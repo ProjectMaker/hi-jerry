@@ -1,0 +1,7 @@
+.idea/
+node_modules/
+platforms/
+*.iml
+*.js
+!hooks/**/*.js
+*.map

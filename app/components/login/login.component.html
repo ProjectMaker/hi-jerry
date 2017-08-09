@@ -1,0 +1,11 @@
+
+    <StackLayout height="400">
+      <Image src="res://logo_login" stretch="none" horizontalAlignment="center"></Image>
+      <TextField hint="Email Address" keyboardType="email" [(ngModel)]="input.email"
+                 autocorrect="false" autocapitalizationType="none"></TextField>
+      <TextField hint="Password" secure="true" [(ngModel)]="input.password"></TextField>
+      <Label [visibility]="error ? 'visible' : 'collapsed'" [text]="error.message"></Label>
+      <Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" (tap)="submit()"></Button>
+      <Button [visibility]="isLoggingIn ? 'visible' : 'collapsed'" text="Sign in with FB" (tap)="loginFb()"></Button>
+      <Button [text]="isLoggingIn ? 'Sign up for Affinity' : 'Back to login'" class="submit-button" (tap)="toggleDisplay()"></Button>
+    </StackLayout>
