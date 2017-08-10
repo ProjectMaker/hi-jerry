@@ -1,9 +1,30 @@
 <ActionBar title="Pin places" class="action-bar">
 </ActionBar>
 <GridLayout rows="*,auto">
-  <StackLayout orientation="vertical" row="0">
+  <GridLayout rows="*,*">
+    <StackLayout row="0" verticalAlignment="top" backgroundColor="aqua" height="100%">
 
-  </StackLayout>
+      <MapView #mapView height="100%"
+               [zoom]="zoom" [bearing]="bearing"
+               [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding" (mapReady)="onMapReady($event)"
+               (markerSelect)="onMarkerEvent($event)" (markerBeginDragging)="onMarkerEvent($event)"
+               (markerEndDragging)="onMarkerEvent($event)" (markerDrag)="onMarkerEvent($event)"
+               (markerInfoWindowTapped)="onMarkerEvent($event)" (coordinateTapped)="onCoordinateTapped($event)"
+               (cameraChanged)="onCameraChanged($event)"></MapView>
+
+    </StackLayout>
+    <StackLayout row="1" height="100%" id="tom">
+      <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%" (itemTap)="onItemTap($event)">
+        <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+          <FlexboxLayout backgroundColor="#faebd7">
+            <Image src="res://icon" stretch="none" horizontalAlignment="center"></Image>
+            <Label [text]="item.title" marginLeft="20px" flexGrow="1"></Label>
+            <Button text="add" class="text-right" marginRight="20px"></Button>
+          </FlexboxLayout>
+        </ng-template>
+      </ListView>
+    </StackLayout>
+  </GridLayout>
   <StackLayout orientation="horizontal" row="1" backgroundColor="#000000">
     <GridLayout columns="*,*" padding="15">
       <Button text="Mes places" col="0" borderRightColor="#ffffff" borderRightWidth="1" color="#ffffff" (tap)="goToPlaces()"></Button>
