@@ -7,7 +7,13 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { routes, navigatableComponents } from "./app.routing";
 
 import { UserService } from './shared/user/user.service';
+import { GeolocationService } from './shared/geolocation/geolocation.sercice';
+import { PlaceSearchService } from './shared/place/place-search.service';
 import { AppComponent } from "./app.component";
+
+declare var GMSServices: any;
+import * as platform from "platform";
+if (platform.isIOS) { GMSServices.provideAPIKey("AIzaSyAtRVvG3Be3xXiZFR7xp-K-9hy4nZ4hMFs"); }
 
 @NgModule({
   declarations: [
@@ -23,7 +29,9 @@ import { AppComponent } from "./app.component";
     NativeScriptRouterModule.forRoot(routes),
   ],
   providers: [
-    UserService
+    UserService,
+    GeolocationService,
+    PlaceSearchService
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })
