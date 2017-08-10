@@ -9,7 +9,6 @@ import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from '../../shared/place/place-search.service';
 const style = require('./map-style.json');
-const places = require('../../shared/place/places-search.mock.json');
 
 registerElement('MapView', () => MapView);
 
