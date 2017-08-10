@@ -9,6 +9,7 @@ import { routes, navigatableComponents } from "./app.routing";
 import { UserService } from './shared/user/user.service';
 import { GeolocationService } from './shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from './shared/place/place-search.service';
+import { PlaceStorageService } from './shared/place/place-storage.service';
 import { AppComponent } from "./app.component";
 
 declare var GMSServices: any;
@@ -31,7 +32,8 @@ if (platform.isIOS) { GMSServices.provideAPIKey("AIzaSyAtRVvG3Be3xXiZFR7xp-K-9hy
   providers: [
     UserService,
     GeolocationService,
-    PlaceSearchService
+    PlaceSearchService,
+    PlaceStorageService
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

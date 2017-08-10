@@ -2,7 +2,15 @@
 </ActionBar>
 <GridLayout rows="*,auto">
   <StackLayout orientation="vertical" row="0">
-
+    <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%">
+      <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+        <FlexboxLayout backgroundColor="#faebd7">
+          <Image src="res://icon" stretch="none" horizontalAlignment="center"></Image>
+          <Label [text]="item.title" marginLeft="20px" flexGrow="1"></Label>
+          <Button text="add" class="text-right" marginRight="20px"></Button>
+        </FlexboxLayout>
+      </ng-template>
+    </ListView>
   </StackLayout>
   <StackLayout orientation="horizontal" row="1" backgroundColor="#000000">
     <GridLayout columns="*,*" padding="15">
