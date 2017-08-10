@@ -7,6 +7,7 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { routes, navigatableComponents } from "./app.routing";
 
 import { UserService } from './shared/user/user.service';
+import { GeolocationService } from './shared/geolocation/geolocation.sercice';
 import { AppComponent } from "./app.component";
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AppComponent } from "./app.component";
     NativeScriptRouterModule.forRoot(routes),
   ],
   providers: [
-    UserService
+    UserService,
+    GeolocationService
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })
