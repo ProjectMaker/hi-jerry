@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import {Image} from 'ui/image';
-import { ImageSource } from "image-source";
+const imageSource = require("image-source");
+
+import * as ImageModule from "tns-core-modules/ui/image";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { registerElement } from 'nativescript-angular/element-registry';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
@@ -40,6 +42,28 @@ export class AddPlacesComponent implements OnInit{
 
   public ngOnInit() {
     this.geolocation.start();
+  }
+
+  onItemTap(event) {
+    const marker = this.markers.find((marker) => {
+      return this.places[event.index].location.latitude === marker.position.latitude
+        && this.places[event.index].location.longitude === marker.position.longitude
+    })
+    let image;
+    if (this.markerSelected) {
+      image = new Image();
+      image.imageSource = imageSource.fromResource('shooting');
+      this.markerSelected.icon = image;
+    }
+    this.markerSelected = marker;
+
+
+    image = new Image();
+    image.imageSource = imageSource.fromResource("monkey-export");
+    image.width = 25;
+    image.height = 25;
+
+    marker.icon = image;
   }
 
   //Map events
@@ -84,24 +108,22 @@ export class AddPlacesComponent implements OnInit{
     this.gpsMarker = this.addMarker({
       location: position,
       title: 'GPS Location'
-    });
+    }, true);
   }
 
-  addMarker(args:AddMarkerArgs) {
+  addMarker(args:AddMarkerArgs, gpsMaker?: boolean) {
     if (!this.mapView || !args || !args.location) return;
 
+    gpsMaker = gpsMaker || false;
     let marker = new Marker();
     marker.position = Position.positionFromLatLng(args.location.latitude, args.location.longitude);
-    this.mapView.addMarker(marker);
 
     marker.title = args.title;
     marker.snippet = args.title;
 
-    const imgSrc = new ImageSource();
-    imgSrc.fromResource("shooting.png");
-
+    const res = gpsMaker ? 'marker-home' : 'shooting';
     const icon = new Image();
-    icon.imageSource = imgSrc;
+    icon.imageSource = imageSource.fromResource(res);
     marker.icon = icon;
 
     this.mapView.addMarker(marker);
