@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   public isLoggingIn:Boolean = true;
   public error = false;
 
-  constructor(private page:Page, private userService:UserService) {
+  constructor(private page:Page, private userService:UserService, private routerExtensions:RouterExtensions) {
     this.input = {
       email: '',
       password: ''
@@ -61,13 +61,21 @@ export class LoginComponent implements OnInit {
     const msg = this.checkFields();
     if (!msg) {
       if (!this.userService.login(this.input.email, this.input.password)) return (new SnackBar()).simple("Incorrect Credentials!");
-    } else (new SnackBar()).simple(msg);
+    } else return (new SnackBar()).simple(msg);
+    this.routerExtensions.navigate(['places'], { clearHistory: true });
   }
 
   public loginFb() {
     this.userService.loginFb()
       .subscribe(
-        authentificated => console.log('authentificated', authentificated),
+        (authentificated) => {
+          console.log('authentificated 1', authentificated);
+          console.log('test');
+          if (authentificated) {
+            console.log('go to places');
+            this.routerExtensions.navigate(['places'], { clearHistory: true });
+          } else console.log('no go to places');
+        },
         error => console.log('error', error),
         () => console.log('completed')
       )
