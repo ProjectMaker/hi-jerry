@@ -9,7 +9,7 @@ export class PlaceSearchService {
 
   public search(position:Position) {
     if (this.mock) {
-      const places = require('./places-search.mock.json');
+      const places = require('./place-search.mock.json');
       return Observable.from(places)
         .map((place:any) => {
           return {

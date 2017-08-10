@@ -23,6 +23,7 @@
     "nativescript-google-maps-sdk": "2.3.2",
     "nativescript-oauth": "2.0.1",
     "nativescript-snackbar": "1.1.7",
+    "nativescript-sqlite": "1.1.7",
     "nativescript-theme-core": "~1.0.2",
     "reflect-metadata": "~0.1.8",
     "rxjs": "~5.3.0",

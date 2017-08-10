@@ -8,8 +8,8 @@ import { registerElement } from 'nativescript-angular/element-registry';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from '../../shared/place/place-search.service';
+import { PlaceStorageService } from '../../shared/place/place-storage.service';
 const style = require('./map-style.json');
-const places = require('../../shared/place/places-search.mock.json');
 
 registerElement('MapView', () => MapView);
 
@@ -32,7 +32,10 @@ export class AddPlacesComponent implements OnInit{
   centeredOnLocation:boolean = false;
   lastCamera: String;
 
-  constructor(private routerExtensions:RouterExtensions, private geolocation:GeolocationService, private placeSearch:PlaceSearchService) {
+  constructor(private routerExtensions:RouterExtensions,
+              private geolocation:GeolocationService,
+              private placeSearch:PlaceSearchService,
+              private placeStorage:PlaceStorageService) {
     //console.log(JSON.stringify(this.places));
   }
 
@@ -45,10 +48,12 @@ export class AddPlacesComponent implements OnInit{
   }
 
   onItemTap(event) {
+    this.placeStorage.add();
     const marker = this.markers.find((marker) => {
       return this.places[event.index].location.latitude === marker.position.latitude
         && this.places[event.index].location.longitude === marker.position.longitude
-    })
+    });
+    this.placeStorage.insert(marker.title, marker.position.latitude, marker.position.longitude);
     let image;
     if (this.markerSelected) {
       image = new Image();
@@ -80,7 +85,6 @@ export class AddPlacesComponent implements OnInit{
           this.placeSearch.search(position)
             .subscribe(
               (place) => {
-                console.log(JSON.stringify(place));
                 this.markers.push(this.addMarker(place));
                 this.places.push(place);
               },
