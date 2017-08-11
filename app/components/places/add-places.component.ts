@@ -6,6 +6,8 @@ import * as ImageModule from "tns-core-modules/ui/image";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { registerElement } from 'nativescript-angular/element-registry';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
+import { SnackBar } from "nativescript-snackbar";
+
 import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from '../../shared/place/place-search.service';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
@@ -53,7 +55,7 @@ export class AddPlacesComponent implements OnInit{
       return this.places[event.index].location.latitude === marker.position.latitude
         && this.places[event.index].location.longitude === marker.position.longitude
     });
-    this.placeStorage.insert(marker.title, marker.position.latitude, marker.position.longitude);
+
     let image;
     if (this.markerSelected) {
       image = new Image();
@@ -156,6 +158,11 @@ export class AddPlacesComponent implements OnInit{
   onCameraChanged(args) {
     //console.log("Camera changed: " + JSON.stringify(args.camera), JSON.stringify(args.camera) === this.lastCamera);
     this.lastCamera = JSON.stringify(args.camera);
+  }
+
+  public onAdd(item:any) {
+    this.placeStorage.insert(item.title, item.location.latitude, item.location.longitude);
+    (new SnackBar()).simple(`${item.title} added`);
   }
 }
 
