@@ -6,7 +6,7 @@ import { Position } from 'nativescript-google-maps-sdk';
 
 @Injectable()
 export class PlaceSearchService {
-  public mock:boolean = false;
+  public mock:boolean = true;
 
   public constructor(private http:Http) {}
 
@@ -18,13 +18,7 @@ export class PlaceSearchService {
     if (this.mock) {
       const places = require('./place-search.mock.json');
       return Observable.of(places)
-        .map((place:any) => {
-          return {
-            location: Position.positionFromLatLng(place.geometry.location.lat, place.geometry.location.lng),
-            title: place.name
-          }
-
-        });
+        .map(result => this.parseGoogleDoc(result));
     }
   }
 
@@ -34,16 +28,16 @@ export class PlaceSearchService {
     //return;
     return this.http.get(url)
       .map(result => result.json())
-      .map((result:any) => {
-        const places = result.results.map((place) => {
-          return {
-            location: Position.positionFromLatLng(place.geometry.location.lat, place.geometry.location.lng),
-            title: place.name
-          }
-        });
-
-        return places;
-      })
+      .map(result => this.parseGoogleDoc(result))
       .do(result => console.log(JSON.stringify(result)));
+  }
+
+  private parseGoogleDoc(doc:any):any {
+    return doc.results.map((place) => {
+      return {
+        location: Position.positionFromLatLng(place.geometry.location.lat, place.geometry.location.lng),
+        title: place.name
+      }
+    });
   }
 }
