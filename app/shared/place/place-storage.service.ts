@@ -59,7 +59,7 @@ export class PlaceStorageService {
         for(var row in rows) {
           places.push({
             'title': rows[row][0],
-            'location': Position.positionFromLatLng(rows[row][1], rows[row][1])
+            'location': Position.positionFromLatLng(rows[row][1], rows[row][2])
           });
         }
         observer.next(places);
