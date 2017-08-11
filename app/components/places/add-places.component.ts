@@ -84,9 +84,11 @@ export class AddPlacesComponent implements OnInit{
           this.firstPosition = false;
           this.placeSearch.search(position)
             .subscribe(
-              (place) => {
-                this.markers.push(this.addMarker(place));
-                this.places.push(place);
+              (places) => {
+                places.forEach((place) => {
+                  this.markers.push(this.addMarker(place));
+                  this.places.push(place);
+                });
               },
               (err) => console.log(err),
               () => console.log('complete')
@@ -98,7 +100,7 @@ export class AddPlacesComponent implements OnInit{
   }
 
   locationReceived(position:Position) {
-    console.log('GPS Update Received', JSON.stringify(position));
+    //console.log('GPS Update Received', JSON.stringify(position));
 
     if (this.mapView && position && !this.centeredOnLocation) {
       this.mapView.latitude = position.latitude;
@@ -142,7 +144,7 @@ export class AddPlacesComponent implements OnInit{
   }
 
   onCoordinateTapped(args) {
-    console.log("Coordinate Tapped, Lat: " + args.position.latitude + ", Lon: " + args.position.longitude, args);
+    //console.log("Coordinate Tapped, Lat: " + args.position.latitude + ", Lon: " + args.position.longitude, args);
   }
 
   onMarkerEvent(args) {
@@ -152,7 +154,7 @@ export class AddPlacesComponent implements OnInit{
   }
 
   onCameraChanged(args) {
-    console.log("Camera changed: " + JSON.stringify(args.camera), JSON.stringify(args.camera) === this.lastCamera);
+    //console.log("Camera changed: " + JSON.stringify(args.camera), JSON.stringify(args.camera) === this.lastCamera);
     this.lastCamera = JSON.stringify(args.camera);
   }
 }
