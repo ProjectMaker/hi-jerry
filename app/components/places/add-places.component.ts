@@ -49,13 +49,7 @@ export class AddPlacesComponent implements OnInit{
     this.geolocation.start();
   }
 
-  onItemTap(event) {
-    this.placeStorage.add();
-    const marker = this.markers.find((marker) => {
-      return this.places[event.index].location.latitude === marker.position.latitude
-        && this.places[event.index].location.longitude === marker.position.longitude
-    });
-
+  private switchMarker(marker:Marker) {
     let image;
     if (this.markerSelected) {
       image = new Image();
@@ -67,10 +61,22 @@ export class AddPlacesComponent implements OnInit{
 
     image = new Image();
     image.imageSource = imageSource.fromResource("monkey-export");
-    image.width = 25;
-    image.height = 25;
-
     marker.icon = image;
+  }
+
+  onItemTap(event) {
+    this.placeStorage.add();
+    const marker = this.markers.find((marker) => {
+      return this.places[event.index].location.latitude === marker.position.latitude
+        && this.places[event.index].location.longitude === marker.position.longitude
+    });
+
+    this.mapView.latitude = marker.position.latitude;
+    this.mapView.longitude = marker.position.longitude;
+
+    this.switchMarker(marker);
+
+    marker.showInfoWindow();
   }
 
   //Map events
@@ -115,7 +121,7 @@ export class AddPlacesComponent implements OnInit{
     if (this.gpsMarker) this.removeMarker(this.gpsMarker);
     this.gpsMarker = this.addMarker({
       location: position,
-      title: 'GPS Location'
+      title: 'Home'
     }, true);
   }
 
@@ -150,9 +156,11 @@ export class AddPlacesComponent implements OnInit{
   }
 
   onMarkerEvent(args) {
+    //if (args.eventName === 'markerSelect')
     console.log("Marker Event: '" + args.eventName
       + "' triggered on: " + args.marker.title
       + ", Lat: " + args.marker.position.latitude + ", Lon: " + args.marker.position.longitude, args);
+    this.switchMarker(args.marker);
   }
 
   onCameraChanged(args) {
