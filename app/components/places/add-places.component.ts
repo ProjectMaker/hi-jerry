@@ -85,9 +85,31 @@ export class AddPlacesComponent implements OnInit{
 
     this.mapView = event.object;
     this.mapView.setStyle(style);
+
+    this.geolocation.isReady()
+      .subscribe(
+        () => {
+          this.locationReceived(this.geolocation.position);
+
+           this.placeSearch.search(this.geolocation.position)
+             .subscribe(
+               (places) => {
+                 places.forEach((place) => {
+                   this.markers.push(this.addMarker(place));
+                   this.places.push(place);
+                 });
+               },
+               (err) => console.log(err),
+               () => console.log('complete')
+             );
+        }
+      );
+    /*
     this.geolocation.positionEvent.subscribe(
       (position:Position) => {
+        console.log('position received');
         this.locationReceived(position);
+
         if (this.firstPosition) {
           this.firstPosition = false;
           this.placeSearch.search(position)
@@ -105,6 +127,7 @@ export class AddPlacesComponent implements OnInit{
 
       }
     );
+     */
   }
 
   locationReceived(position:Position) {

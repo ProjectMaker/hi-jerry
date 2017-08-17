@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from "@angular/core";
 import { Position } from 'nativescript-google-maps-sdk';
+import {Observable} from "rxjs/Observable";
 
 const geolocation = require("nativescript-geolocation");
 
@@ -23,6 +24,22 @@ export class GeolocationService {
       .catch(err => console.error(JSON.stringify(err)));
   }
 
+  isReady() {
+    if (this.position) return Observable.of(this.position);
+    else {
+      return Observable.create(observer => {
+        const interval = setInterval(() => {
+          if (this.position) {
+            clearInterval(interval);
+            observer.next(true);
+            observer.complete();
+          }
+        }, 2000);
+        return () => clearInterval(interval);
+      });
+    }
+  }
+
   stop() {
     if (this.watchId) geolocation.clearWatch(this.watchId);
     this.watchId = null;
@@ -31,12 +48,17 @@ export class GeolocationService {
 
 
   watch() {
-    this.watchId = geolocation.watchLocation(() => this.positionEvent.emit(this.position), (err) => console.error(err), {
-      desiredAccuracy: 10,
-      updateDistance: 10,
-      minimumUpdateTime: 10000,
-      //maximumAge: 60000
-    });
+    this.watchId = geolocation.watchLocation(
+      (position:Position) => {
+        this.position = position;
+        this.positionEvent.emit(this.position) },
+      (err) => console.error(err), {
+        desiredAccuracy: 10,
+        updateDistance: 10,
+        minimumUpdateTime: 10000,
+        //maximumAge: 60000
+      }
+    );
   }
 
   enableLocation() {
