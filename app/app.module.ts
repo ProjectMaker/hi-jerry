@@ -14,7 +14,7 @@ import { AppComponent } from "./app.component";
 
 declare var GMSServices: any;
 import * as platform from "platform";
-if (platform.isIOS) { GMSServices.provideAPIKey("AIzaSyAtRVvG3Be3xXiZFR7xp-K-9hy4nZ4hMFs"); }
+if (platform.isIOS) { GMSServices.provideAPIKey("AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4"); }
 
 @NgModule({
   declarations: [
