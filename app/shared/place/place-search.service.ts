@@ -29,7 +29,6 @@ export class PlaceSearchService {
       this.placesRefreshEvent.subscribe(
         (places) => {
           observer.next(places);
-          console.log(JSON.stringify(places));
         }
       );
     });
@@ -41,10 +40,10 @@ export class PlaceSearchService {
     let nextPageToken:string;
     if (!pageToken) url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${key}&location=${position.latitude},${position.longitude}&radius=500`;
     else url = url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${key}&pagetoken=${pageToken}`;
-
     this.http.get(url)
       .map(result => {
         const doc = result.json();
+        //console.log(doc.status);
         if (doc.next_page_token) nextPageToken = doc.next_page_token;
         return doc;
       })
@@ -52,7 +51,9 @@ export class PlaceSearchService {
       .subscribe(
         (places => {
           this.placesRefreshEvent.emit(places);
-          if (nextPageToken) this.callGoogleApi(position, nextPageToken);
+          if (nextPageToken) {
+            setTimeout(() => this.callGoogleApi(position, nextPageToken), 2500);
+          }
         })
       )
   }
