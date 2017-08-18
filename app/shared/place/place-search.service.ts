@@ -3,7 +3,7 @@ import {Observable} from "rxjs/Observable";
 import 'rxjs/add/observable/of';
 import {Http, Headers, RequestOptions} from "@angular/http";
 import { Position } from 'nativescript-google-maps-sdk';
-
+import { Place } from './place';
 
 @Injectable()
 export class PlaceSearchService {
@@ -60,12 +60,13 @@ export class PlaceSearchService {
 
   private parseGoogleDoc(doc:any):any {
     return doc.results.filter(place => place.types.indexOf('bar') >= 0 || place.types.indexOf('restaurant') >= 0)
-      .map((place) => {
-        return {
-          location: Position.positionFromLatLng(place.geometry.location.lat, place.geometry.location.lng),
-          title: place.name,
-          address: place.vicinity
-        }
+      .map((doc) => {
+        const place = new Place();
+        place.location = Position.positionFromLatLng(doc.geometry.location.lat, doc.geometry.location.lng);
+        place.title = doc.name;
+        place.address = doc.vicinity;
+        place.type = doc.types.indexOf('bar') >= 0 ? 'bar' : 'restaurant';
+        return place;
       });
   }
 }
