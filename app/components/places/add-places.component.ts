@@ -11,6 +11,7 @@ import { SnackBar } from "nativescript-snackbar";
 import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from '../../shared/place/place-search.service';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
+import { Place } from '../../shared/place/place';
 const style = require('./map-style.json');
 
 registerElement('MapView', () => MapView);
@@ -144,21 +145,22 @@ export class AddPlacesComponent implements OnInit{
     this.gpsMarker = this.addMarker({
       location: position,
       title: 'Home',
-      address: ''
+      address: '',
+      type: ''
     }, true);
   }
 
-  addMarker(args:AddMarkerArgs, gpsMaker?: boolean) {
-    if (!this.mapView || !args || !args.location) return;
+  addMarker(place:Place, gpsMaker?: boolean) {
+    if (!this.mapView || !place || !place.location) return;
 
     gpsMaker = gpsMaker || false;
     let marker = new Marker();
-    marker.position = Position.positionFromLatLng(args.location.latitude, args.location.longitude);
+    marker.position = Position.positionFromLatLng(place.location.latitude, place.location.longitude);
 
-    marker.title = args.title;
-    marker.snippet = args.address;
+    marker.title = place.title;
+    marker.snippet = place.address;
 
-    const res = gpsMaker ? 'marker-home' : 'shooting';
+    const res = gpsMaker ? 'marker-home' : place.type === 'bar' ? 'bar' : 'restaurant';
     const icon = new Image();
     icon.imageSource = imageSource.fromResource(res);
     marker.icon = icon;
@@ -195,10 +197,4 @@ export class AddPlacesComponent implements OnInit{
     this.placeStorage.insert(item.title, item.location.latitude, item.location.longitude);
     (new SnackBar()).simple(`${item.title} added`);
   }
-}
-
-export class AddMarkerArgs {
-  public location:Position;
-  public title:string;
-  public address: string;
 }
