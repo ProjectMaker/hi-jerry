@@ -33,11 +33,12 @@ export class PlaceSearchService {
   }
 
   private parseGoogleDoc(doc:any):any {
-    return doc.results.map((place) => {
-      return {
-        location: Position.positionFromLatLng(place.geometry.location.lat, place.geometry.location.lng),
-        title: place.name
-      }
-    });
+    return doc.results.filter(place => place.types.indexOf('bar') >= 0 || place.types.indexOf('restaurant') >= 0)
+      .map((place) => {
+        return {
+          location: Position.positionFromLatLng(place.geometry.location.lat, place.geometry.location.lng),
+          title: place.name
+        }
+      });
   }
 }
