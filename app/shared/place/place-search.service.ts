@@ -1,13 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/observable/of';
 import {Http, Headers, RequestOptions} from "@angular/http";
 import { Position } from 'nativescript-google-maps-sdk';
 
+
 @Injectable()
 export class PlaceSearchService {
-  public mock:boolean = true;
-
+  public mock:boolean = false;
+  private placesRefreshEvent:EventEmitter<Array<any>> = new EventEmitter();
   public constructor(private http:Http) {}
 
   public search(position:Position) {
@@ -23,13 +24,37 @@ export class PlaceSearchService {
   }
 
   private searchGoogle(position:Position) {
+    this.callGoogleApi(position);
+    return Observable.create(observer => {
+      this.placesRefreshEvent.subscribe(
+        (places) => {
+          observer.next(places);
+          console.log(JSON.stringify(places));
+        }
+      );
+    });
+  }
+
+  private callGoogleApi(position:Position, pageToken?:string) {
     const key = 'AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4';
-    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${key}&location=${position.latitude},${position.longitude}&radius=500`;
-    //return;
-    return this.http.get(url)
-      .map(result => result.json())
+    let url:string;
+    let nextPageToken:string;
+    if (!pageToken) url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${key}&location=${position.latitude},${position.longitude}&radius=500`;
+    else url = url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${key}&pagetoken=${pageToken}`;
+
+    this.http.get(url)
+      .map(result => {
+        const doc = result.json();
+        if (doc.next_page_token) nextPageToken = doc.next_page_token;
+        return doc;
+      })
       .map(result => this.parseGoogleDoc(result))
-      .do(result => console.log(JSON.stringify(result)));
+      .subscribe(
+        (places => {
+          this.placesRefreshEvent.emit(places);
+          if (nextPageToken) this.callGoogleApi(position, nextPageToken);
+        })
+      )
   }
 
   private parseGoogleDoc(doc:any):any {
