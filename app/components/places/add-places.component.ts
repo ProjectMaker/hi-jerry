@@ -90,18 +90,17 @@ export class AddPlacesComponent implements OnInit{
       .subscribe(
         () => {
           this.locationReceived(this.geolocation.position);
-
-           this.placeSearch.search(this.geolocation.position)
-             .subscribe(
-               (places) => {
-                 places.forEach((place) => {
-                   this.markers.push(this.addMarker(place));
-                   this.places.push(place);
-                 });
-               },
-               (err) => console.log(err),
-               () => console.log('complete')
-             );
+          this.placeSearch.search(this.geolocation.position)
+           .subscribe(
+             (places) => {
+               places.forEach((place) => {
+                 this.markers.push(this.addMarker(place));
+                 this.places.push(place);
+               });
+             },
+             (err) => console.log(err),
+             () => console.log('complete')
+           );
         }
       );
     /*
@@ -144,7 +143,8 @@ export class AddPlacesComponent implements OnInit{
     if (this.gpsMarker) this.removeMarker(this.gpsMarker);
     this.gpsMarker = this.addMarker({
       location: position,
-      title: 'Home'
+      title: 'Home',
+      address: ''
     }, true);
   }
 
@@ -156,7 +156,7 @@ export class AddPlacesComponent implements OnInit{
     marker.position = Position.positionFromLatLng(args.location.latitude, args.location.longitude);
 
     marker.title = args.title;
-    marker.snippet = args.title;
+    marker.snippet = args.address;
 
     const res = gpsMaker ? 'marker-home' : 'shooting';
     const icon = new Image();
@@ -200,4 +200,5 @@ export class AddPlacesComponent implements OnInit{
 export class AddMarkerArgs {
   public location:Position;
   public title:string;
+  public address: string;
 }

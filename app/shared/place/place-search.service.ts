@@ -7,7 +7,7 @@ import { Position } from 'nativescript-google-maps-sdk';
 
 @Injectable()
 export class PlaceSearchService {
-  public mock:boolean = false;
+  public mock:boolean = true;
   private placesRefreshEvent:EventEmitter<Array<any>> = new EventEmitter();
   public constructor(private http:Http) {}
 
@@ -63,7 +63,8 @@ export class PlaceSearchService {
       .map((place) => {
         return {
           location: Position.positionFromLatLng(place.geometry.location.lat, place.geometry.location.lng),
-          title: place.name
+          title: place.name,
+          address: place.vicinity
         }
       });
   }
