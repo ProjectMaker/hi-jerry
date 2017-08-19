@@ -11,7 +11,7 @@ import { SnackBar } from "nativescript-snackbar";
 import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from '../../shared/place/place-search.service';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
-import { Place } from '../../shared/place/place';
+import { PlaceMap } from '../../shared/place/place';
 const style = require('./map-style.json');
 
 registerElement('MapView', () => MapView);
@@ -54,7 +54,7 @@ export class AddPlacesComponent implements OnInit{
     let image;
     if (this.markerSelected) {
       image = new Image();
-      image.imageSource = imageSource.fromResource('shooting');
+      image.imageSource = imageSource.fromResource(!this.markerSelected.userData.type ? 'marker-home' : this.markerSelected.userData.type === 'bar' ? 'bar' : 'restaurant');
       this.markerSelected.icon = image;
     }
     this.markerSelected = marker;
@@ -68,8 +68,8 @@ export class AddPlacesComponent implements OnInit{
   onItemTap(event) {
     this.placeStorage.add();
     const marker = this.markers.find((marker) => {
-      return this.places[event.index].location.latitude === marker.position.latitude
-        && this.places[event.index].location.longitude === marker.position.longitude
+      return this.places[event.index].externalId === marker.userData.externalId
+        && this.places[event.index].origin === marker.userData.origin
     });
 
     this.mapView.latitude = marker.position.latitude;
@@ -144,22 +144,24 @@ export class AddPlacesComponent implements OnInit{
     if (this.gpsMarker) this.removeMarker(this.gpsMarker);
     this.gpsMarker = this.addMarker({
       location: position,
-      title: 'Home',
+      name: 'Home',
       address: '',
-      type: ''
+      type: '',
+      origin: null,
+      externalId: null
     }, true);
   }
 
-  addMarker(place:Place, gpsMaker?: boolean) {
+  addMarker(place:PlaceMap, gpsMaker?: boolean) {
     if (!this.mapView || !place || !place.location) return;
 
     gpsMaker = gpsMaker || false;
     let marker = new Marker();
     marker.position = Position.positionFromLatLng(place.location.latitude, place.location.longitude);
 
-    marker.title = place.title;
+    marker.title = place.name;
     marker.snippet = place.address;
-
+    marker.userData = { type: place.type, externalId: place.externalId, origin: place.origin };
     const res = gpsMaker ? 'marker-home' : place.type === 'bar' ? 'bar' : 'restaurant';
     const icon = new Image();
     icon.imageSource = imageSource.fromResource(res);
