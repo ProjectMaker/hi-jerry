@@ -10,6 +10,7 @@ import { PlaceMap } from '../../shared/place/place';
 })
 export class PlacesComponent implements OnInit {
   public places:Array<any> = [];
+  public isReady:boolean = false;
   constructor(private routerExtensions:RouterExtensions, private placeStorage:PlaceStorageService) {}
 
   public goToAddPlaces() {
@@ -23,6 +24,7 @@ export class PlacesComponent implements OnInit {
         this.placeStorage.fetch()
           .subscribe(
             (places) => {
+              this.isReady = true;
               this.places = places;
             }
           )

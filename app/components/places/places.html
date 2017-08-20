@@ -1,7 +1,8 @@
 <ActionBar title="Mes places" class="action-bar">
 </ActionBar>
 <GridLayout rows="*,auto">
-  <StackLayout orientation="vertical" row="0">
+  <ActivityIndicator busy="true" visibility="{{ !isReady ? 'visible' : 'collapse'}}" row="0"></ActivityIndicator>
+  <StackLayout orientation="vertical" row="0" visibility="{{ isReady ? 'visible' : 'collapse'}}">
     <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%">
       <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
         <FlexboxLayout backgroundColor="#faebd7">
