@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/observable/of';
 import { Position } from 'nativescript-google-maps-sdk';
@@ -10,7 +10,7 @@ import { PlaceMap } from './place';
 export class PlaceStorageService {
   private database:any;
   private error:boolean = false;
-  public places:Array<any> = [];
+  public emitter:EventEmitter<Array<PlaceMap>> = new EventEmitter();
 
   public constructor() {
     (new Sqlite("kl.jerry")).then(db => {
@@ -67,29 +67,23 @@ export class PlaceStorageService {
   }
 
   public fetch() {
-    console.log('fetch', this.database);
-    return Observable.create(observer => {
-      this.database.all("SELECT id, name, lat, lng, address, type, origin, externalId FROM place").then(rows => {
-        const places = [];
-        for(var row in rows) {
-          places.push({
-            id: rows[row][0],
-            name: rows[row][1],
-            location: Position.positionFromLatLng(rows[row][2], rows[row][3]),
-            address: rows[row][4],
-            type: rows[row][5],
-            origin: rows[row][6],
-            externalId: rows[row][7]
-          });
-        }
-        observer.next(places);
-        observer.complete();
-      }, error => {
-        console.log("SELECT ERROR", error);
-        observer.error(error);
-      });
+    this.database.all("SELECT id, name, lat, lng, address, type, origin, externalId FROM place").then(rows => {
+      const places = [];
+      for(var row in rows) {
+        places.push({
+          id: rows[row][0],
+          name: rows[row][1],
+          location: Position.positionFromLatLng(rows[row][2], rows[row][3]),
+          address: rows[row][4],
+          type: rows[row][5],
+          origin: rows[row][6],
+          externalId: rows[row][7]
+        });
+      }
+      this.emitter.emit(places);
+    }, error => {
+      console.log("SELECT ERROR", error);
     });
-
   }
 
   public add() {
