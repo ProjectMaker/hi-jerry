@@ -19,7 +19,7 @@
           <FlexboxLayout backgroundColor="#faebd7">
             <Image src="res://{{item.type}}" stretch="none" horizontalAlignment="center"></Image>
             <Label [text]="item.name" marginLeft="10px" flexGrow="1" (tap)="onItemNameTap(item)"></Label>
-            <Button text="add" class="text-right" marginRight="20px" (tap)="onAdd(item)"></Button>
+            <Button text="add" class="text-right" marginRight="20px" (tap)="onItemAdd(item)"></Button>
           </FlexboxLayout>
         </ng-template>
       </ListView>

@@ -65,7 +65,7 @@ export class AddPlacesComponent implements OnInit{
     marker.icon = image;
   }
 
-  onItemNameTap(item:PlaceMap) {
+  public onItemNameTap(item:PlaceMap) {
     console.log('onItemNameTap', item.externalId, item.origin);
     const marker = this.markers.find((marker) => {
       return item.externalId === marker.userData.externalId
@@ -78,6 +78,11 @@ export class AddPlacesComponent implements OnInit{
     this.switchMarker(marker);
 
     marker.showInfoWindow();
+  }
+
+  public onItemAdd(item:PlaceMap) {
+    this.placeStorage.insert(item.name, item.location.latitude, item.location.longitude);
+    (new SnackBar()).simple(`${item.name} added`);
   }
 
   //Map events
@@ -193,10 +198,5 @@ export class AddPlacesComponent implements OnInit{
   onCameraChanged(args) {
     //console.log("Camera changed: " + JSON.stringify(args.camera), JSON.stringify(args.camera) === this.lastCamera);
     this.lastCamera = JSON.stringify(args.camera);
-  }
-
-  public onAdd(item:any) {
-    this.placeStorage.insert(item.title, item.location.latitude, item.location.longitude);
-    (new SnackBar()).simple(`${item.title} added`);
   }
 }
