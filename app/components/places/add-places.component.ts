@@ -65,11 +65,11 @@ export class AddPlacesComponent implements OnInit{
     marker.icon = image;
   }
 
-  onItemTap(event) {
-    this.placeStorage.add();
+  onItemNameTap(item:PlaceMap) {
+    console.log('onItemNameTap', item.externalId, item.origin);
     const marker = this.markers.find((marker) => {
-      return this.places[event.index].externalId === marker.userData.externalId
-        && this.places[event.index].origin === marker.userData.origin
+      return item.externalId === marker.userData.externalId
+        && item.origin === marker.userData.origin
     });
 
     this.mapView.latitude = marker.position.latitude;

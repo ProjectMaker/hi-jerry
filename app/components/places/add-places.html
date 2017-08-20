@@ -14,11 +14,11 @@
 
     </StackLayout>
     <StackLayout row="1" height="100%" id="tom">
-      <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%" (itemTap)="onItemTap($event)">
+      <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%">
         <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
           <FlexboxLayout backgroundColor="#faebd7">
             <Image src="res://{{item.type}}" stretch="none" horizontalAlignment="center"></Image>
-            <Label [text]="item.name" marginLeft="10px" flexGrow="1"></Label>
+            <Label [text]="item.name" marginLeft="10px" flexGrow="1" (tap)="onItemNameTap(item)"></Label>
             <Button text="add" class="text-right" marginRight="20px" (tap)="onAdd(item)"></Button>
           </FlexboxLayout>
         </ng-template>
