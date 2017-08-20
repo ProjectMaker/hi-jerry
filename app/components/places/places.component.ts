@@ -18,16 +18,17 @@ export class PlacesComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.placeStorage.emitter.subscribe(
+      (places) => {
+        this.places = places;
+      },
+      (err) => console.log(err)
+    );
     this.placeStorage.isReady()
       .subscribe(
       () => {
-        this.placeStorage.fetch()
-          .subscribe(
-            (places) => {
-              this.isReady = true;
-              this.places = places;
-            }
-          )
+        this.isReady = true;
+        this.placeStorage.fetch();
       },
       (err) => console.log(err),
       () => console.log('completed')
@@ -35,7 +36,6 @@ export class PlacesComponent implements OnInit {
   }
 
   public onRemove(place:PlaceMap) {
-    console.log('onRemove', place.id)
     this.placeStorage.remove(place.id);
   }
 }
