@@ -55,19 +55,31 @@ export class PlaceStorageService {
     );
   }
 
+  public remove(placeId:string) {
+    this.database.execSQL("DELETE FROM place WHERE id = ?",
+      [placeId]).then(id => {
+        console.log("REMOVE RESULT", id);
+        this.fetch();
+      }, error => {
+        console.log("REMOVE ERROR", error);
+      }
+    );
+  }
+
   public fetch() {
     console.log('fetch', this.database);
     return Observable.create(observer => {
-      this.database.all("SELECT name, lat, lng, address, type, origin, externalId FROM place").then(rows => {
+      this.database.all("SELECT id, name, lat, lng, address, type, origin, externalId FROM place").then(rows => {
         const places = [];
         for(var row in rows) {
           places.push({
-            name: rows[row][0],
-            location: Position.positionFromLatLng(rows[row][1], rows[row][2]),
-            address: rows[row][3],
-            type: rows[row][4],
-            origin: rows[row][5],
-            externalId: rows[row][6]
+            id: rows[row][0],
+            name: rows[row][1],
+            location: Position.positionFromLatLng(rows[row][2], rows[row][3]),
+            address: rows[row][4],
+            type: rows[row][5],
+            origin: rows[row][6],
+            externalId: rows[row][7]
           });
         }
         observer.next(places);

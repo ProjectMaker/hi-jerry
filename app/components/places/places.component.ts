@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
+import { PlaceMap } from '../../shared/place/place';
 
 @Component({
   moduleId: module.id,
@@ -29,5 +30,10 @@ export class PlacesComponent implements OnInit {
       (err) => console.log(err),
       () => console.log('completed')
     );
+  }
+
+  public onRemove(place:PlaceMap) {
+    console.log('onRemove', place.id)
+    this.placeStorage.remove(place.id);
   }
 }

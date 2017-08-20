@@ -148,6 +148,7 @@ export class AddPlacesComponent implements OnInit{
 
     if (this.gpsMarker) this.removeMarker(this.gpsMarker);
     this.gpsMarker = this.addMarker({
+      id: null,
       location: position,
       name: 'Home',
       address: '',
