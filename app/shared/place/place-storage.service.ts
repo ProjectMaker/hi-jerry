@@ -14,7 +14,7 @@ export class PlaceStorageService {
 
   public constructor() {
     (new Sqlite("kl.jerry")).then(db => {
-      db.execSQL("CREATE TABLE IF NOT EXISTS place (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, lat REAL, lng REAL, address TEXT, origin TEXT, externalId TEXT)").then(id => {
+      db.execSQL("CREATE TABLE IF NOT EXISTS place (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, lat REAL, lng REAL, address TEXT, type TEXT, origin TEXT, externalId TEXT)").then(id => {
         this.database = db;
         console.log('db create', this.database)
       }, error => {
@@ -45,8 +45,8 @@ export class PlaceStorageService {
   }
 
   public insert(place:PlaceMap) {
-    this.database.execSQL("INSERT INTO place (name, lat, lng, address, origin, externalId) VALUES (?, ?, ?, ?, ?, ?)",
-      [place.name, place.location.latitude, place.location.longitude, place.address, place.origin, place.externalId]).then(id => {
+    this.database.execSQL("INSERT INTO place (name, lat, lng, address, type, origin, externalId) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [place.name, place.location.latitude, place.location.longitude, place.address, place.type, place.origin, place.externalId]).then(id => {
         console.log("INSERT RESULT", id);
         this.fetch();
       }, error => {
@@ -58,15 +58,16 @@ export class PlaceStorageService {
   public fetch() {
     console.log('fetch', this.database);
     return Observable.create(observer => {
-      this.database.all("SELECT name, lat, lng, address, origin, externalId FROM place").then(rows => {
+      this.database.all("SELECT name, lat, lng, address, type, origin, externalId FROM place").then(rows => {
         const places = [];
         for(var row in rows) {
           places.push({
             name: rows[row][0],
             location: Position.positionFromLatLng(rows[row][1], rows[row][2]),
             address: rows[row][3],
-            origin: rows[row][4],
-            externalId: rows[row][5]
+            type: rows[row][4],
+            origin: rows[row][5],
+            externalId: rows[row][6]
           });
         }
         observer.next(places);
