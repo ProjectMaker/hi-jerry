@@ -80,9 +80,9 @@ export class AddPlacesComponent implements OnInit{
     marker.showInfoWindow();
   }
 
-  public onItemAdd(item:PlaceMap) {
-    this.placeStorage.insert(item.name, item.location.latitude, item.location.longitude);
-    (new SnackBar()).simple(`${item.name} added`);
+  public onItemAdd(place:PlaceMap) {
+    this.placeStorage.insert(place);
+    (new SnackBar()).simple(`${place.name} added`);
   }
 
   //Map events
