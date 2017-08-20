@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
+import { PlaceMap } from '../../shared/place/place';
 
 @Component({
   moduleId: module.id,
@@ -9,6 +10,7 @@ import { PlaceStorageService } from '../../shared/place/place-storage.service';
 })
 export class PlacesComponent implements OnInit {
   public places:Array<any> = [];
+  public isReady:boolean = false;
   constructor(private routerExtensions:RouterExtensions, private placeStorage:PlaceStorageService) {}
 
   public goToAddPlaces() {
@@ -22,6 +24,7 @@ export class PlacesComponent implements OnInit {
         this.placeStorage.fetch()
           .subscribe(
             (places) => {
+              this.isReady = true;
               this.places = places;
             }
           )
@@ -29,5 +32,10 @@ export class PlacesComponent implements OnInit {
       (err) => console.log(err),
       () => console.log('completed')
     );
+  }
+
+  public onRemove(place:PlaceMap) {
+    console.log('onRemove', place.id)
+    this.placeStorage.remove(place.id);
   }
 }
