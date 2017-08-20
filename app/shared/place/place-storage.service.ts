@@ -83,6 +83,7 @@ export class PlaceStorageService {
           });
         }
         observer.next(places);
+        observer.complete();
       }, error => {
         console.log("SELECT ERROR", error);
         observer.error(error);

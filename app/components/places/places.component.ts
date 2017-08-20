@@ -21,12 +21,14 @@ export class PlacesComponent implements OnInit {
     this.placeStorage.isReady()
       .subscribe(
       () => {
-        this.placeStorage.fetch()
+        const sub = this.placeStorage.fetch()
           .subscribe(
             (places) => {
               this.isReady = true;
               this.places = places;
-            }
+            },
+            (err) => console.log(err),
+            () => sub.unsubscribe()
           )
       },
       (err) => console.log(err),
