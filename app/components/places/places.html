@@ -1,6 +1,7 @@
 <ActionBar title="Mes places" class="action-bar">
 </ActionBar>
 <GridLayout rows="*,auto">
+  <!-- <Image src="data:image/png;base64,{{ imageSource1 }}" ></Image> -->
   <ActivityIndicator busy="true" visibility="{{ !isReady ? 'visible' : 'collapse'}}" row="0"></ActivityIndicator>
   <StackLayout orientation="vertical" row="0" visibility="{{ isReady ? 'visible' : 'collapse'}}">
     <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%">

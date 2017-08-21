@@ -3,7 +3,10 @@ import {Observable} from "rxjs/Observable";
 import 'rxjs/add/observable/of';
 import {Http, Headers, RequestOptions} from "@angular/http";
 import { Position } from 'nativescript-google-maps-sdk';
+import * as ApplicationSettings from "application-settings";
 import { PlaceMap } from './place';
+
+const http = require('http');
 
 @Injectable()
 export class PlaceSearchService {
@@ -15,6 +18,21 @@ export class PlaceSearchService {
     if (this.mock) return this.searchMock(position);
     else return this.searchGoogle(position);
   }
+
+  public saveImg(url?:string) {
+    url = url || 'https://via.placeholder.com/350x150';
+    const format = 'png';
+    if (!ApplicationSettings.hasKey('imgTest')) {
+      http.getImage(url).then((r) => {
+        console.log('base64 ok', r.toBase64String(format));
+        ApplicationSettings.setString('imgTest', r.toBase64String(format));
+        //this.imageSource1 = r.toBase64String(ApplicationSettings.getString('imgTest'));
+      });
+    } //else this.imageSource1 = ApplicationSettings.getString('imgTest')
+
+    console.log(ApplicationSettings.getString('imgTest'));
+  }
+
   private searchMock(position:Position) {
     if (this.mock) {
       const places = require('./place-search.mock.json');
