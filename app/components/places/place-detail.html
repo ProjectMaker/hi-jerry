@@ -1,3 +1,9 @@
 <GridLayout>
-  <Label text="YO"></Label>
+  <StackLayout [visibility]="isReady ? 'visible' : 'collapse'">
+    <Label text="Le bouillon belge"></Label>
+    <Label text="46 rue des Haies, Paris"></Label>
+  </StackLayout>
+  <ActivityIndicator
+    [busy]="!isReady"
+    ></ActivityIndicator>
 </GridLayout>
