@@ -34,6 +34,7 @@ export class AddPlacesComponent implements OnInit{
   firstPosition:boolean = true;
   centeredOnLocation:boolean = false;
   lastCamera: String;
+  iconAdd:string = String.fromCharCode(0xf055);
 
   constructor(private routerExtensions:RouterExtensions,
               private geolocation:GeolocationService,
