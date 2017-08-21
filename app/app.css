@@ -16,3 +16,11 @@ TextField {
 .medium-spacing {
     margin: 10;
 }
+
+.fa {
+    font-family: 'FontAwesome', 'fontawesome-webfont';
+}
+
+.fa-1 {
+    font-size: 24;
+}
