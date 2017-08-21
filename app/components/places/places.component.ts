@@ -11,6 +11,7 @@ import { PlaceMap } from '../../shared/place/place';
 export class PlacesComponent implements OnInit {
   public places:Array<any> = [];
   public isReady:boolean = false;
+  public iconRemove:string = String.fromCharCode(0xf056);
   constructor(private routerExtensions:RouterExtensions, private placeStorage:PlaceStorageService) {}
 
   public goToAddPlaces() {
