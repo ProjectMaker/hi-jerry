@@ -12,6 +12,9 @@ export class PlacesComponent implements OnInit {
   public places:Array<any> = [];
   public isReady:boolean = false;
   public iconRemove:string = String.fromCharCode(0xf056);
+  public iconList = String.fromCharCode(0xf2bb);
+  public iconMapMarker = String.fromCharCode(0xf041);
+
   constructor(private routerExtensions:RouterExtensions, private placeStorage:PlaceStorageService) {}
 
   public goToAddPlaces() {
