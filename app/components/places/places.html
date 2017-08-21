@@ -8,7 +8,7 @@
         <FlexboxLayout backgroundColor="#faebd7">
           <Image src="res://{{item.type}}" stretch="none" horizontalAlignment="center"></Image>
           <Label [text]="item.name" marginLeft="20px" flexGrow="1"></Label>
-          <Button text="remove" class="text-right" marginRight="20px" (tap)="onRemove(item)"></Button>
+          <Label text="{{ iconRemove }}" class="fa fa-1" color="#CB1D00" marginRight="10px" (tap)="onRemove(item)"></Label>
         </FlexboxLayout>
       </ng-template>
     </ListView>
