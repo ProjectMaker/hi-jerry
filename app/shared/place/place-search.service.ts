@@ -3,7 +3,12 @@ import {Observable} from "rxjs/Observable";
 import 'rxjs/add/observable/of';
 import {Http, Headers, RequestOptions} from "@angular/http";
 import { Position } from 'nativescript-google-maps-sdk';
+import * as ApplicationSettings from "application-settings";
+import { ImageSource } from "image-source";
 import { PlaceMap } from './place';
+
+const http = require('http');
+const key = 'AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4';
 
 @Injectable()
 export class PlaceSearchService {
@@ -15,6 +20,17 @@ export class PlaceSearchService {
     if (this.mock) return this.searchMock(position);
     else return this.searchGoogle(position);
   }
+
+  public getImgRef(ref:string):Observable<string> {
+    const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=${key}&photoreference=${ref}`;
+    return Observable.create(observer => {
+      http.getImage(url).then((image:ImageSource) => {
+        observer.next(image.toBase64String('jpeg'));
+        observer.complete();
+      })
+    });
+  }
+
   private searchMock(position:Position) {
     if (this.mock) {
       const places = require('./place-search.mock.json');
@@ -35,7 +51,6 @@ export class PlaceSearchService {
   }
 
   private callGoogleApi(position:Position, pageToken?:string) {
-    const key = 'AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4';
     let url:string;
     let nextPageToken:string;
     if (!pageToken) url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${key}&location=${position.latitude},${position.longitude}&radius=500`;
@@ -62,14 +77,14 @@ export class PlaceSearchService {
     return doc.results.filter(place => place.types.indexOf('bar') >= 0 || place.types.indexOf('restaurant') >= 0)
       .map((doc) => {
         const place:PlaceMap = {
-          id: null,
           location: Position.positionFromLatLng(doc.geometry.location.lat, doc.geometry.location.lng),
           name: doc.name,
           address: doc.vicinity,
           type: doc.types.indexOf('bar') >= 0 ? 'bar' : 'restaurant',
           origin: 'google',
           externalId: doc.id,
-        }
+          imageRefId: doc.photos ? doc.photos[0].photo_reference : '',
+        };
         return place;
       });
   }

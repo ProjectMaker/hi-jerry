@@ -6,6 +6,17 @@ const Sqlite = require("nativescript-sqlite");
 
 import { PlaceMap } from './place';
 
+const QUERY_CREATE_TABLE = "\
+  CREATE TABLE IF NOT EXISTS place ( \
+    id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, lat REAL, lng REAL, address TEXT, type TEXT, origin TEXT, \
+    externalId TEXT, imageRefId TEXT, imageRef BLOB \
+  )";
+
+const QUERY_INSERT = "\
+  INSERT INTO place (name, lat, lng, address, type, origin, externalId, imageRefId, imageRef) \
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) \
+";
+
 @Injectable()
 export class PlaceStorageService {
   private database:any;
@@ -14,7 +25,7 @@ export class PlaceStorageService {
 
   public constructor() {
     (new Sqlite("kl.jerry")).then(db => {
-      db.execSQL("CREATE TABLE IF NOT EXISTS place (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, lat REAL, lng REAL, address TEXT, type TEXT, origin TEXT, externalId TEXT)").then(id => {
+      db.execSQL(QUERY_CREATE_TABLE).then(id => {
         this.database = db;
         console.log('db create', this.database)
       }, error => {
@@ -45,8 +56,9 @@ export class PlaceStorageService {
   }
 
   public insert(place:PlaceMap) {
-    this.database.execSQL("INSERT INTO place (name, lat, lng, address, type, origin, externalId) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [place.name, place.location.latitude, place.location.longitude, place.address, place.type, place.origin, place.externalId]).then(id => {
+    this.database.execSQL(QUERY_INSERT,
+      [place.name, place.location.latitude, place.location.longitude, place.address, place.type, place.origin,
+        place.externalId, place.imageRefId, place.imageRef]).then(id => {
         console.log("INSERT RESULT", id);
         this.fetch();
       }, error => {
@@ -67,7 +79,7 @@ export class PlaceStorageService {
   }
 
   public fetch() {
-    this.database.all("SELECT id, name, lat, lng, address, type, origin, externalId FROM place").then(rows => {
+    this.database.all("SELECT id, name, lat, lng, address, type, origin, externalId, imageRefId, imageRef FROM place").then(rows => {
       const places = [];
       for(var row in rows) {
         places.push({
@@ -77,7 +89,9 @@ export class PlaceStorageService {
           address: rows[row][4],
           type: rows[row][5],
           origin: rows[row][6],
-          externalId: rows[row][7]
+          externalId: rows[row][7],
+          imageRefId: rows[row][8],
+          imageRef: rows[row][9]
         });
       }
       this.emitter.emit(places);

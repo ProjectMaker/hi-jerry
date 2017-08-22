@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
-import { PlaceMap } from '../../shared/place/place';
+import { PlaceMap, PlaceImgPlaceholder } from '../../shared/place/place';
+
 
 @Component({
   moduleId: module.id,
@@ -14,6 +15,7 @@ export class PlacesComponent implements OnInit {
   public iconRemove:string = String.fromCharCode(0xf056);
   public iconList = String.fromCharCode(0xf2bb);
   public iconMapMarker = String.fromCharCode(0xf041);
+  public imageSource1:string = PlaceImgPlaceholder;
 
   constructor(private routerExtensions:RouterExtensions, private placeStorage:PlaceStorageService) {}
 
