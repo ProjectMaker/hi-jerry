@@ -6,6 +6,9 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { UserService } from '../../shared/user/user.service';
 import { User } from '../../shared/user/user';
 
+
+import {LoadingIndicator} from "nativescript-loading-indicator";
+
 //import { SnackBar } from 'nativescript-snackbar';
 //import * as ApplicationSettings from 'application-settings';
 

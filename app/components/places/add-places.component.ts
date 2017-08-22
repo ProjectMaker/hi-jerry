@@ -7,6 +7,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { registerElement } from 'nativescript-angular/element-registry';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 import { SnackBar } from "nativescript-snackbar";
+import {LoadingIndicator} from "nativescript-loading-indicator";
 
 import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from '../../shared/place/place-search.service';
@@ -82,12 +83,21 @@ export class AddPlacesComponent implements OnInit{
   }
 
   public onItemAdd(place:PlaceMap) {
+    const loader = new LoadingIndicator();
+    loader.show({
+      message: 'process ...',
+      ios: {
+        color: '#FFFFFF',
+        backgroundColor: '#000000',
+      }
+    }); // options is optional
     this.placeSearch.getImgRef(place.imageRefId)
      .subscribe(
        (imageRef) => {
          place.imageRef = imageRef;
          this.placeStorage.insert(place);
-         (new SnackBar()).simple(`${place.name} added`);
+         //(new SnackBar()).simple(`${place.name} added`);
+         loader.hide();
        },
        (err) => console.log(err),
        () => console.log('complete')
