@@ -77,14 +77,14 @@ export class PlaceSearchService {
     return doc.results.filter(place => place.types.indexOf('bar') >= 0 || place.types.indexOf('restaurant') >= 0)
       .map((doc) => {
         const place:PlaceMap = {
-          id: null,
           location: Position.positionFromLatLng(doc.geometry.location.lat, doc.geometry.location.lng),
           name: doc.name,
           address: doc.vicinity,
           type: doc.types.indexOf('bar') >= 0 ? 'bar' : 'restaurant',
           origin: 'google',
           externalId: doc.id,
-        }
+          imageRefId: doc.photos ? doc.photos[0].photo_reference : '',
+        };
         return place;
       });
   }

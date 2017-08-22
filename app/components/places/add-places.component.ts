@@ -67,7 +67,7 @@ export class AddPlacesComponent implements OnInit{
   }
 
   public onItemNameTap(item:PlaceMap) {
-    console.log('onItemNameTap', item.externalId, item.origin);
+    console.log('onItemNameTap', item.externalId, item.origin, item.imageRefId);
     const marker = this.markers.find((marker) => {
       return item.externalId === marker.userData.externalId
         && item.origin === marker.userData.origin
@@ -82,8 +82,17 @@ export class AddPlacesComponent implements OnInit{
   }
 
   public onItemAdd(place:PlaceMap) {
-    this.placeStorage.insert(place);
-    (new SnackBar()).simple(`${place.name} added`);
+    this.placeSearch.getImgRef(place.imageRefId)
+     .subscribe(
+       (imageRef) => {
+         place.imageRef = imageRef;
+         this.placeStorage.insert(place);
+         (new SnackBar()).simple(`${place.name} added`);
+       },
+       (err) => console.log(err),
+       () => console.log('complete')
+     );
+
   }
 
   //Map events
@@ -168,7 +177,7 @@ export class AddPlacesComponent implements OnInit{
 
     marker.title = place.name;
     marker.snippet = place.address;
-    marker.userData = { type: place.type, externalId: place.externalId, origin: place.origin };
+    marker.userData = { type: place.type, externalId: place.externalId, origin: place.origin, imageRefId: place.imageRefId };
     const res = gpsMaker ? 'marker-home' : place.type === 'bar' ? 'bar' : 'restaurant';
     const icon = new Image();
     icon.imageSource = imageSource.fromResource(res);
