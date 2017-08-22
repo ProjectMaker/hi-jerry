@@ -1,0 +1,10 @@
+<GridLayout>
+  <StackLayout [visibility]="isReady ? 'visible' : 'collapse'">
+    <Label [text]="place.name"></Label>
+    <Label [text]="place.address"></Label>
+    <Image src="data:image/png;base64,{{ place.imageRef }}" ></Image>
+  </StackLayout>
+  <ActivityIndicator
+    [busy]="!isReady"
+    ></ActivityIndicator>
+</GridLayout>
