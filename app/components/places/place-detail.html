@@ -1,7 +1,8 @@
 <GridLayout>
   <StackLayout [visibility]="isReady ? 'visible' : 'collapse'">
-    <Label text="Le bouillon belge"></Label>
-    <Label text="46 rue des Haies, Paris"></Label>
+    <Label [text]="place.name"></Label>
+    <Label [text]="place.address"></Label>
+    <Image src="data:image/png;base64,{{ place.imageRef }}" ></Image>
   </StackLayout>
   <ActivityIndicator
     [busy]="!isReady"
