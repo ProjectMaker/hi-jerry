@@ -4,9 +4,11 @@ import 'rxjs/add/observable/of';
 import {Http, Headers, RequestOptions} from "@angular/http";
 import { Position } from 'nativescript-google-maps-sdk';
 import * as ApplicationSettings from "application-settings";
+import { ImageSource } from "image-source";
 import { PlaceMap } from './place';
 
 const http = require('http');
+const key = 'AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4';
 
 @Injectable()
 export class PlaceSearchService {
@@ -19,18 +21,14 @@ export class PlaceSearchService {
     else return this.searchGoogle(position);
   }
 
-  public saveImg(url?:string) {
-    url = url || 'https://via.placeholder.com/350x150';
-    const format = 'png';
-    if (!ApplicationSettings.hasKey('imgTest')) {
-      http.getImage(url).then((r) => {
-        console.log('base64 ok', r.toBase64String(format));
-        ApplicationSettings.setString('imgTest', r.toBase64String(format));
-        //this.imageSource1 = r.toBase64String(ApplicationSettings.getString('imgTest'));
-      });
-    } //else this.imageSource1 = ApplicationSettings.getString('imgTest')
-
-    console.log(ApplicationSettings.getString('imgTest'));
+  public getImgRef(ref:string):Observable<string> {
+    const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=${key}&photoreference=${ref}`;
+    return Observable.create(observer => {
+      http.getImage(url).then((image:ImageSource) => {
+        observer.next(image.toBase64String('jpeg'));
+        observer.complete();
+      })
+    });
   }
 
   private searchMock(position:Position) {
@@ -53,7 +51,6 @@ export class PlaceSearchService {
   }
 
   private callGoogleApi(position:Position, pageToken?:string) {
-    const key = 'AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4';
     let url:string;
     let nextPageToken:string;
     if (!pageToken) url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${key}&location=${position.latitude},${position.longitude}&radius=500`;
