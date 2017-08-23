@@ -161,7 +161,7 @@ export class AddPlacesComponent implements OnInit{
     if (this.mapView && position && !this.centeredOnLocation) {
       this.mapView.latitude = position.latitude;
       this.mapView.longitude = position.longitude;
-      this.mapView.zoom = 14;
+      this.mapView.zoom = 14.9;
       this.centeredOnLocation = true;
     }
 
@@ -217,7 +217,7 @@ export class AddPlacesComponent implements OnInit{
   }
 
   onCameraChanged(args) {
-    //console.log("Camera changed: " + JSON.stringify(args.camera), JSON.stringify(args.camera) === this.lastCamera);
+    console.log("Camera changed: " + JSON.stringify(args.camera), JSON.stringify(args.camera) === this.lastCamera);
     this.lastCamera = JSON.stringify(args.camera);
   }
 }
