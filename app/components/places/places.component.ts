@@ -3,6 +3,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
 import { PlaceMap, PlaceImgPlaceholder } from '../../shared/place/place';
 
+const dialogs = require("ui/dialogs");
 
 @Component({
   moduleId: module.id,
@@ -40,6 +41,8 @@ export class PlacesComponent implements OnInit {
   }
 
   public onRemove(place:PlaceMap) {
-    this.placeStorage.remove(place.id);
+    dialogs.confirm(`Remove ${place.name}`).then((result) => {
+      if (result === true) this.placeStorage.remove(place.id);
+    });
   }
 }
