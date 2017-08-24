@@ -14,6 +14,8 @@ import { PlaceStorageService } from './shared/place/place-storage.service';
 import { AppComponent } from "./app.component";
 import { placePipes } from './components/places/place-context.pipe';
 
+import { DropDownModule } from "nativescript-drop-down/angular";
+
 declare var GMSServices: any;
 import * as platform from "platform";
 if (platform.isIOS) {
@@ -39,7 +41,8 @@ if (platform.isIOS) {
     NativeScriptRouterModule,
     NativeScriptRouterModule.forRoot(routes),
     TNSCheckBoxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DropDownModule
   ],
   providers: [
     UserService,

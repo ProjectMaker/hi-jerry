@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {Image} from 'ui/image';
 const imageSource = require("image-source");
 
@@ -6,7 +6,7 @@ import * as ImageModule from "tns-core-modules/ui/image";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { registerElement } from 'nativescript-angular/element-registry';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
-import { SnackBar } from "nativescript-snackbar";
+import { DropDown, SelectedIndexChangedEventData, ValueList } from "nativescript-drop-down";
 import {LoadingIndicator} from "nativescript-loading-indicator";
 
 import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
@@ -36,7 +36,11 @@ export class AddPlacesComponent implements OnInit{
   centeredOnLocation:boolean = false;
   lastCamera: String;
   iconAdd:string = String.fromCharCode(0xf055);
+  public iconCircleDown:string = String.fromCharCode(0xf107);
+  public selectedIndex = 0;
+  public items:ValueList<string> = new ValueList({value: 'bar', display: 'Bar'},{value: 'restaurant', display: 'Restaurant'});
 
+  @ViewChild("dd") dd: ElementRef;
   constructor(private routerExtensions:RouterExtensions,
               private geolocation:GeolocationService,
               private placeSearch:PlaceSearchService,
@@ -50,7 +54,7 @@ export class AddPlacesComponent implements OnInit{
 
   public ngOnInit() {
     this.geolocation.start();
-    /*
+
     this.geolocation.isReady()
       .subscribe(
         () => {
@@ -69,12 +73,6 @@ export class AddPlacesComponent implements OnInit{
             );
         }
       );
-    */
-  }
-
-  protected getIcon(place:PlaceMap) {
-    console.log('getIcon');
-    return getMarkerIcon(place.type)
   }
 
   private switchMarker(marker:Marker) {
@@ -246,5 +244,13 @@ export class AddPlacesComponent implements OnInit{
   onCameraChanged(args) {
     console.log("Camera changed: " + JSON.stringify(args.camera), JSON.stringify(args.camera) === this.lastCamera);
     this.lastCamera = JSON.stringify(args.camera);
+  }
+
+  public onchange(args: SelectedIndexChangedEventData) {
+    //const dd = page.getViewById<DropDown>("dd");
+    const elt = <DropDown>this.dd.nativeElement;
+    console.log(this.items.getValue(args.newIndex))
+    elt.close();
+    console.log(`Drop Down selected index changed from ${args.oldIndex} to ${args.newIndex}`);
   }
 }
