@@ -3,12 +3,12 @@
     <Label text="La ferme" class="place-name"></Label>
     <Label text="Levallois Perret"></Label>
   </StackLayout>
-  <StackLayout orientation="horizontal" row="1" marginTop="20">
-    <Label text="{{ iconStar }}" class="fa fa-1 place-star" (tap)="onRemove(item)"></Label>
-    <Label text="{{ iconStar }}" class="fa fa-1 place-star" (tap)="onRemove(item)"></Label>
-    <Label text="{{ iconStar }}" class="fa fa-1 place-star" (tap)="onRemove(item)"></Label>
-    <Label text="{{ iconStar }}" class="fa fa-1 place-star" (tap)="onRemove(item)"></Label>
-    <Label text="{{ iconStar }}" class="fa fa-1 place-star" (tap)="onRemove(item)"></Label>
+  <StackLayout orientation="horizontal" row="1" class="place-star-container">
+    <Label *ngFor="let star of [1,2,3,4,5]"
+           text="{{ iconStar }}"
+           class="fa fa-1 place-star"
+           [class.place-star-selected]="note >= star"
+           (tap)="onTapStar(star)"></Label>
   </StackLayout>
   <StackLayout row="2" class="place-context-container">
     <CheckBox text="En famille" checked="false"></CheckBox>

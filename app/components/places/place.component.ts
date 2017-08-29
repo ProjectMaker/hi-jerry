@@ -8,6 +8,11 @@ import { Component, OnInit } from "@angular/core";
 })
 export class PlaceComponent implements OnInit{
   public iconStar:string = String.fromCharCode(0xf005);
+  public note:number = 0;
 
   public ngOnInit() { }
+
+  public onTapStar(note:number) {
+    this.note = note;
+  }
 }

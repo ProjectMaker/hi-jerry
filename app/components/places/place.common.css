@@ -2,8 +2,16 @@
     font-weight: bold;
 }
 
+.place-star-container {
+    margin-top: 20;
+}
+
 .place-container .place-star {
     margin-right: 10;
+}
+
+.place-container .place-star-selected {
+    color: #b58900;
 }
 
 .place-context-container {
