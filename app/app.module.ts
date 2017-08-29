@@ -3,9 +3,9 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpModule } from "nativescript-angular";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
+import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
 
 import { routes, navigatableComponents } from "./app.routing";
-
 import { UserService } from './shared/user/user.service';
 import { GeolocationService } from './shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from './shared/place/place-search.service';
@@ -28,6 +28,7 @@ if (platform.isIOS) { GMSServices.provideAPIKey("AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdP
     NativeScriptHttpModule,
     NativeScriptRouterModule,
     NativeScriptRouterModule.forRoot(routes),
+    TNSCheckBoxModule
   ],
   providers: [
     UserService,

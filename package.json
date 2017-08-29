@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~4.1.0",
     "@angular/router": "~4.1.0",
     "nativescript-angular": "~3.1.0",
+    "nativescript-checkbox": "2.1.11",
     "nativescript-geolocation": "3.0.0",
     "nativescript-google-maps-sdk": "2.3.2",
     "nativescript-loading-indicator": "2.3.2",

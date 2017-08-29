@@ -1,0 +1,25 @@
+<GridLayout paddingLeft="10" paddingTop="10" class="place-container" rows="auto,auto,auto,auto,auto">
+  <StackLayout row="0">
+    <Label text="La ferme" class="place-name"></Label>
+    <Label text="Levallois Perret"></Label>
+  </StackLayout>
+  <StackLayout orientation="horizontal" row="1" marginTop="20">
+    <Label text="{{ iconStar }}" class="fa fa-1 place-star" (tap)="onRemove(item)"></Label>
+    <Label text="{{ iconStar }}" class="fa fa-1 place-star" (tap)="onRemove(item)"></Label>
+    <Label text="{{ iconStar }}" class="fa fa-1 place-star" (tap)="onRemove(item)"></Label>
+    <Label text="{{ iconStar }}" class="fa fa-1 place-star" (tap)="onRemove(item)"></Label>
+    <Label text="{{ iconStar }}" class="fa fa-1 place-star" (tap)="onRemove(item)"></Label>
+  </StackLayout>
+  <StackLayout row="2" class="place-context-container">
+    <CheckBox text="En famille" checked="false"></CheckBox>
+    <CheckBox text="En couple" checked="false"></CheckBox>
+    <CheckBox text="Entre amis" checked="false"></CheckBox>
+    <CheckBox text="Pour faire des rencontres" checked="false"></CheckBox>
+  </StackLayout>
+  <StackLayout row="3" class="place-comments-container">
+    <TextView hint="Laisser un commentaire"></TextView>
+  </StackLayout>
+  <StackLayout row="4" class="place-submit-container">
+    <Button text="Ajouter"></Button>
+  </StackLayout>
+</GridLayout>
