@@ -11,6 +11,7 @@ import { GeolocationService } from './shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from './shared/place/place-search.service';
 import { PlaceStorageService } from './shared/place/place-storage.service';
 import { AppComponent } from "./app.component";
+import { PlaceContextCheckedPipe } from './components/places/place-context.pipe';
 
 declare var GMSServices: any;
 import * as platform from "platform";
@@ -19,6 +20,7 @@ if (platform.isIOS) { GMSServices.provideAPIKey("AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdP
 @NgModule({
   declarations: [
     AppComponent,
+    PlaceContextCheckedPipe,
     ...navigatableComponents
   ],
   bootstrap: [AppComponent],

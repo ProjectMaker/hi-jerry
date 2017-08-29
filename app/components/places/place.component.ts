@@ -25,8 +25,4 @@ export class PlaceComponent implements OnInit{
   public onTapContext(context:any) {
     if (this.place.contexts.indexOf(context.value) === -1) this.place.contexts.push(context.value);
   }
-
-  public isChecked(context:any) {
-    return this.place.contexts.indexOf(context.value) !== -1;
-  }
 }
