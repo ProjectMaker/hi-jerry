@@ -7,14 +7,13 @@
     <Label *ngFor="let star of [1,2,3,4,5]"
            text="{{ iconStar }}"
            class="fa fa-1 place-star"
-           [class.place-star-selected]="note >= star"
+           [class.place-star-selected]="place.note >= star"
            (tap)="onTapStar(star)"></Label>
   </StackLayout>
   <StackLayout row="2" class="place-context-container">
-    <CheckBox text="En famille" checked="false"></CheckBox>
-    <CheckBox text="En couple" checked="false"></CheckBox>
-    <CheckBox text="Entre amis" checked="false"></CheckBox>
-    <CheckBox text="Pour faire des rencontres" checked="false"></CheckBox>
+    <CheckBox *ngFor="let context of contextValues"
+              [text]="context.label" [checked]="isChecked(context)"
+              (checkedChange)="onTapContext(context)"></CheckBox>
   </StackLayout>
   <StackLayout row="3" class="place-comments-container">
     <TextView hint="Laisser un commentaire"></TextView>
