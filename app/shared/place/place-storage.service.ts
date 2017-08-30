@@ -43,7 +43,7 @@ export class PlaceStorageService {
     });
   }
 
-  public isReady() {
+  public isReady():Observable<boolean> {
     if (this.database) return Observable.of(true);
     else {
       return Observable.create(observer => {
@@ -61,9 +61,7 @@ export class PlaceStorageService {
   }
 
   public update(place:PlaceMap) {
-    console.log('PlaceStorage update', QUERY_UPDATE);
     return Observable.create(observer => {
-      console.log('UPDATE', QUERY_UPDATE);
       this.database.execSQL(QUERY_UPDATE, [
         place.note, place.comment, place.contexts.join(','), place.id
       ]).then(id => {
