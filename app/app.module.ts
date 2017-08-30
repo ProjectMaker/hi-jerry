@@ -3,6 +3,7 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpModule } from "nativescript-angular";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
+import { ReactiveFormsModule } from '@angular/forms';
 import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
 
 import { routes, navigatableComponents } from "./app.routing";
@@ -30,7 +31,8 @@ if (platform.isIOS) { GMSServices.provideAPIKey("AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdP
     NativeScriptHttpModule,
     NativeScriptRouterModule,
     NativeScriptRouterModule.forRoot(routes),
-    TNSCheckBoxModule
+    TNSCheckBoxModule,
+    ReactiveFormsModule
   ],
   providers: [
     UserService,

@@ -17,6 +17,9 @@ export interface PlaceMap {
   type:string;
   origin:string;
   externalId:string;
+  note?:number;
+  comment?:string;
+  contexts?:Array<string>;
   imageRefId?:string;
   imageRef?:string;
 }
