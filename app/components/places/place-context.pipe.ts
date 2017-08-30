@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from "@angular/core";
   name: 'placeContextChecked'
 })
 export class PlaceContextCheckedPipe implements PipeTransform {
-  public transform(context:any, place:any) {
+  public transform(place:any, context:any) {
     return place && place.contexts.indexOf(context.value) !== -1;
   }
 }
