@@ -18,20 +18,19 @@ export class PlaceComponent implements OnInit{
   public iconStar:string = String.fromCharCode(0xf005);
   public note:number = 0;
   public contextValues:Array<any> = CONTEXT_VALUES;
-  public place:Observable<Place>;
+  public place:Place;
 
   public ngOnInit() {
-    this.place = Observable.of({
+    Observable.of({
       note: 1, contexts: ['family']
-    });
+    }).subscribe(v => this.place = v);
   }
 
   public onTapStar(note:number) {
-    //(<Place>this.place).note = note;
+    this.place.note = note;
   }
 
   public onTapContext(context:any) {
-    //const contexts = (<Place>this.place).contexts;
-    //if (contexts.indexOf(context.value) === -1) contexts.push(context.value);
+    if (this.place.contexts.indexOf(context.value) === -1) this.place.contexts.push(context.value);
   }
 }

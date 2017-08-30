@@ -7,12 +7,12 @@
     <Label *ngFor="let star of [1,2,3,4,5]"
            text="{{ iconStar }}"
            class="fa fa-1 place-star"
-           [class.place-star-selected]="(place | async)?.note >= star"
+           [class.place-star-selected]="(place)?.note >= star"
            (tap)="onTapStar(star)"></Label>
   </StackLayout>
   <StackLayout row="2" class="place-context-container">
     <CheckBox *ngFor="let context of contextValues"
-              [text]="context.label" [checked]="place | async | placeContextChecked:context"
+              [text]="context.label" [checked]="(place)?.contexts | placeContextChecked:context"
               (checkedChange)="onTapContext(context)"></CheckBox>
   </StackLayout>
   <StackLayout row="3" class="place-comments-container">
