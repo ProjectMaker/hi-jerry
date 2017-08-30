@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Position } from 'nativescript-google-maps-sdk';
 import {Observable} from "rxjs/Observable";
 
@@ -21,7 +22,7 @@ export class PlaceComponent implements OnInit{
   public contextsCtrl:AbstractControl;
   public place:PlaceMap;
 
-  public constructor(private placeStorage:PlaceStorageService, private fb:FormBuilder) {
+  public constructor(private placeStorage:PlaceStorageService, private fb:FormBuilder, private route:ActivatedRoute) {
 
   }
 
@@ -34,12 +35,31 @@ export class PlaceComponent implements OnInit{
     this.noteCtrl = this.placeForm.controls['note'];
     this.contextsCtrl = this.placeForm.controls['contexts'];
 
-    Observable.of({
-      name: 'La ferme', address: 'Levallois Perret',
-      location: Position.positionFromLatLng(0,0),
-      type: '', origin: '', externalId: '',
-      note: 0, contexts: [], comment: '',
-    }).subscribe(v => this.place = v);
+    const params = this.route.snapshot.queryParamMap;
+    if (params.get('id')) {
+      this.placeStorage.isReady()
+        .subscribe(
+          () => {
+            this.placeStorage.emitter.subscribe(
+              (places) => {
+                this.place = places.find(place => place.id === parseInt(params.get('id')));
+                this.noteCtrl.setValue(this.place.note);
+                this.contextsCtrl.setValue(this.place.contexts.join(','));
+                console.log(JSON.stringify(this.place));
+              },
+              (err) => console.log(err)
+            );
+            this.placeStorage.fetch();
+          }
+        );
+    } else {
+      this.place = {
+        name: params.get('name'), address: params.get('address'),
+        location: Position.positionFromLatLng(parseInt(params.get('latitude')),parseInt(params.get('longitude'))),
+        type: params.get('type'), origin: params.get('origin'), externalId: params.get('externalId'),
+        note: 0, contexts: [], comment: '',
+      };
+    }
   }
 
   public onTapStar(note:number) {
@@ -49,8 +69,8 @@ export class PlaceComponent implements OnInit{
   }
 
   public onTapContext(event:any, context:any) {
-    const checkboxElt = event.object;
-    if (checkboxElt.checked) {
+    if (!this.place) return false;
+    if (event.object.checked) {
       if (this.place.contexts.indexOf(context.value) === -1) this.place.contexts.push(context.value);
     } else {
       this.place.contexts = this.place.contexts.filter(value => value !== context.value);
@@ -61,6 +81,8 @@ export class PlaceComponent implements OnInit{
 
   public onSubmit() {
     if (this.placeForm.valid) {
+      this.place.comment = this.placeForm.controls['comment'].value;
+      console.log('onSubmit', JSON.stringify(this.place));
       if (!this.place.id) this.placeStorage.insert(this.place).subscribe(id => this.place.id = id);
       else {
         this.placeStorage.update(this.place);
