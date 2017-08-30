@@ -1,8 +1,8 @@
 <GridLayout paddingLeft="10" paddingTop="10" class="place-container" rows="auto,auto,auto,auto,auto">
   <StackLayout [formGroup]="placeForm">
     <StackLayout row="0">
-      <Label text="La ferme" class="place-name"></Label>
-      <Label text="Levallois Perret"></Label>
+      <Label [text]="place.name" class="place-name"></Label>
+      <Label [text]="place.address"></Label>
     </StackLayout>
     <StackLayout orientation="horizontal" row="1" class="place-star-container">
       <Label *ngFor="let star of [1,2,3,4,5]"
@@ -20,7 +20,7 @@
       <TextView hint="Laisser un commentaire" formControlName="comment"></TextView>
     </StackLayout>
     <StackLayout row="4" class="place-submit-container">
-      <Button text="Ajouter" (tap)="onSubmit()" [isEnabled]="true" [class]="placeForm.invalid ? 'disabled' : ''"></Button>
+      <Button [text]="place.id ? 'Modifier' : 'Ajouter'" (tap)="onSubmit()" [isEnabled]="true" [class]="placeForm.invalid ? 'disabled' : ''"></Button>
     </StackLayout>
   </StackLayout>
 </GridLayout>

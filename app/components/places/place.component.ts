@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Position } from 'nativescript-google-maps-sdk';
 import {Observable} from "rxjs/Observable";
 
-import { CONTEXT_VALUES } from '../../shared/place/place';
+import { PlaceMap, CONTEXT_VALUES } from '../../shared/place/place';
+import { PlaceStorageService } from '../../shared/place/place-storage.service';
 
 @Component({
   moduleId: module.id,
@@ -17,9 +19,9 @@ export class PlaceComponent implements OnInit{
   public placeForm:FormGroup;
   public noteCtrl:AbstractControl;
   public contextsCtrl:AbstractControl;
-  public place:any;
+  public place:PlaceMap;
 
-  public constructor(private fb:FormBuilder) {
+  public constructor(private placeStorage:PlaceStorageService, private fb:FormBuilder) {
 
   }
 
@@ -33,13 +35,16 @@ export class PlaceComponent implements OnInit{
     this.contextsCtrl = this.placeForm.controls['contexts'];
 
     Observable.of({
-      note: 0, contexts: []
+      name: 'La ferme', address: 'Levallois Perret',
+      location: Position.positionFromLatLng(0,0),
+      type: '', origin: '', externalId: '',
+      note: 0, contexts: [], comment: '',
     }).subscribe(v => this.place = v);
   }
 
   public onTapStar(note:number) {
     if (this.place.note !== note) this.place.note = note;
-    else this.place.note = '';
+    else this.place.note = 0;
     this.noteCtrl.setValue(this.place.note);
   }
 
@@ -55,7 +60,11 @@ export class PlaceComponent implements OnInit{
   }
 
   public onSubmit() {
-    console.log(this.placeForm.invalid);
-    console.log(this.placeForm.valid);
+    if (this.placeForm.valid) {
+      if (!this.place.id) this.placeStorage.insert(this.place).subscribe(id => this.place.id = id);
+      else {
+        this.placeStorage.update(this.place);
+      }
+    }
   }
 }

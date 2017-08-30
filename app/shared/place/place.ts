@@ -10,7 +10,7 @@ export class Place {
 }
 
 export interface PlaceMap {
-  id?:string,
+  id?:number,
   location:Position;
   name:string;
   address:string;
