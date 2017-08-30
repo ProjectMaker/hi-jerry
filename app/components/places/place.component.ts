@@ -27,7 +27,8 @@ export class PlaceComponent implements OnInit{
   }
 
   public onTapStar(note:number) {
-    this.place.note = note;
+    if (this.place.note !== note) this.place.note = note;
+    else this.place.note = 0;
   }
 
   public onTapContext(context:any) {
