@@ -3,9 +3,9 @@
     <Label text="Pin places" col="0" horizontalAlignment="center"></Label>
     <StackLayout orientation="horizontal" col="1" paddingRight="10">
       <Label text="{{iconCircleDown}}" class="fa fa-1" marginRight="5"></Label>
-      <DropDown #dd [(ngModel)]="selectedIndex" class="drop-down"
+      <DropDown #filterType [(ngModel)]="selectedIndex" class="drop-down"
                 (selectedIndexChanged)="onChangeType($event)"
-                [items]="items" accessoryViewVisible="false">
+                [items]="filterTypeItems" accessoryViewVisible="false">
         row="0">
       </DropDown>
     </StackLayout>

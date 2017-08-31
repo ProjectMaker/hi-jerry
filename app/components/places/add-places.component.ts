@@ -38,7 +38,7 @@ export class AddPlacesComponent implements OnInit{
   iconAdd:string = String.fromCharCode(0xf055);
   public iconCircleDown:string = String.fromCharCode(0xf107);
   public selectedIndex = 0;
-  public items:ValueList<string> = new ValueList(
+  public filterTypeItems:ValueList<string> = new ValueList(
     { value: 'all', display: 'Tout' },
     { value: 'bar', display: 'Bar' },
     { value: 'lodging', display: 'Hotel' },
@@ -46,7 +46,7 @@ export class AddPlacesComponent implements OnInit{
     { value: 'other', display: 'Autres' } );
   private _places:Array<PlaceMap> = [];
 
-  @ViewChild("dd") dd: ElementRef;
+  @ViewChild("filterType") filterTypeElt: ElementRef;
   constructor(private routerExtensions:RouterExtensions,
               private geolocation:GeolocationService,
               private placeSearch:PlaceSearchService,
@@ -256,13 +256,13 @@ export class AddPlacesComponent implements OnInit{
   }
 
   protected onChangeType(args: SelectedIndexChangedEventData) {
-    const elt = <DropDown>this.dd.nativeElement;
-    const type = this.items.getValue(args.newIndex);
+    const filterElt = <DropDown>this.filterTypeElt.nativeElement;
+    const type = this.filterTypeItems.getValue(args.newIndex);
     if (type === 'all') this.places = this._places.slice();
     else this.places = this._places.filter(place => place.type === type);
     this.markers.forEach(marker => this.removeMarker(marker));
     this.markers = [];
     this.places.forEach(place => this.addMarker(place));
-    elt.close();
+    filterElt.close();
   }
 }
