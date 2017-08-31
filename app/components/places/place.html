@@ -1,8 +1,8 @@
 <StackLayout verticalAlignment="center">
   <ActivityIndicator [busy]="!isReady" visibility="{{ !isReady ? 'visible' : 'collapse'}}"></ActivityIndicator>
-  <ScrollView orientation="vertical" #scrollLayout  visibility="{{ isReady ? 'visible' : 'collapse'}}">
+  <ScrollView orientation="vertical" visibility="{{ isReady ? 'visible' : 'collapse'}}">
     <GridLayout paddingLeft="10" paddingTop="10" class="place-container"
-                rows="auto,auto,auto,auto,auto" #formLayout>
+                rows="auto,auto,auto,auto,auto">
       <StackLayout [formGroup]="placeForm">
         <StackLayout row="0">
           <Label [text]="(place)?.name" class="place-name"></Label>
@@ -20,7 +20,7 @@
                     [text]="context.label" [checked]="(place)?.contexts | placeContextChecked:context"
                     (checkedChange)="onChangeContext($event, context)"></CheckBox>
         </StackLayout>
-        <StackLayout row="3" class="place-comments-container" #commentLayout>
+        <StackLayout row="3" class="place-comments-container">
           <TextField class="toto" hint="Laisser un commentaire" formControlName="comment" [text]="(place)?.comment" returnKeyType="done"></TextField>
         </StackLayout>
         <StackLayout row="4" class="place-submit-container">
