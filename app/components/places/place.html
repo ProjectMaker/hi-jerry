@@ -20,7 +20,7 @@
                     (checkedChange)="onChangeContext($event, context)"></CheckBox>
         </StackLayout>
         <StackLayout row="3" class="place-comments-container">
-          <TextField class="toto" hint="Laisser un commentaire" formControlName="comment" [text]="(place)?.comment" returnKeyType="done"></TextField>
+          <TextView hint="Laisser un commentaire" formControlName="comment" [text]="(place)?.comment" returnKeyType="done"></TextView>
         </StackLayout>
         <StackLayout row="4" class="place-submit-container">
           <Button [text]="(place)?.id ? 'Modifier' : 'Ajouter'" (tap)="onSubmit()" [isEnabled]="true" [class]="placeForm.invalid ? 'disabled' : ''"></Button>
