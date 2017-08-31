@@ -12,7 +12,7 @@ import {LoadingIndicator} from "nativescript-loading-indicator";
 import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from '../../shared/place/place-search.service';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
-import { PlaceMap } from '../../shared/place/place';
+import { PlaceMap, getMarkerIcon } from '../../shared/place/place';
 const style = require('./map-style.json');
 
 registerElement('MapView', () => MapView);
@@ -50,13 +50,39 @@ export class AddPlacesComponent implements OnInit{
 
   public ngOnInit() {
     this.geolocation.start();
+    /*
+    this.geolocation.isReady()
+      .subscribe(
+        () => {
+          this.locationReceived(this.geolocation.position);
+          this.placeSearch.search(this.geolocation.position)
+            .subscribe(
+              (places) => {
+                places.filter(place => !(marker => marker.userData.origin === place.origin && marker.userData.externalId == place.externalId))
+                places.forEach((place) => {
+                  this.markers.push(this.addMarker(place));
+                  this.places.push(place);
+                });
+              },
+              (err) => console.log(err),
+              () => console.log('complete')
+            );
+        }
+      );
+    */
+  }
+
+  protected getIcon(place:PlaceMap) {
+    console.log('getIcon');
+    return getMarkerIcon(place.type)
   }
 
   private switchMarker(marker:Marker) {
     let image;
     if (this.markerSelected) {
       image = new Image();
-      image.imageSource = imageSource.fromResource(!this.markerSelected.userData.type ? 'marker-home' : this.markerSelected.userData.type === 'bar' ? 'bar' : 'restaurant');
+      getMarkerIcon(this.markerSelected.userData.type)
+      image.imageSource = imageSource.fromResource(getMarkerIcon(this.markerSelected.userData.type));
       this.markerSelected.icon = image;
     }
     this.markerSelected = marker;
@@ -117,17 +143,17 @@ export class AddPlacesComponent implements OnInit{
         () => {
           this.locationReceived(this.geolocation.position);
           this.placeSearch.search(this.geolocation.position)
-           .subscribe(
-             (places) => {
-               places.forEach((place) => {
-                 if (this.markers.find(marker => marker.userData.origin === place.origin && marker.userData.externalId == place.externalId)) return false;
-                 this.markers.push(this.addMarker(place));
-                 this.places.push(place);
-               });
-             },
-             (err) => console.log(err),
-             () => console.log('complete')
-           );
+            .subscribe(
+              (places) => {
+                places.filter(place => !(marker => marker.userData.origin === place.origin && marker.userData.externalId == place.externalId))
+                places.forEach((place) => {
+                  this.markers.push(this.addMarker(place));
+                  this.places.push(place);
+                });
+              },
+              (err) => console.log(err),
+              () => console.log('complete')
+            );
         }
       );
     /*
@@ -173,7 +199,7 @@ export class AddPlacesComponent implements OnInit{
       location: position,
       name: 'Home',
       address: '',
-      type: '',
+      type: 'home',
       origin: null,
       externalId: null
     }, true);
@@ -189,7 +215,7 @@ export class AddPlacesComponent implements OnInit{
     marker.title = place.name;
     marker.snippet = place.address;
     marker.userData = { type: place.type, externalId: place.externalId, origin: place.origin, imageRefId: place.imageRefId };
-    const res = gpsMaker ? 'marker-home' : place.type === 'bar' ? 'bar' : 'restaurant';
+    const res = getMarkerIcon(place.type);
     const icon = new Image();
     icon.imageSource = imageSource.fromResource(res);
     marker.icon = icon;
