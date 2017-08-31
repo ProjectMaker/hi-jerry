@@ -22,13 +22,10 @@ export class PlaceComponent implements OnInit{
   public contextsCtrl:AbstractControl;
   public place:PlaceMap;
 
-  public constructor(private placeStorage:PlaceStorageService, private fb:FormBuilder, private route:ActivatedRoute) {
-
-  }
+  public constructor(private placeStorage:PlaceStorageService, private fb:FormBuilder, private route:ActivatedRoute) { }
 
 
   public ngOnInit() {
-
     this.placeForm = this.fb.group({
       comment: this.fb.control('', [Validators.required]),
       note: this.fb.control('', [Validators.required, Validators.pattern(/[1-5]{1}/)]),
@@ -37,13 +34,6 @@ export class PlaceComponent implements OnInit{
     this.noteCtrl = this.placeForm.controls['note'];
     this.contextsCtrl = this.placeForm.controls['contexts'];
 
-    this.place = {
-      name: 'YO', address: 'Paris',
-      location: Position.positionFromLatLng(0,0),
-      type: '', origin: '', externalId: '',
-      note: 0, contexts: [], comment: '',
-    };
-    /*
     const params = this.route.snapshot.queryParamMap;
     if (params.get('id')) {
       this.placeStorage.isReady()
@@ -69,7 +59,6 @@ export class PlaceComponent implements OnInit{
         note: 0, contexts: [], comment: '',
       };
     }
-    */
   }
 
   public onChangeStar(note:number) {
@@ -92,7 +81,6 @@ export class PlaceComponent implements OnInit{
   public onSubmit() {
     if (this.placeForm.valid) {
       this.place.comment = this.placeForm.controls['comment'].value;
-      console.log('onSubmit', JSON.stringify(this.place));
       if (!this.place.id) this.placeStorage.insert(this.place).subscribe(id => this.place.id = id);
       else {
         this.placeStorage.update(this.place);
