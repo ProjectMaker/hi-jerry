@@ -16,7 +16,14 @@ import { PlaceContextCheckedPipe } from './components/places/place-context.pipe'
 
 declare var GMSServices: any;
 import * as platform from "platform";
-if (platform.isIOS) { GMSServices.provideAPIKey("AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4"); }
+if (platform.isIOS) {
+  GMSServices.provideAPIKey("AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4");
+  const iqKeyboard: IQKeyboardManager = IQKeyboardManager.sharedManager();
+  iqKeyboard.overrideKeyboardAppearance = true;
+  iqKeyboard.keyboardAppearance = UIKeyboardAppearance.Dark;
+  iqKeyboard.shouldResignOnTouchOutside = true;
+  iqKeyboard.shouldShowTextFieldPlaceholder = true;
+}
 
 @NgModule({
   declarations: [

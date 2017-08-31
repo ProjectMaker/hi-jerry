@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Position } from 'nativescript-google-maps-sdk';
 import {Observable} from "rxjs/Observable";
+import { StackLayout } from "ui/layouts/stack-layout";
 
 import { PlaceMap, CONTEXT_VALUES } from '../../shared/place/place';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
@@ -11,11 +12,10 @@ import { PlaceStorageService } from '../../shared/place/place-storage.service';
   moduleId: module.id,
   selector: 'kl-place',
   templateUrl: 'place.html',
-  styleUrls: ["./place.common.css"],
+  styleUrls: ["./place.common.css", "./place.component.css"],
 })
 export class PlaceComponent implements OnInit{
   public iconStar:string = String.fromCharCode(0xf005);
-  public note:number = 0;
   public contextValues:Array<any> = CONTEXT_VALUES;
   public placeForm:FormGroup;
   public noteCtrl:AbstractControl;
@@ -26,7 +26,9 @@ export class PlaceComponent implements OnInit{
 
   }
 
+
   public ngOnInit() {
+
     this.placeForm = this.fb.group({
       comment: this.fb.control('', [Validators.required]),
       note: this.fb.control('', [Validators.required]),
@@ -35,6 +37,13 @@ export class PlaceComponent implements OnInit{
     this.noteCtrl = this.placeForm.controls['note'];
     this.contextsCtrl = this.placeForm.controls['contexts'];
 
+    this.place = {
+      name: 'YO', address: 'Paris',
+      location: Position.positionFromLatLng(0,0),
+      type: '', origin: '', externalId: '',
+      note: 0, contexts: [], comment: '',
+    };
+    /*
     const params = this.route.snapshot.queryParamMap;
     if (params.get('id')) {
       this.placeStorage.isReady()
@@ -60,15 +69,16 @@ export class PlaceComponent implements OnInit{
         note: 0, contexts: [], comment: '',
       };
     }
+    */
   }
 
-  public onTapStar(note:number) {
+  public onChangeStar(note:number) {
     if (this.place.note !== note) this.place.note = note;
     else this.place.note = 0;
     this.noteCtrl.setValue(this.place.note);
   }
 
-  public onTapContext(event:any, context:any) {
+  public onChangeContext(event:any, context:any) {
     if (!this.place) return false;
     if (event.object.checked) {
       if (this.place.contexts.indexOf(context.value) === -1) this.place.contexts.push(context.value);
