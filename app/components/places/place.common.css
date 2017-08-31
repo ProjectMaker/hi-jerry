@@ -1,3 +1,7 @@
+.place-container {
+    padding: 10 10 0 10;
+}
+
 .place-container .place-name {
     font-weight: bold;
 }
@@ -15,7 +19,7 @@
 }
 
 .place-context-container {
-    margin-top: 20;
+    margin-top: 10;
 }
 
 .place-context-container CheckBox {
@@ -33,6 +37,7 @@
 .place-submit-container {
     margin-top: 20;
     horizontal-align: center;
+    width: 100%;
 }
 
 .place-submit-container Button {

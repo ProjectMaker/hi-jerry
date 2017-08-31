@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Position } from 'nativescript-google-maps-sdk';
+import { LoadingIndicator } from "nativescript-loading-indicator";
 
 import { PlaceMap, CONTEXT_VALUES } from '../../shared/place/place';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
@@ -80,10 +81,18 @@ export class PlaceComponent implements OnInit{
 
   public onSubmit() {
     if (this.placeForm.valid) {
+      const loader = new LoadingIndicator();
+      loader.show({
+        message: 'process ...',
+        ios: {
+          color: '#FFFFFF',
+          backgroundColor: '#000000',
+        }
+      });
       this.place.comment = this.placeForm.controls['comment'].value;
-      if (!this.place.id) this.placeStorage.insert(this.place).subscribe(id => this.place.id = id);
+      if (!this.place.id) this.placeStorage.insert(this.place).subscribe(id => { this.place.id = id; loader.hide() });
       else {
-        this.placeStorage.update(this.place);
+        this.placeStorage.update(this.place).subscribe(() => loader.hide());
       }
     }
   }
