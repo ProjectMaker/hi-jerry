@@ -1,111 +1,295 @@
 {
-  "accounting": { },
-  "airport": { },
-  "amusement_park": { },
-  "aquarium": { },
-  "art_gallery": { },
-  "atm": { },
-  "bakery": { },
-  "bank": { },
+  "accounting": {
+    "type": "other"
+  },
+  "airport": {
+    "type": "other"
+  },
+  "amusement_park": {
+    "type": "other"
+  },
+  "aquarium": {
+    "type": "other"
+  },
+  "art_gallery": {
+    "type": "other"
+  },
+  "atm": {
+    "type": "other"
+  },
+  "bakery": {
+    "type": "other"
+  },
+  "bank": {
+    "type": "other"
+  },
   "bar": {
     "type": "bar"
   },
-  "beauty_salon": { },
-  "bicycle_store": { },
-  "book_store": { },
-  "bowling_alley": { },
-  "bus_station": { },
+  "beauty_salon": {
+    "type": "other"
+  },
+  "bicycle_store": {
+    "type": "other"
+  },
+  "book_store": {
+    "type": "other"
+  },
+  "bowling_alley": {
+    "type": "other"
+  },
+  "bus_station": {
+    "type": "other"
+  },
   "cafe": {
     "type": "bar"
   },
-  "campground": { },
-  "car_dealer": { },
-  "car_rental": { },
-  "car_repair": { },
-  "car_wash": { },
-  "casino": { },
-  "cemetery": { },
-  "church": { },
-  "city_hall": { },
-  "clothing_store": { },
-  "convenience_store": { },
-  "courthouse": { },
-  "dentist": { },
-  "department_store": { },
-  "doctor": { },
-  "electrician": { },
-  "electronics_store": { },
-  "embassy": { },
-  "establishment (deprecated)": { },
-  "finance (deprecated)": { },
-  "fire_station": { },
-  "florist": { },
-  "food (deprecated)": { },
-  "funeral_home": { },
-  "furniture_store": { },
-  "gas_station": { },
-  "general_contractor (deprecated)": { },
-  "grocery_or_supermarket (deprecated)": { },
-  "gym": { },
-  "hair_care": { },
-  "hardware_store": { },
-  "health (deprecated)": { },
-  "hindu_temple": { },
-  "home_goods_store": { },
-  "hospital": { },
-  "insurance_agency": { },
-  "jewelry_store": { },
-  "laundry": { },
-  "lawyer": { },
-  "library": { },
-  "liquor_store": { },
-  "local_government_office": { },
-  "locksmith": { },
-  "lodging": { },
+  "campground": {
+    "type": "other"
+  },
+  "car_dealer": {
+    "type": "other"
+  },
+  "car_rental": {
+    "type": "other"
+  },
+  "car_repair": {
+    "type": "other"
+  },
+  "car_wash": {
+    "type": "other"
+  },
+  "casino": {
+    "type": "other"
+  },
+  "cemetery": {
+    "type": "other"
+  },
+  "church": {
+    "type": "other"
+  },
+  "city_hall": {
+    "type": "other"
+  },
+  "clothing_store": {
+    "type": "other"
+  },
+  "convenience_store": {
+    "type": "other"
+  },
+  "courthouse": {
+    "type": "other"
+  },
+  "dentist": {
+    "type": "other"
+  },
+  "department_store": {
+    "type": "other"
+  },
+  "doctor": {
+    "type": "other"
+  },
+  "electrician": {
+    "type": "other"
+  },
+  "electronics_store": {
+    "type": "other"
+  },
+  "embassy": {
+    "type": "other"
+  },
+  "establishment (deprecated)": {
+    "type": "other"
+  },
+  "finance (deprecated)": {
+    "type": "other"
+  },
+  "fire_station": {
+    "type": "other"
+  },
+  "florist": {
+    "type": "other"
+  },
+  "food (deprecated)": {
+    "type": "other"
+  },
+  "funeral_home": {
+    "type": "other"
+  },
+  "furniture_store": {
+    "type": "other"
+  },
+  "gas_station": {
+    "type": "other"
+  },
+  "general_contractor (deprecated)": {
+    "type": "other"
+  },
+  "grocery_or_supermarket (deprecated)": {
+    "type": "other"
+  },
+  "gym": {
+    "type": "other"
+  },
+  "hair_care": {
+    "type": "other"
+  },
+  "hardware_store": {
+    "type": "other"
+  },
+  "health (deprecated)": {
+    "type": "other"
+  },
+  "hindu_temple": {
+    "type": "other"
+  },
+  "home_goods_store": {
+    "type": "other"
+  },
+  "hospital": {
+    "type": "other"
+  },
+  "insurance_agency": {
+    "type": "other"
+  },
+  "jewelry_store": {
+    "type": "other"
+  },
+  "laundry": {
+    "type": "other"
+  },
+  "lawyer": {
+    "type": "other"
+  },
+  "library": {
+    "type": "other"
+  },
+  "liquor_store": {
+    "type": "other"
+  },
+  "local_government_office": {
+    "type": "other"
+  },
+  "locksmith": {
+    "type": "other"
+  },
+  "lodging": {
+    "type": "lodging"
+  },
   "meal_delivery": {
     "type": "restaurant"
   },
   "meal_takeaway": {
     "type": "restaurant"
   },
-  "mosque": { },
-  "movie_rental": { },
-  "movie_theater": { },
-  "moving_company": { },
-  "museum": { },
-  "night_club": { },
-  "painter": { },
-  "park": { },
-  "parking": { },
-  "pet_store": { },
-  "pharmacy": { },
-  "physiotherapist": { },
-  "place_of_worship (deprecated)": { },
-  "plumber": { },
-  "police": { },
-  "post_office": { },
-  "real_estate_agency": { },
+  "mosque": {
+    "type": "other"
+  },
+  "movie_rental": {
+    "type": "other"
+  },
+  "movie_theater": {
+    "type": "other"
+  },
+  "moving_company": {
+    "type": "other"
+  },
+  "museum": {
+    "type": "other"
+  },
+  "night_club": {
+    "type": "other"
+  },
+  "painter": {
+    "type": "other"
+  },
+  "park": {
+    "type": "other"
+  },
+  "parking": {
+    "type": "other"
+  },
+  "pet_store": {
+    "type": "other"
+  },
+  "pharmacy": {
+    "type": "other"
+  },
+  "physiotherapist": {
+    "type": "other"
+  },
+  "place_of_worship (deprecated)": {
+    "type": "other"
+  },
+  "plumber": {
+    "type": "other"
+  },
+  "police": {
+    "type": "other"
+  },
+  "post_office": {
+    "type": "other"
+  },
+  "real_estate_agency": {
+    "type": "other"
+  },
   "restaurant": {
     "type": "restaurant"
   },
-  "roofing_contractor": { },
-  "rv_park": { },
-  "school": { },
-  "shoe_store": { },
-  "shopping_mall": { },
-  "spa": { },
-  "stadium": { },
-  "storage": { },
-  "store": { },
-  "subway_station": { },
-  "synagogue": { },
-  "taxi_stand": { },
-  "train_station": { },
-  "transit_station": { },
-  "travel_agency": { },
-  "university": { },
-  "veterinary_care": { },
-  "zoo": { }
+  "roofing_contractor": {
+    "type": "other"
+  },
+  "rv_park": {
+    "type": "other"
+  },
+  "school": {
+    "type": "other"
+  },
+  "shoe_store": {
+    "type": "other"
+  },
+  "shopping_mall": {
+    "type": "other"
+  },
+  "spa": {
+    "type": "other"
+  },
+  "stadium": {
+    "type": "other"
+  },
+  "storage": {
+    "type": "other"
+  },
+  "store": {
+    "type": "other"
+  },
+  "subway_station": {
+    "type": "other"
+  },
+  "synagogue": {
+    "type": "other"
+  },
+  "taxi_stand": {
+    "type": "other"
+  },
+  "train_station": {
+    "type": "other"
+  },
+  "transit_station": {
+    "type": "other"
+  },
+  "travel_agency": {
+    "type": "other"
+  },
+  "university": {
+    "type": "other"
+  },
+  "veterinary_care": {
+    "type": "other"
+  },
+  "zoo": {
+    "type": "other"
+  }
 }
 
 

@@ -5,7 +5,7 @@ import { PlaceDetailComponent } from './components/places/place-detail.component
 import { PlaceComponent } from './components/places/place.component';
 
 export const routes = [
-  { path: '', component: PlaceComponent },
+  { path: '', component: AddPlacesComponent },
   { path: 'place', component: PlaceComponent },
   { path: 'login', component: LoginComponent },
   { path: 'places', component: PlacesComponent },

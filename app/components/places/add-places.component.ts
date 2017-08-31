@@ -50,6 +50,31 @@ export class AddPlacesComponent implements OnInit{
 
   public ngOnInit() {
     this.geolocation.start();
+    /*
+    this.geolocation.isReady()
+      .subscribe(
+        () => {
+          this.locationReceived(this.geolocation.position);
+          this.placeSearch.search(this.geolocation.position)
+            .subscribe(
+              (places) => {
+                places.filter(place => !(marker => marker.userData.origin === place.origin && marker.userData.externalId == place.externalId))
+                places.forEach((place) => {
+                  this.markers.push(this.addMarker(place));
+                  this.places.push(place);
+                });
+              },
+              (err) => console.log(err),
+              () => console.log('complete')
+            );
+        }
+      );
+    */
+  }
+
+  protected getIcon(place:PlaceMap) {
+    console.log('getIcon');
+    return getMarkerIcon(place.type)
   }
 
   private switchMarker(marker:Marker) {
@@ -118,17 +143,17 @@ export class AddPlacesComponent implements OnInit{
         () => {
           this.locationReceived(this.geolocation.position);
           this.placeSearch.search(this.geolocation.position)
-           .subscribe(
-             (places) => {
-               places.forEach((place) => {
-                 if (this.markers.find(marker => marker.userData.origin === place.origin && marker.userData.externalId == place.externalId)) return false;
-                 this.markers.push(this.addMarker(place));
-                 this.places.push(place);
-               });
-             },
-             (err) => console.log(err),
-             () => console.log('complete')
-           );
+            .subscribe(
+              (places) => {
+                places.filter(place => !(marker => marker.userData.origin === place.origin && marker.userData.externalId == place.externalId))
+                places.forEach((place) => {
+                  this.markers.push(this.addMarker(place));
+                  this.places.push(place);
+                });
+              },
+              (err) => console.log(err),
+              () => console.log('complete')
+            );
         }
       );
     /*

@@ -10,6 +10,8 @@ import { PlaceMap } from './place';
 const http = require('http');
 const key = 'AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4';
 
+const TYPES = require('./place-types.json');
+
 @Injectable()
 export class PlaceSearchService {
   public mock:boolean = true;
@@ -74,18 +76,29 @@ export class PlaceSearchService {
   }
 
   private parseGoogleDoc(doc:any):any {
-    return doc.results.filter(place => place.types.indexOf('bar') >= 0 || place.types.indexOf('restaurant') >= 0)
+    return doc.results
       .map((doc) => {
         const place:PlaceMap = {
           location: Position.positionFromLatLng(doc.geometry.location.lat, doc.geometry.location.lng),
           name: doc.name,
           address: doc.vicinity,
-          type: doc.types.indexOf('bar') >= 0 ? 'bar' : 'restaurant',
+          type: this.rewriteType(doc.types),
           origin: 'google',
           externalId: doc.id,
           imageRefId: doc.photos ? doc.photos[0].photo_reference : '',
         };
         return place;
       });
+  }
+  
+  private rewriteType(types) {
+    let result = 'other';
+    for (let type of types) {
+      if ((TYPES[type] || { type: 'other' }).type !== 'other') {
+        result = TYPES[type]['type'];
+        break;
+      }
+    }
+    return result;
   }
 }
