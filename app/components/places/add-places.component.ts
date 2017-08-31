@@ -21,6 +21,7 @@ registerElement('MapView', () => MapView);
   moduleId: module.id,
   selector: 'kl-add-places',
   templateUrl: 'add-places.html',
+  styleUrls: ["./action-bar.common.css"],
 })
 export class AddPlacesComponent implements OnInit{
   places:any[] = [];
