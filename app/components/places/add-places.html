@@ -4,7 +4,7 @@
     <StackLayout orientation="horizontal" col="1" paddingRight="10">
       <Label text="{{iconCircleDown}}" class="fa fa-1" marginRight="5"></Label>
       <DropDown #dd [(ngModel)]="selectedIndex" class="drop-down"
-                (selectedIndexChanged)="onchange($event)"
+                (selectedIndexChanged)="onChangeType($event)"
                 [items]="items" accessoryViewVisible="false">
         row="0">
       </DropDown>

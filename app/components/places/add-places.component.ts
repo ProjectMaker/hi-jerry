@@ -38,7 +38,13 @@ export class AddPlacesComponent implements OnInit{
   iconAdd:string = String.fromCharCode(0xf055);
   public iconCircleDown:string = String.fromCharCode(0xf107);
   public selectedIndex = 0;
-  public items:ValueList<string> = new ValueList({value: 'bar', display: 'Bar'},{value: 'restaurant', display: 'Restaurant'});
+  public items:ValueList<string> = new ValueList(
+    { value: 'all', display: 'Tout' },
+    { value: 'bar', display: 'Bar' },
+    { value: 'lodging', display: 'Hotel' },
+    { value: 'restaurant', display: 'Restaurant' },
+    { value: 'other', display: 'Autres' } );
+  private _places:Array<PlaceMap> = [];
 
   @ViewChild("dd") dd: ElementRef;
   constructor(private routerExtensions:RouterExtensions,
@@ -55,6 +61,7 @@ export class AddPlacesComponent implements OnInit{
   public ngOnInit() {
     this.geolocation.start();
 
+
     this.geolocation.isReady()
       .subscribe(
         () => {
@@ -67,12 +74,14 @@ export class AddPlacesComponent implements OnInit{
                   this.markers.push(this.addMarker(place));
                   this.places.push(place);
                 });
+                this._places = this.places.slice();
               },
               (err) => console.log(err),
               () => console.log('complete')
             );
         }
       );
+
   }
 
   private switchMarker(marker:Marker) {
@@ -148,6 +157,7 @@ export class AddPlacesComponent implements OnInit{
                   this.markers.push(this.addMarker(place));
                   this.places.push(place);
                 });
+                this._places = this.places.slice();
               },
               (err) => console.log(err),
               () => console.log('complete')
@@ -200,13 +210,12 @@ export class AddPlacesComponent implements OnInit{
       type: 'home',
       origin: null,
       externalId: null
-    }, true);
+    });
   }
 
-  addMarker(place:PlaceMap, gpsMaker?: boolean) {
+  private addMarker(place:PlaceMap) {
     if (!this.mapView || !place || !place.location) return;
 
-    gpsMaker = gpsMaker || false;
     let marker = new Marker();
     marker.position = Position.positionFromLatLng(place.location.latitude, place.location.longitude);
 
@@ -246,11 +255,14 @@ export class AddPlacesComponent implements OnInit{
     this.lastCamera = JSON.stringify(args.camera);
   }
 
-  public onchange(args: SelectedIndexChangedEventData) {
-    //const dd = page.getViewById<DropDown>("dd");
+  protected onChangeType(args: SelectedIndexChangedEventData) {
     const elt = <DropDown>this.dd.nativeElement;
-    console.log(this.items.getValue(args.newIndex))
+    const type = this.items.getValue(args.newIndex);
+    if (type === 'all') this.places = this._places.slice();
+    else this.places = this._places.filter(place => place.type === type);
+    this.markers.forEach(marker => this.removeMarker(marker));
+    this.markers = [];
+    this.places.forEach(place => this.addMarker(place));
     elt.close();
-    console.log(`Drop Down selected index changed from ${args.oldIndex} to ${args.newIndex}`);
   }
 }
