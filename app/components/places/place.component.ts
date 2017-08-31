@@ -21,7 +21,8 @@ export class PlaceComponent implements OnInit{
   public noteCtrl:AbstractControl;
   public contextsCtrl:AbstractControl;
   public place:PlaceMap;
-
+  public isReady:boolean = false;
+  
   public constructor(private placeStorage:PlaceStorageService, private fb:FormBuilder, private route:ActivatedRoute) { }
 
 
@@ -33,32 +34,33 @@ export class PlaceComponent implements OnInit{
     });
     this.noteCtrl = this.placeForm.controls['note'];
     this.contextsCtrl = this.placeForm.controls['contexts'];
-
-    const params = this.route.snapshot.queryParamMap;
-    if (params.get('id')) {
-      this.placeStorage.isReady()
-        .subscribe(
-          () => {
+    
+    this.placeStorage.isReady()
+      .subscribe(
+        () => {
+          const params = this.route.snapshot.queryParamMap;
+          if (params.get('id')) {
             this.placeStorage.emitter.subscribe(
               (places) => {
+                this.isReady = true;
                 this.place = places.find(place => place.id === parseInt(params.get('id')));
                 this.noteCtrl.setValue(this.place.note);
                 this.contextsCtrl.setValue(this.place.contexts.join(','));
-                console.log(JSON.stringify(this.place));
               },
               (err) => console.log(err)
             );
             this.placeStorage.fetch();
+          } else {
+            this.place = {
+              name: params.get('name'), address: params.get('address'),
+              location: Position.positionFromLatLng(parseInt(params.get('latitude')),parseInt(params.get('longitude'))),
+              type: params.get('type'), origin: params.get('origin'), externalId: params.get('externalId'),
+              note: 0, contexts: [], comment: '',
+            };
+            this.isReady = true;
           }
-        );
-    } else {
-      this.place = {
-        name: params.get('name'), address: params.get('address'),
-        location: Position.positionFromLatLng(parseInt(params.get('latitude')),parseInt(params.get('longitude'))),
-        type: params.get('type'), origin: params.get('origin'), externalId: params.get('externalId'),
-        note: 0, contexts: [], comment: '',
-      };
-    }
+        }
+      );
   }
 
   public onChangeStar(note:number) {
