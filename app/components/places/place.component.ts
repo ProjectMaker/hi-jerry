@@ -31,7 +31,7 @@ export class PlaceComponent implements OnInit{
 
     this.placeForm = this.fb.group({
       comment: this.fb.control('', [Validators.required]),
-      note: this.fb.control('', [Validators.required]),
+      note: this.fb.control('', [Validators.required, Validators.pattern(/[1-5]{1}/)]),
       contexts: this.fb.control('', [Validators.required])
     });
     this.noteCtrl = this.placeForm.controls['note'];
