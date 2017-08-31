@@ -16,10 +16,10 @@
     <StackLayout row="1" height="100%" id="tom">
       <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%">
         <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
-          <FlexboxLayout backgroundColor="#faebd7">
+          <FlexboxLayout backgroundColor="#f6f8fa">
             <Image src="res://{{item.type}}" stretch="none" horizontalAlignment="center"></Image>
             <Label [text]="item.name" marginLeft="10px" flexGrow="1" (tap)="onItemNameTap(item)"></Label>
-            <Label text="{{ iconAdd }}" class="fa fa-2" color="#1b926c" marginRight="10px"
+            <Label text="{{ iconAdd }}" class="fa fa-2" color="#1b926c" paddingLeft="10" paddingRight="10"
                    [nsRouterLink]="['/place']"
                    [queryParams]="{name: item.name, address: item.address, latitude: item.location.latitude, longitude: item.location.longitude, type: item.type, origin: item.origin, externalId: item.externalId}"></Label>
           </FlexboxLayout>
