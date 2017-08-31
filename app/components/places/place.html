@@ -1,6 +1,6 @@
 <StackLayout verticalAlignment="center">
   <ActivityIndicator [busy]="!isReady" visibility="{{ !isReady ? 'visible' : 'collapse'}}"></ActivityIndicator>
-  <ScrollView orientation="vertical" #scrollLayout  visibility="{{ isReady ? 'visible' : 'collapse'}}" backgroundColor="red">
+  <ScrollView orientation="vertical" #scrollLayout  visibility="{{ isReady ? 'visible' : 'collapse'}}">
     <GridLayout paddingLeft="10" paddingTop="10" class="place-container"
                 rows="auto,auto,auto,auto,auto" #formLayout>
       <StackLayout [formGroup]="placeForm">
