@@ -120,6 +120,7 @@ export class AddPlacesComponent implements OnInit{
            .subscribe(
              (places) => {
                places.forEach((place) => {
+                 if (this.markers.find(marker => marker.userData.origin === place.origin && marker.userData.externalId == place.externalId)) return false;
                  this.markers.push(this.addMarker(place));
                  this.places.push(place);
                });
