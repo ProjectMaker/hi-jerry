@@ -19,7 +19,9 @@
           <FlexboxLayout backgroundColor="#faebd7">
             <Image src="res://{{item.type}}" stretch="none" horizontalAlignment="center"></Image>
             <Label [text]="item.name" marginLeft="10px" flexGrow="1" (tap)="onItemNameTap(item)"></Label>
-            <Label text="{{ iconAdd }}" class="fa fa-2" color="#1b926c" marginRight="10px" (tap)="onItemAdd(item)"></Label>
+            <Label text="{{ iconAdd }}" class="fa fa-2" color="#1b926c" marginRight="10px"
+                   [nsRouterLink]="['/place']"
+                   [queryParams]="{name: item.name, address: item.address, latitude: item.location.latitude, longitude: item.location.longitude, type: item.type, origin: item.origin, externalId: item.externalId}"></Label>
           </FlexboxLayout>
         </ng-template>
       </ListView>

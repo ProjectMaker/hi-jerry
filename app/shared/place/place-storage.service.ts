@@ -9,12 +9,17 @@ import { PlaceMap } from './place';
 const QUERY_CREATE_TABLE = "\
   CREATE TABLE IF NOT EXISTS place ( \
     id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, lat REAL, lng REAL, address TEXT, type TEXT, origin TEXT, \
-    externalId TEXT, imageRefId TEXT, imageRef BLOB \
+    externalId TEXT, imageRefId TEXT, imageRef BLOB, \
+    note INTEGER, comment TEXT, contexts TEXT\
   )";
 
 const QUERY_INSERT = "\
-  INSERT INTO place (name, lat, lng, address, type, origin, externalId, imageRefId, imageRef) \
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) \
+  INSERT INTO place (name, lat, lng, address, type, origin, externalId, imageRefId, imageRef, note, comment, contexts) \
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) \
+";
+
+const QUERY_UPDATE = "\
+  UPDATE place SET note = ?, comment = ?, contexts = ? WHERE id = ?\
 ";
 
 @Injectable()
@@ -38,7 +43,7 @@ export class PlaceStorageService {
     });
   }
 
-  public isReady() {
+  public isReady():Observable<boolean> {
     if (this.database) return Observable.of(true);
     else {
       return Observable.create(observer => {
@@ -55,19 +60,38 @@ export class PlaceStorageService {
     }
   }
 
-  public insert(place:PlaceMap) {
-    this.database.execSQL(QUERY_INSERT,
-      [place.name, place.location.latitude, place.location.longitude, place.address, place.type, place.origin,
-        place.externalId, place.imageRefId, place.imageRef]).then(id => {
-        console.log("INSERT RESULT", id);
-        this.fetch();
+  public update(place:PlaceMap) {
+    return Observable.create(observer => {
+      this.database.execSQL(QUERY_UPDATE, [
+        place.note, place.comment, place.contexts.join(','), place.id
+      ]).then(id => {
+        observer.next(id);
+        observer.complete();
       }, error => {
-        console.log("INSERT ERROR", error);
-      }
-    );
+        console.log("UPDATE ERROR", error);
+        observer.error(error);
+      })
+    });
   }
 
-  public remove(placeId:string) {
+  public insert(place:PlaceMap):Observable<number> {
+    return Observable.create(observer => {
+      this.database.execSQL(QUERY_INSERT,
+        [place.name, place.location.latitude, place.location.longitude, place.address, place.type, place.origin,
+          place.externalId, place.imageRefId, place.imageRef, place.note, place.comment, place.contexts.join(',')]).then(id => {
+          console.log("INSERT RESULT", id);
+          observer.next(id);
+          observer.complete();
+          this.fetch();
+        }, error => {
+          console.log("INSERT ERROR", error);
+          observer.error(error);
+        }
+      );
+    });
+  }
+
+  public remove(placeId:number) {
     this.database.execSQL("DELETE FROM place WHERE id = ?",
       [placeId]).then(id => {
         console.log("REMOVE RESULT", id);
@@ -79,7 +103,7 @@ export class PlaceStorageService {
   }
 
   public fetch() {
-    this.database.all("SELECT id, name, lat, lng, address, type, origin, externalId, imageRefId, imageRef FROM place").then(rows => {
+    this.database.all("SELECT id, name, lat, lng, address, type, origin, externalId, imageRefId, imageRef, note, comment, contexts FROM place").then(rows => {
       const places = [];
       for(var row in rows) {
         places.push({
@@ -91,7 +115,10 @@ export class PlaceStorageService {
           origin: rows[row][6],
           externalId: rows[row][7],
           imageRefId: rows[row][8],
-          imageRef: rows[row][9]
+          imageRef: rows[row][9],
+          note: rows[row][10],
+          comment: rows[row][11],
+          contexts: rows[row][12] ? rows[row][12].split(',') : [],
         });
       }
       this.emitter.emit(places);
