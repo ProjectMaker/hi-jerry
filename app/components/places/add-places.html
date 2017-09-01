@@ -3,7 +3,7 @@
     <Label text="Pin places" col="0" horizontalAlignment="center" class="title"></Label>
     <StackLayout orientation="horizontal" col="1" paddingRight="10">
       <Label text="{{iconCircleDown}}" class="fa fa-1" marginRight="5"></Label>
-      <DropDown #filterType [(ngModel)]="selectedIndex" class="drop-down"
+      <DropDown #filterType [(ngModel)]="selectedIndex"
                 (selectedIndexChanged)="onChangeType($event)"
                 [items]="filterTypeItems" accessoryViewVisible="false" class="filter">
         row="0">

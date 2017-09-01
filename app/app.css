@@ -36,12 +36,3 @@ TextField {
 .fa-2 {
     font-size: 32;
 }
-
-.drop-down {
-    background-color: #fff;    /* works */
-    horizontal-align: right;     /* works */
-    vertical-align: center;      /* works */
-    text-align: left;            /* doesn't work */
-    width: 100;                      /* works */
-    height: 36;                      /* works */
-}

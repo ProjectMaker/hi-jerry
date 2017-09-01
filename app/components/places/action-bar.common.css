@@ -10,4 +10,8 @@
 
 .action-bar-container .filter {
     background-color: #f9f9f9;
+    horizontal-align: right;
+    vertical-align: center;
+    text-align: left;
+    width: 100;
 }
