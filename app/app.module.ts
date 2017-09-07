@@ -13,9 +13,11 @@ import { PlaceSearchService } from './shared/place/place-search.service';
 import { PlaceStorageService } from './shared/place/place-storage.service';
 import { AppComponent } from "./app.component";
 
+
 import { placePipes } from './components/places/place-context.pipe';
 
 import { PlaceSearchModule } from './modules/search-place/search-place.module';
+import { FormPlaceModule } from './modules/form-place/form-place.module';
 
 import { DropDownModule } from "nativescript-drop-down/angular";
 
@@ -46,7 +48,7 @@ if (platform.isIOS) {
     TNSCheckBoxModule,
     ReactiveFormsModule,
     DropDownModule,
-    PlaceSearchModule,
+    FormPlaceModule
   ],
   providers: [
     UserService,

@@ -29,6 +29,10 @@ export class PlaceSearchService {
     else return this.callGoogleApiQuery(position, name);
   }
 
+  public searchById(id:string) {
+    if (this.mock) return this.searchMockById(id);
+  }
+
   public getImgRef(ref:string):Observable<string> {
     const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=${key}&photoreference=${ref}`;
     return Observable.create(observer => {
@@ -58,12 +62,45 @@ export class PlaceSearchService {
     });
   }
 
+  private searchMockById(id:string):Observable<any> {
+    const doc = require('./place-search-by-id.mock.json');
+    return Observable.of(doc)
+      .map(doc => {
+        return {
+          name: doc.result.name,
+          address: doc.result.address_components,
+          formattedAddress: doc.result.formatted_address,
+          location: Position.positionFromLatLng(doc.result.geometry.location.lat, doc.result.geometry.location.lng),
+          placeId: doc.result.place_id,
+          types: doc.result.types,
+          phoneNumber: doc.result.international_phone_number
+        }
+      });
+  }
+
+  private callGooleApiDetail(id:string):Observable<any> {
+    const url= `${URL_API_PLACE}/details/json?key=${key}&placeid=${id}`;
+    return this.http.get(url)
+      .map(result => result.json())
+      .map(doc => {
+        return {
+          name: doc.result.name,
+          address: doc.result.address_components,
+          formattedAddress: doc.result.formatted_address,
+          location: Position.positionFromLatLng(doc.result.geometry.location.lat, doc.result.geometry.location.lng),
+          placeId: doc.result.place_id,
+          types: doc.result.types,
+          phoneNumber: doc.result.international_phone_number
+        }
+      });
+  }
+  
   private searchMockByPositionAndName(position:Position, name:string):Observable<any> {
     const doc = require('./place-search-by-name.mock.json');
     return Observable.of(doc)
       .map(doc => doc.predictions
         .map(prediction => {
-          return { description: prediction.description, id: prediction.id, name: prediction.structured_formatting.main_text };
+          return { description: prediction.description, id: prediction.place_id, name: prediction.structured_formatting.main_text };
         }));
   }
 
@@ -73,7 +110,7 @@ export class PlaceSearchService {
       .map(result => result.json())
       .map(doc => doc.predictions
         .map(prediction => {
-          return { description: prediction.description, id: prediction.id, name: prediction.structured_formatting.main_text };
+          return { description: prediction.description, id: prediction.place_id, name: prediction.structured_formatting.main_text };
         }));
   }
 

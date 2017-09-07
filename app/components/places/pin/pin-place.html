@@ -1,6 +1,7 @@
 <StackLayout>
-  <ActivityIndicator [busy]="!isReady" visibility="{{ !isReady ? 'visible' : 'collapse'}}"></ActivityIndicator>
   <ScrollView orientation="vertical" visibility="{{ isReady ? 'visible' : 'collapse'}}">
-    <kl-search-place></kl-search-place>
+    <StackLayout orientation="vertical">
+      <kl-form-place-add></kl-form-place-add>
+    </StackLayout>
   </ScrollView>
 </StackLayout>

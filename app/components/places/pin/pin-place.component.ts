@@ -8,12 +8,20 @@ import { Component, OnInit } from "@angular/core";
 })
 export class PinPlaceComponent implements OnInit{
   public isReady:boolean = false;
-
+  public step:string = 'search';
+  public place:any = {}
+  
   public constructor() { }
 
 
   public ngOnInit() {
 
     this.isReady = true;
+  }
+
+  protected onPlaceSelected(place) {
+    this.step = 'validation';
+    
+    console.log('place', JSON.stringify(place));
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 
 @Component({
   moduleId: module.id,
@@ -9,6 +9,8 @@ import { Component, OnInit } from "@angular/core";
 export class SearchPlaceComponent implements OnInit{
   public isReady:boolean = false;
   public places:Array<any> = [];
+
+  @Output() selected = new EventEmitter();
   public constructor() { }
 
 
@@ -16,12 +18,12 @@ export class SearchPlaceComponent implements OnInit{
 
   }
 
-  protected onSearchSubmit(event) {
-    this.places = event;
-    console.log("pinPlaceSearch result", event);
+  protected onSearchSubmit(places) {
+    this.places = places;
   }
 
-  protected onSelectedPlace(event) {
-    console.log(event.description);
+  protected onSelectedPlace(place) {
+    console.log('search-place.component, onSelectedPlace', place);
+    this.selected.next(place);
   }
 }
