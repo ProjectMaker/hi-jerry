@@ -1,0 +1,8 @@
+<StackLayout verticalAlignment="center">
+  <ActivityIndicator [busy]="!isReady" visibility="{{ !isReady ? 'visible' : 'collapse'}}"></ActivityIndicator>
+  <ScrollView orientation="vertical" visibility="{{ isReady ? 'visible' : 'collapse'}}">
+    <GridLayout class="place-container">
+      <Label text="Pin place"></Label>
+    </GridLayout>
+  </ScrollView>
+</StackLayout>
