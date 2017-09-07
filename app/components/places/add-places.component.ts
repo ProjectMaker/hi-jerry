@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {Image} from 'ui/image';
 const imageSource = require("image-source");
 
@@ -6,7 +6,7 @@ import * as ImageModule from "tns-core-modules/ui/image";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { registerElement } from 'nativescript-angular/element-registry';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
-import { SnackBar } from "nativescript-snackbar";
+import { DropDown, SelectedIndexChangedEventData, ValueList } from "nativescript-drop-down";
 import {LoadingIndicator} from "nativescript-loading-indicator";
 
 import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
@@ -21,6 +21,7 @@ registerElement('MapView', () => MapView);
   moduleId: module.id,
   selector: 'kl-add-places',
   templateUrl: 'add-places.html',
+  styleUrls: ["./action-bar.common.css"],
 })
 export class AddPlacesComponent implements OnInit{
   places:any[] = [];
@@ -36,7 +37,17 @@ export class AddPlacesComponent implements OnInit{
   centeredOnLocation:boolean = false;
   lastCamera: String;
   iconAdd:string = String.fromCharCode(0xf055);
+  public iconCircleDown:string = String.fromCharCode(0xf107);
+  public selectedIndex = 0;
+  public filterTypeItems:ValueList<string> = new ValueList(
+    { value: 'all', display: 'Tout' },
+    { value: 'bar', display: 'Bar' },
+    { value: 'lodging', display: 'Hotel' },
+    { value: 'restaurant', display: 'Restaurant' },
+    { value: 'other', display: 'Autres' } );
+  private _places:Array<PlaceMap> = [];
 
+  @ViewChild("filterType") filterTypeElt: ElementRef;
   constructor(private routerExtensions:RouterExtensions,
               private geolocation:GeolocationService,
               private placeSearch:PlaceSearchService,
@@ -50,6 +61,7 @@ export class AddPlacesComponent implements OnInit{
 
   public ngOnInit() {
     this.geolocation.start();
+
     /*
     this.geolocation.isReady()
       .subscribe(
@@ -63,6 +75,7 @@ export class AddPlacesComponent implements OnInit{
                   this.markers.push(this.addMarker(place));
                   this.places.push(place);
                 });
+                this._places = this.places.slice();
               },
               (err) => console.log(err),
               () => console.log('complete')
@@ -70,11 +83,6 @@ export class AddPlacesComponent implements OnInit{
         }
       );
     */
-  }
-
-  protected getIcon(place:PlaceMap) {
-    console.log('getIcon');
-    return getMarkerIcon(place.type)
   }
 
   private switchMarker(marker:Marker) {
@@ -150,6 +158,7 @@ export class AddPlacesComponent implements OnInit{
                   this.markers.push(this.addMarker(place));
                   this.places.push(place);
                 });
+                this._places = this.places.slice();
               },
               (err) => console.log(err),
               () => console.log('complete')
@@ -202,13 +211,12 @@ export class AddPlacesComponent implements OnInit{
       type: 'home',
       origin: null,
       externalId: null
-    }, true);
+    });
   }
 
-  addMarker(place:PlaceMap, gpsMaker?: boolean) {
+  private addMarker(place:PlaceMap) {
     if (!this.mapView || !place || !place.location) return;
 
-    gpsMaker = gpsMaker || false;
     let marker = new Marker();
     marker.position = Position.positionFromLatLng(place.location.latitude, place.location.longitude);
 
@@ -246,5 +254,16 @@ export class AddPlacesComponent implements OnInit{
   onCameraChanged(args) {
     console.log("Camera changed: " + JSON.stringify(args.camera), JSON.stringify(args.camera) === this.lastCamera);
     this.lastCamera = JSON.stringify(args.camera);
+  }
+
+  protected onChangeType(args: SelectedIndexChangedEventData) {
+    const filterElt = <DropDown>this.filterTypeElt.nativeElement;
+    const type = this.filterTypeItems.getValue(args.newIndex);
+    if (type === 'all') this.places = this._places.slice();
+    else this.places = this._places.filter(place => place.type === type);
+    this.markers.forEach(marker => this.removeMarker(marker));
+    this.markers = [];
+    this.places.forEach(place => this.addMarker(place));
+    filterElt.close();
   }
 }

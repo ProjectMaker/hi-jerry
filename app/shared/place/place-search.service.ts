@@ -14,7 +14,7 @@ const TYPES = require('./place-types.json');
 
 @Injectable()
 export class PlaceSearchService {
-  public mock:boolean = true;
+  public mock:boolean = false;
   private placesRefreshEvent:EventEmitter<Array<any>> = new EventEmitter();
   public constructor(private http:Http) {}
 

@@ -26,6 +26,9 @@ TextField {
     font-family: 'FontAwesome', 'fontawesome-webfont';
 }
 
+.fa-0 {
+    font-size: 14;
+}
 .fa-1 {
     font-size: 24;
 }

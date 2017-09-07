@@ -1,35 +1,48 @@
-<ActionBar title="Pin places" class="action-bar">
-</ActionBar>
-<GridLayout rows="*,auto">
-  <GridLayout rows="*,*">
-    <StackLayout row="0" verticalAlignment="top" backgroundColor="aqua" height="100%">
-      <MapView #mapView height="100%"
-               [zoom]="zoom" [bearing]="bearing"
-               [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding" (mapReady)="onMapReady($event)"
-               (markerSelect)="onMarkerEvent($event)" (markerBeginDragging)="onMarkerEvent($event)"
-               (markerEndDragging)="onMarkerEvent($event)" (markerDrag)="onMarkerEvent($event)"
-               (markerInfoWindowTapped)="onMarkerEvent($event)" (coordinateTapped)="onCoordinateTapped($event)"
-               (cameraChanged)="onCameraChanged($event)"></MapView>
-    </StackLayout>
-
-    <StackLayout row="1" height="100%" id="tom">
-      <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%">
-        <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
-          <FlexboxLayout backgroundColor="#f6f8fa">
-            <Image src="{{item.type | placeIconImgSrc}}" stretch="none" horizontalAlignment="center"></Image>
-            <Label [text]="item.name" marginLeft="10px" flexGrow="1" (tap)="onItemNameTap(item)"></Label>
-            <Label text="{{ iconAdd }}" class="fa fa-2" color="#1b926c" paddingLeft="10" paddingRight="10"
-                   [nsRouterLink]="['/place']"
-                   [queryParams]="{name: item.name, address: item.address, latitude: item.location.latitude, longitude: item.location.longitude, type: item.type, origin: item.origin, externalId: item.externalId}"></Label>
-          </FlexboxLayout>
-        </ng-template>
-      </ListView>
+<GridLayout rows="auto,*">
+  <GridLayout columns="*,auto" rows="45" row="0" class="action-bar-container">
+    <Label text="Pin places" col="0" horizontalAlignment="center" class="title"></Label>
+    <StackLayout orientation="horizontal" col="1" paddingRight="10">
+      <Label text="{{iconCircleDown}}" class="fa fa-1" marginRight="5"></Label>
+      <DropDown #filterType [(ngModel)]="selectedIndex"
+                (selectedIndexChanged)="onChangeType($event)"
+                [items]="filterTypeItems" accessoryViewVisible="false" class="filter">
+        row="0">
+      </DropDown>
     </StackLayout>
   </GridLayout>
-  <StackLayout orientation="horizontal" row="1" backgroundColor="#000000">
-    <GridLayout columns="*,*" padding="15">
-      <Button text="Mes places" col="0" borderRightColor="#ffffff" borderRightWidth="1" color="#ffffff" (tap)="goToPlaces()"></Button>
-      <Button text="Pin place" col="1" borderLeftColor="#ffffff" borderLeftWidth="1" color="#ffffff"></Button>
+  <GridLayout rows="*,auto" row="1">
+    <GridLayout rows="*,*">
+      <StackLayout row="0" verticalAlignment="top" height="100%">
+
+        <MapView #mapView height="100%"
+                 [zoom]="zoom" [bearing]="bearing"
+                 [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding" (mapReady)="onMapReady($event)"
+                 (markerSelect)="onMarkerEvent($event)" (markerBeginDragging)="onMarkerEvent($event)"
+                 (markerEndDragging)="onMarkerEvent($event)" (markerDrag)="onMarkerEvent($event)"
+                 (markerInfoWindowTapped)="onMarkerEvent($event)" (coordinateTapped)="onCoordinateTapped($event)"
+                 (cameraChanged)="onCameraChanged($event)"></MapView>
+
+
+      </StackLayout>
+      <StackLayout row="1" height="100%" id="tom">
+        <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%">
+          <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+            <FlexboxLayout backgroundColor="#f6f8fa">
+              <Image src="{{item.type | placeIconImgSrc}}" stretch="none" horizontalAlignment="center"></Image>
+              <Label [text]="item.name" marginLeft="10px" flexGrow="1" (tap)="onItemNameTap(item)"></Label>
+              <Label text="{{ iconAdd }}" class="fa fa-2" color="#1b926c" paddingLeft="10" paddingRight="10"
+                     [nsRouterLink]="['/place']"
+                     [queryParams]="{name: item.name, address: item.address, latitude: item.location.latitude, longitude: item.location.longitude, type: item.type, origin: item.origin, externalId: item.externalId}"></Label>
+            </FlexboxLayout>
+          </ng-template>
+        </ListView>
+      </StackLayout>
     </GridLayout>
-  </StackLayout>
+    <StackLayout orientation="horizontal" row="1" backgroundColor="#000000">
+      <GridLayout columns="*,*" padding="15">
+        <Button text="Mes places" col="0" borderRightColor="#ffffff" borderRightWidth="1" color="#ffffff" (tap)="goToPlaces()"></Button>
+        <Button text="Pin place" col="1" borderLeftColor="#ffffff" borderLeftWidth="1" color="#ffffff"></Button>
+      </GridLayout>
+    </StackLayout>
+  </GridLayout>
 </GridLayout>
