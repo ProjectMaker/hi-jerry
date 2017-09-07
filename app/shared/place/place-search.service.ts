@@ -11,16 +11,22 @@ const http = require('http');
 const key = 'AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4';
 
 const TYPES = require('./place-types.json');
+const URL_API_PLACE = 'https://maps.googleapis.com/maps/api/place';
 
 @Injectable()
 export class PlaceSearchService {
-  public mock:boolean = false;
+  public mock:boolean = true;
   private placesRefreshEvent:EventEmitter<Array<any>> = new EventEmitter();
   public constructor(private http:Http) {}
 
   public search(position:Position) {
     if (this.mock) return this.searchMock(position);
     else return this.searchGoogle(position);
+  }
+
+  public searchByPositionAndName(position:Position, name:string):Observable<any> {
+    if (this.mock) return this.searchMockByPositionAndName(position, name);
+    else return this.callGoogleApiQuery(position, name);
   }
 
   public getImgRef(ref:string):Observable<string> {
@@ -50,6 +56,25 @@ export class PlaceSearchService {
         }
       );
     });
+  }
+
+  private searchMockByPositionAndName(position:Position, name:string):Observable<any> {
+    const doc = require('./place-search-by-name.mock.json');
+    return Observable.of(doc)
+      .map(doc => doc.predictions
+        .map(prediction => {
+          return { description: prediction.description, id: prediction.id, name: prediction.structured_formatting.main_text };
+        }));
+  }
+
+  private callGoogleApiQuery(position:Position, name: string):Observable<any> {
+    const url= `${URL_API_PLACE}/queryautocomplete/json?key=${key}&location=${position.latitude},${position.longitude}&radius=500&input=${name}`;
+    return this.http.get(url)
+      .map(result => result.json())
+      .map(doc => doc.predictions
+        .map(prediction => {
+          return { description: prediction.description, id: prediction.id, name: prediction.structured_formatting.main_text };
+        }));
   }
 
   private callGoogleApi(position:Position, pageToken?:string) {
