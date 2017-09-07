@@ -62,7 +62,7 @@ export class AddPlacesComponent implements OnInit{
   public ngOnInit() {
     this.geolocation.start();
 
-
+    /*
     this.geolocation.isReady()
       .subscribe(
         () => {
@@ -82,7 +82,7 @@ export class AddPlacesComponent implements OnInit{
             );
         }
       );
-
+    */
   }
 
   private switchMarker(marker:Marker) {
