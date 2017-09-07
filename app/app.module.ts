@@ -12,7 +12,10 @@ import { GeolocationService } from './shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from './shared/place/place-search.service';
 import { PlaceStorageService } from './shared/place/place-storage.service';
 import { AppComponent } from "./app.component";
+
 import { placePipes } from './components/places/place-context.pipe';
+
+import { PlaceSearchModule } from './modules/search-place/search-place.module';
 
 import { DropDownModule } from "nativescript-drop-down/angular";
 
@@ -42,7 +45,8 @@ if (platform.isIOS) {
     NativeScriptRouterModule.forRoot(routes),
     TNSCheckBoxModule,
     ReactiveFormsModule,
-    DropDownModule
+    DropDownModule,
+    PlaceSearchModule,
   ],
   providers: [
     UserService,

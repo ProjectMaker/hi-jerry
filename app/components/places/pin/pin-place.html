@@ -1,8 +1,6 @@
-<StackLayout verticalAlignment="center">
+<StackLayout>
   <ActivityIndicator [busy]="!isReady" visibility="{{ !isReady ? 'visible' : 'collapse'}}"></ActivityIndicator>
   <ScrollView orientation="vertical" visibility="{{ isReady ? 'visible' : 'collapse'}}">
-    <GridLayout class="place-container">
-      <Label text="Pin place"></Label>
-    </GridLayout>
+    <kl-search-place></kl-search-place>
   </ScrollView>
 </StackLayout>

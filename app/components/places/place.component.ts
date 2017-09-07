@@ -6,6 +6,7 @@ import { LoadingIndicator } from "nativescript-loading-indicator";
 
 import { PlaceMap, CONTEXT_VALUES } from '../../shared/place/place';
 import { PlaceStorageService } from '../../shared/place/place-storage.service';
+import { PlaceSearchService } from '../../shared/place/place-search.service';
 
 @Component({
   moduleId: module.id,
@@ -22,7 +23,7 @@ export class PlaceComponent implements OnInit{
   public place:PlaceMap;
   public isReady:boolean = false;
   
-  public constructor(private placeStorage:PlaceStorageService, private fb:FormBuilder, private route:ActivatedRoute) { }
+  public constructor(private placeStorage:PlaceStorageService, private placeSearch:PlaceSearchService, private fb:FormBuilder, private route:ActivatedRoute) { }
 
 
   public ngOnInit() {
@@ -33,7 +34,14 @@ export class PlaceComponent implements OnInit{
     });
     this.noteCtrl = this.placeForm.controls['note'];
     this.contextsCtrl = this.placeForm.controls['contexts'];
-    
+
+    this.placeSearch.searchByPositionAndName(Position.positionFromLatLng(48.8511475,2.399606700000001), 'bouion')
+      .subscribe(
+        (result) => console.log('result', result),
+        (err) => console.log('err', err),
+        () => console.log('complete')
+      );
+
     this.placeStorage.isReady()
       .subscribe(
         () => {
@@ -56,6 +64,7 @@ export class PlaceComponent implements OnInit{
               type: params.get('type'), origin: params.get('origin'), externalId: params.get('externalId'),
               note: 0, contexts: [], comment: '',
             };
+
             this.isReady = true;
           }
         }
