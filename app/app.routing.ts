@@ -3,9 +3,10 @@ import { PlacesComponent } from './components/places/places.component';
 import { AddPlacesComponent } from './components/places/add-places.component';
 import { PlaceDetailComponent } from './components/places/place-detail.component';
 import { PlaceComponent } from './components/places/place.component';
+import { PinPlaceComponent } from './components/places/pin/pin-place.component';
 
 export const routes = [
-  { path: '', component: LoginComponent },
+  { path: 'pin-place', component: PinPlaceComponent },
   { path: 'place', component: PlaceComponent },
   { path: 'login', component: LoginComponent },
   { path: 'places', component: PlacesComponent },
@@ -18,5 +19,6 @@ export const navigatableComponents = [
   LoginComponent,
   PlacesComponent,
   AddPlacesComponent,
-  PlaceDetailComponent
+  PlaceDetailComponent,
+  PinPlaceComponent
 ];

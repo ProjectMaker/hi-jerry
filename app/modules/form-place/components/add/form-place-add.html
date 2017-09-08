@@ -1,8 +1,0 @@
-<StackLayout>
-  <ScrollView orientation="vertical" visibility="{{ isReady ? 'visible' : 'collapse'}}">
-    <StackLayout orientation="vertical">
-      <kl-search-place *ngIf="step === 'search'" (selected)="onPlaceSelected($event)"></kl-search-place>
-      <kl-form-place-validation *ngIf="step === 'validation'" [place]="place"></kl-form-place-validation>
-    </StackLayout>
-  </ScrollView>
-</StackLayout>

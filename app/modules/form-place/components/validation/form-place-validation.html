@@ -1,29 +1,29 @@
 <StackLayout verticalAlignment="center">
-  <ActivityIndicator [busy]="!isReady" visibility="{{ !isReady ? 'visible' : 'collapse'}}"></ActivityIndicator>
-  <ScrollView orientation="vertical" visibility="{{ isReady ? 'visible' : 'collapse'}}">
+  <ActivityIndicator *ngIf="!isReady" busy="true"></ActivityIndicator>
+  <ScrollView orientation="vertical" *ngIf="isReady">
     <GridLayout class="place-container" rows="auto,auto,auto,auto,auto">
       <StackLayout [formGroup]="placeForm">
         <StackLayout row="0">
-          <Label [text]="(place)?.name" class="place-name"></Label>
-          <Label [text]="(place)?.formattedAddress"></Label>
+          <Label [text]="place.name" class="place-name"></Label>
+          <Label [text]="place.formattedAddress"></Label>
         </StackLayout>
         <StackLayout orientation="horizontal" row="1" class="place-star-container">
           <Label *ngFor="let star of [1,2,3,4,5]"
                  text="{{ iconStar }}"
                  class="fa fa-2 place-star"
-                 [class.place-star-selected]="(place)?.note >= star"
+                 [class.place-star-selected]="place.note >= star"
                  (tap)="onChangeStar(star)"></Label>
         </StackLayout>
         <StackLayout row="2" class="place-context-container">
           <CheckBox *ngFor="let context of contextValues"
-                    [text]="context.label" [checked]="(place)?.contexts | placeContextChecked:context"
+                    [text]="context.label" [checked]="place.contexts | placeContextChecked:context"
                     (checkedChange)="onChangeContext($event, context)"></CheckBox>
         </StackLayout>
         <StackLayout row="3" class="place-comments-container">
-          <TextView hint="Laisser un commentaire" formControlName="comment" [text]="(place)?.comment" returnKeyType="done"></TextView>
+          <TextView hint="Laisser un commentaire" formControlName="comment" [text]="place.comment" returnKeyType="done"></TextView>
         </StackLayout>
         <StackLayout row="4" class="place-submit-container">
-          <Button [text]="(place)?.id ? 'Modifier' : 'Ajouter'" (tap)="onSubmit()" [isEnabled]="true" [class]="placeForm.invalid ? 'disabled' : ''"></Button>
+          <Button [text]="place.id ? 'Modifier' : 'Ajouter'" (tap)="onSubmit()" [isEnabled]="true" [class]="placeForm.invalid ? 'disabled' : ''"></Button>
         </StackLayout>
       </StackLayout>
     </GridLayout>

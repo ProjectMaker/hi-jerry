@@ -30,4 +30,4 @@ import { SearchPlaceListComponent } from "./components/search-place-list.compone
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class PlaceSearchModule {}
+export class SearchPlaceModule {}

@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { LoadingIndicator } from "nativescript-loading-indicator";
 
+import { PlaceSearchService } from '../../../../shared/place/place-search.service';
 import { CONTEXT_VALUES } from '../../../../shared/place/place';
 
 @Component({
@@ -20,21 +22,13 @@ export class FormPlaceValidationComponent implements OnInit{
   public noteCtrl:AbstractControl;
   public contextsCtrl:AbstractControl;
 
-  @Input() place:any;
-  public constructor(private fb:FormBuilder) { }
+  public place:any;
+  public constructor(private placeSearch:PlaceSearchService, private route:ActivatedRoute, private fb:FormBuilder) { }
 
 
   public ngOnInit() {
-    console.log('form-place-validation init');
-    this.placeForm = this.fb.group({
-      comment: this.fb.control('', [Validators.required]),
-      note: this.fb.control('', [Validators.required, Validators.pattern(/[1-5]{1}/)]),
-      contexts: this.fb.control('', [Validators.required])
-    });
-    this.noteCtrl = this.placeForm.controls['note'];
-    this.contextsCtrl = this.placeForm.controls['contexts'];
-
-    this.isReady = true;
+    this.loadData();
+    this.initForm();
   }
 
   public onChangeStar(note:number) {
@@ -71,6 +65,32 @@ export class FormPlaceValidationComponent implements OnInit{
         this.placeStorage.update(this.place).subscribe(() => loader.hide());
       }
       */
+    }
+  }
+
+  private initForm() {
+    this.placeForm = this.fb.group({
+      comment: this.fb.control('', [Validators.required]),
+      note: this.fb.control('', [Validators.required, Validators.pattern(/[1-5]{1}/)]),
+      contexts: this.fb.control('', [Validators.required])
+    });
+    this.noteCtrl = this.placeForm.controls['note'];
+    this.contextsCtrl = this.placeForm.controls['contexts'];
+  }
+
+  private loadData() {
+    const params = this.route.snapshot.params;
+    if (params.origin === 'geoloc') {
+      this.placeSearch.searchById(params.id)
+        .subscribe(
+          (place) => {
+            this.place = place;
+            this.place.contexts = [];
+            this.isReady = true;
+
+          },
+          (err) => console.log('FormPlaceAddComponent.onPlaceSelected error', err)
+        );
     }
   }
 }
