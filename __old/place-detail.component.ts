@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute} from '@angular/router';
 
-import { PlaceStorageService } from '../../shared/place/place-storage.service';
+import { PlaceStorageService } from '../../shared/place/storage/place-storage.service';
 
 @Component({
   moduleId: module.id,

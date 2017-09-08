@@ -11,7 +11,7 @@ import {LoadingIndicator} from "nativescript-loading-indicator";
 
 import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from '../../shared/place/place-search.service';
-import { PlaceStorageService } from '../../shared/place/place-storage.service';
+import { PlaceStorageService } from '../../shared/place/storage/place-storage.service';
 import { PlaceMap, getMarkerIcon } from '../../shared/place/place';
 const style = require('./map-style.json');
 

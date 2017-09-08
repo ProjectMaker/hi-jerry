@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LoadingIndicator } from "nativescript-loading-indicator";
 
 import { PlaceSearchService } from '../../../../shared/place/place-search.service';
+import { PlaceStorageService } from '../../../../shared/place/storage/place-storage.service';
 import { CONTEXT_VALUES } from '../../../../shared/place/place';
 
 @Component({
@@ -23,7 +24,7 @@ export class FormPlaceValidationComponent implements OnInit{
   public contextsCtrl:AbstractControl;
 
   public place:any;
-  public constructor(private placeSearch:PlaceSearchService, private route:ActivatedRoute, private fb:FormBuilder) { }
+  public constructor(private placeSearch:PlaceSearchService, private placeStorage:PlaceStorageService, private route:ActivatedRoute, private fb:FormBuilder) { }
 
 
   public ngOnInit() {
@@ -58,6 +59,8 @@ export class FormPlaceValidationComponent implements OnInit{
         }
       });
       this.place.comment = this.placeForm.controls['comment'].value;
+      this.placeStorage.insert(this.place)
+        .subscribe((place => console.log(JSON.stringify(place))));
       loader.hide();
       /*
       if (!this.place.id) this.placeStorage.insert(this.place).subscribe(id => { this.place.id = id; loader.hide() });

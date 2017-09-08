@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { RouterExtensions } from 'nativescript-angular/router';
-import { PlaceStorageService } from '../../shared/place/place-storage.service';
+import { PlaceStorageService } from '../../shared/place/storage/place-storage.service';
 import { PlaceMap, PlaceImgPlaceholder } from '../../shared/place/place';
 
 const dialogs = require("ui/dialogs");
@@ -23,6 +23,7 @@ export class PlacesComponent implements OnInit {
   }
 
   public ngOnInit() {
+    /*
     this.placeStorage.emitter.subscribe(
       (places) => {
         this.places = places;
@@ -38,11 +39,12 @@ export class PlacesComponent implements OnInit {
       (err) => console.log(err),
       () => console.log('completed')
     );
+    */
   }
 
   public onRemove(place:PlaceMap) {
     dialogs.confirm(`Remove ${place.name}`).then((result) => {
-      if (result === true) this.placeStorage.remove(place.id);
+      if (result === true) this.placeStorage.remove(place.id.toString());
     });
   }
 }

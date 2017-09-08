@@ -5,7 +5,7 @@ import { Position } from 'nativescript-google-maps-sdk';
 import { LoadingIndicator } from "nativescript-loading-indicator";
 
 import { PlaceMap, CONTEXT_VALUES } from '../../shared/place/place';
-import { PlaceStorageService } from '../../shared/place/place-storage.service';
+import { PlaceStorageService } from '../../shared/place/storage/place-storage.service';
 import { PlaceSearchService } from '../../shared/place/place-search.service';
 
 @Component({
