@@ -25,12 +25,11 @@ export class FormPlaceValidationComponent implements OnInit{
   public noteCtrl:AbstractControl;
   public contextsCtrl:AbstractControl;
 
-  public place:any;
+  @Input() place:any;
   public constructor(private placeSearch:PlaceSearchService, private placeStorage:PlaceStorageService, private route:ActivatedRoute, private fb:FormBuilder) { }
 
 
   public ngOnInit() {
-    this.loadData();
     this.initForm();
   }
 
@@ -81,21 +80,5 @@ export class FormPlaceValidationComponent implements OnInit{
     });
     this.noteCtrl = this.placeForm.controls['note'];
     this.contextsCtrl = this.placeForm.controls['contexts'];
-  }
-
-  private loadData() {
-    const params = this.route.snapshot.params;
-    if (params.origin === 'geoloc') {
-      this.placeSearch.searchById(params.id)
-        .subscribe(
-          (place) => {
-            this.place = place;
-            this.place.contexts = [];
-            this.isReady = true;
-
-          },
-          (err) => console.log('FormPlaceAddComponent.onPlaceSelected error', err)
-        );
-    }
   }
 }
