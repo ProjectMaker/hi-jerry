@@ -7,6 +7,7 @@ export interface IPlaceStorageService {
   update(place:any);
   insert(place:any):Observable<any>;
   remove(id:string);
+  load():Observable<Array<any>>;
 }
 
 @Injectable()
@@ -16,6 +17,11 @@ export class PlaceStorageService implements IPlaceStorageService {
 
   public constructor() {
     console.log('API CONSTRUCT');
+  }
+
+  public load():Observable<Array<any>> {
+    const place = require('./place.mock.json');
+    return Observable.of([place]);
   }
 
   public update(place:any) {

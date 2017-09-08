@@ -13,7 +13,12 @@ export class PlaceStorageMockService  implements IPlaceStorageService {
   public constructor() {
     console.log('API CONSTRUCT');
   }
-
+  
+  public load():Observable<Array<any>> {
+    const place = require('./place.mock.json');
+    return Observable.of([place]).map(places => this.places = places);
+  }
+  
   public update(place:any) {
     const idx = this.places.findIndex(_place => _place.id === place.id);
     this.places[idx] = place;

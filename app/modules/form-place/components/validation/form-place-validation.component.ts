@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LoadingIndicator } from "nativescript-loading-indicator";
 
 import { PlaceSearchService } from '../../../../shared/place/place-search.service';
+import providePlaceStorageService from '../../../../shared/place/storage/provide-service';
 import { PlaceStorageService } from '../../../../shared/place/storage/place-storage.service';
 import { CONTEXT_VALUES } from '../../../../shared/place/place';
 
@@ -13,6 +14,7 @@ import { CONTEXT_VALUES } from '../../../../shared/place/place';
   selector: 'kl-form-place-validation',
   templateUrl: 'form-place-validation.html',
   styleUrls: ["./form-place-validation.common.css", "./form-place-validation.component.css"],
+  providers: [ providePlaceStorageService() ]
 })
 export class FormPlaceValidationComponent implements OnInit{
   public isReady:boolean = false;

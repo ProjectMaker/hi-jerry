@@ -10,14 +10,10 @@ import { routes, navigatableComponents } from "./app.routing";
 import { UserService } from './shared/user/user.service';
 import { GeolocationService } from './shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from './shared/place/place-search.service';
-import { PlaceStorageService } from './shared/place/storage/place-storage.service';
-import { PlaceStorageMockService } from './shared/place/storage/place-storage.mock.service';
 import { AppComponent } from "./app.component";
 import { ActionBarComponent as ActionBarPlacesComponent } from './components/places/action-bar/action-bar.component';
 
 import { FormPlaceModule } from './modules/form-place/form-place.module';
-import { Config } from './shared/config';
-
 import { DropDownModule } from "nativescript-drop-down/angular";
 
 
@@ -56,7 +52,6 @@ if (platform.isIOS) {
     UserService,
     GeolocationService,
     PlaceSearchService,
-    { provide: PlaceStorageService, useFactory: () => Config.mock ? new PlaceStorageMockService() : new PlaceStorageService(), deps: [] }
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

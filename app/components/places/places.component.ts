@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { RouterExtensions } from 'nativescript-angular/router';
+import providePlaceStorageService from '../../shared/place/storage/provide-service';
 import { PlaceStorageService } from '../../shared/place/storage/place-storage.service';
 import { PlaceMap, PlaceImgPlaceholder } from '../../shared/place/place';
 
@@ -9,10 +10,11 @@ const dialogs = require("ui/dialogs");
   moduleId: module.id,
   selector: 'kl-places',
   templateUrl: 'places.html',
+  providers: [providePlaceStorageService()]
 })
 export class PlacesComponent implements OnInit {
   public places:Array<any> = [];
-  public isReady:boolean = false;
+  public isReady:boolean = true;
   public iconRemove:string = String.fromCharCode(0xf056);
   public imageSource1:string = PlaceImgPlaceholder;
 
@@ -23,23 +25,14 @@ export class PlacesComponent implements OnInit {
   }
 
   public ngOnInit() {
-    /*
     this.placeStorage.emitter.subscribe(
       (places) => {
         this.places = places;
       },
       (err) => console.log(err)
     );
-    this.placeStorage.isReady()
-      .subscribe(
-      () => {
-        this.isReady = true;
-        this.placeStorage.fetch();
-      },
-      (err) => console.log(err),
-      () => console.log('completed')
-    );
-    */
+    this.placeStorage.load()
+      .subscribe((places) => this.places = places);
   }
 
   public onRemove(place:PlaceMap) {

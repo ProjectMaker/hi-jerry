@@ -1,3 +1,3 @@
 export class Config {
-  static mock:boolean = false;
+  static mock:boolean = true;
 }
