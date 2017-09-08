@@ -15,7 +15,6 @@ export class PinPlaceComponent implements OnInit{
 
 
   public ngOnInit() {
-
     this.isReady = true;
   }
 

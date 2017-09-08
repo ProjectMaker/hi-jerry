@@ -13,7 +13,7 @@ import { PlaceSearchService } from './shared/place/place-search.service';
 import { PlaceStorageService } from './shared/place/storage/place-storage.service';
 import { PlaceStorageMockService } from './shared/place/storage/place-storage.mock.service';
 import { AppComponent } from "./app.component";
-
+import { ActionBarComponent as ActionBarPlacesComponent } from './components/places/action-bar/action-bar.component';
 
 import { FormPlaceModule } from './modules/form-place/form-place.module';
 import { Config } from './shared/config';
@@ -33,13 +33,11 @@ if (platform.isIOS) {
   iqKeyboard.shouldShowTextFieldPlaceholder = true;
 }
 
-const provideMyService = () => {
-  return { provide: PlaceStorageService, useFactory: () => Config.mock ? new PlaceStorageMockService() : new PlaceStorageService(), deps: [] }
-}
 
 @NgModule({
   declarations: [
     AppComponent,
+    ActionBarPlacesComponent,
     ...navigatableComponents
   ],
   bootstrap: [AppComponent],
@@ -58,8 +56,7 @@ const provideMyService = () => {
     UserService,
     GeolocationService,
     PlaceSearchService,
-    //PlaceStorageService,
-    provideMyService(),
+    { provide: PlaceStorageService, useFactory: () => Config.mock ? new PlaceStorageMockService() : new PlaceStorageService(), deps: [] }
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

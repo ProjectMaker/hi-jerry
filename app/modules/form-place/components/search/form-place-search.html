@@ -1,7 +1,4 @@
-<StackLayout>
-  <ScrollView orientation="vertical" visibility="{{ isReady ? 'visible' : 'collapse'}}">
-    <StackLayout orientation="vertical">
-      <kl-search-place (selected)="onPlaceSelected($event)"></kl-search-place>
-    </StackLayout>
-  </ScrollView>
+<StackLayout orientation="vertical">
+  <kl-search-place (selected)="onPlaceSelected($event)"></kl-search-place>
 </StackLayout>
+

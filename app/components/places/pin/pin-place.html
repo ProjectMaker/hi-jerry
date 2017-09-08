@@ -1,7 +1,11 @@
-<StackLayout>
-  <ScrollView orientation="vertical" visibility="{{ isReady ? 'visible' : 'collapse'}}">
-    <StackLayout orientation="vertical">
+<ActionBar title="Pin places" class="action-bar">
+</ActionBar>
+<GridLayout rows="*,auto">
+  <StackLayout row="0">
+    <ScrollView orientation="vertical" visibility="{{ isReady ? 'visible' : 'collapse'}}">
       <kl-form-place-add></kl-form-place-add>
-    </StackLayout>
-  </ScrollView>
-</StackLayout>
+    </ScrollView>
+  </StackLayout>
+  <kl-places-action-bar activePage="pin" row="1"></kl-places-action-bar>
+</GridLayout>
+

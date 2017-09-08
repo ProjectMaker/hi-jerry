@@ -14,10 +14,5 @@
       </ng-template>
     </ListView>
   </StackLayout>
-  <StackLayout orientation="horizontal" row="1" backgroundColor="#000000">
-    <GridLayout columns="*,*">
-      <Button text="Mes places" padding="10" col="0" borderRightColor="#ffffff" borderRightWidth="1" color="#ffffff"></Button>
-      <Button text="Pin place" padding="10" col="1" borderLeftColor="#ffffff" borderLeftWidth="1" color="#ffffff" (tap)="goToAddPlaces()"></Button>
-    </GridLayout>
-  </StackLayout>
+  <kl-places-action-bar activePage="list"></kl-places-action-bar>
 </GridLayout>

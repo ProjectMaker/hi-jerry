@@ -1,24 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-
-import { PlaceSearchService } from '../../../../shared/place/place-search.service';
+import { Component, Output, EventEmitter } from "@angular/core";
 
 @Component({
   moduleId: module.id,
   selector: 'kl-form-place-search',
   templateUrl: 'form-place-search.html',
 })
-export class FormPlaceSearchComponent implements OnInit{
-  protected isReady:boolean = false;
-
-  public constructor(private placeSearch:PlaceSearchService, private router:Router) { }
-
-
-  public ngOnInit() {
-    this.isReady = true;
-  }
+export class FormPlaceSearchComponent {
+  @Output() submit = new EventEmitter();
+  public constructor() { }
 
   protected onPlaceSelected(place) {
-    this.router.navigate(['/add-place-validation', place.id, 'geoloc']);
+    this.submit.next(place);
   }
 }
