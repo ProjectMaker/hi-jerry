@@ -1,0 +1,13 @@
+<ActionBar title="Place detail" class="action-bar">
+</ActionBar>
+<GridLayout rows="*,auto">
+  <StackLayout row="0">
+    <ScrollView orientation="vertical" *ngIf="isReady">
+      <kl-form-place-edit [place]="place"></kl-form-place-edit>
+    </ScrollView>
+  </StackLayout>
+  <StackLayout row="0" verticalAlignment="center" *ngIf="!isReady">
+    <ActivityIndicator busy="true"></ActivityIndicator>
+  </StackLayout>
+  <kl-places-action-bar row="1"></kl-places-action-bar>
+</GridLayout>

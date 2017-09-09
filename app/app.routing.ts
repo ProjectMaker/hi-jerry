@@ -1,22 +1,19 @@
 import { LoginComponent } from './components/login/login.component';
-import { PlacesComponent } from './components/places/places.component';
-import { AddPlacesComponent } from './components/places/add-places.component';
-import { PlaceDetailComponent } from './components/places/place-detail.component';
-import { PlaceComponent } from './components/places/place.component';
+import { PlaceListComponent } from './components/places/list/place-list.component';
+import { PinPlaceComponent } from './components/places/pin/pin-place.component';
+import { PlaceDetailComponent } from './components/places/detail/place-detail.component';
 
 export const routes = [
-  { path: '', component: LoginComponent },
-  { path: 'place', component: PlaceComponent },
+  { path: 'pin-places', component: PinPlaceComponent },
+  { path: '', component: PlaceListComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'places', component: PlacesComponent },
-  { path: 'add-places', component: AddPlacesComponent },
-  { path: 'place-detail', component: PlaceDetailComponent },
+  { path: 'places', component: PlaceListComponent },
+  { path: 'place-detail/:id', component: PlaceDetailComponent }
 ];
 
 export const navigatableComponents = [
-  PlaceComponent,
   LoginComponent,
-  PlacesComponent,
-  AddPlacesComponent,
+  PlaceListComponent,
+  PinPlaceComponent,
   PlaceDetailComponent
 ];

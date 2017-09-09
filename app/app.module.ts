@@ -10,11 +10,13 @@ import { routes, navigatableComponents } from "./app.routing";
 import { UserService } from './shared/user/user.service';
 import { GeolocationService } from './shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from './shared/place/place-search.service';
-import { PlaceStorageService } from './shared/place/place-storage.service';
 import { AppComponent } from "./app.component";
-import { placePipes } from './components/places/place-context.pipe';
+import { ActionBarComponent as ActionBarPlacesComponent } from './components/places/action-bar/action-bar.component';
 
+import { FormPlaceModule } from './modules/form-place/form-place.module';
 import { DropDownModule } from "nativescript-drop-down/angular";
+
+
 
 declare var GMSServices: any;
 import * as platform from "platform";
@@ -27,10 +29,11 @@ if (platform.isIOS) {
   iqKeyboard.shouldShowTextFieldPlaceholder = true;
 }
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    ...placePipes,
+    ActionBarPlacesComponent,
     ...navigatableComponents
   ],
   bootstrap: [AppComponent],
@@ -42,13 +45,13 @@ if (platform.isIOS) {
     NativeScriptRouterModule.forRoot(routes),
     TNSCheckBoxModule,
     ReactiveFormsModule,
-    DropDownModule
+    DropDownModule,
+    FormPlaceModule
   ],
   providers: [
     UserService,
     GeolocationService,
     PlaceSearchService,
-    PlaceStorageService
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })
