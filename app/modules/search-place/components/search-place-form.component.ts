@@ -3,7 +3,7 @@ import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/fo
 
 import { Position } from 'nativescript-google-maps-sdk';
 
-import { PlaceSearchService } from '../../../shared/place/place-search.service';
+import { PlaceSearchService } from '../../../shared/place/search/place-search.service';
 
 @Component({
   moduleId: module.id,

@@ -9,7 +9,7 @@ import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
 import { routes, navigatableComponents } from "./app.routing";
 import { UserService } from './shared/user/user.service';
 import { GeolocationService } from './shared/geolocation/geolocation.sercice';
-import { PlaceSearchService } from './shared/place/place-search.service';
+import providePlaceSearchService from './shared/place/search/provide-service';
 import { AppComponent } from "./app.component";
 import { ActionBarComponent as ActionBarPlacesComponent } from './components/places/action-bar/action-bar.component';
 
@@ -51,7 +51,7 @@ if (platform.isIOS) {
   providers: [
     UserService,
     GeolocationService,
-    PlaceSearchService,
+    providePlaceSearchService(),
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

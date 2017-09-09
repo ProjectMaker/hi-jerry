@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { routes, navigatableComponents } from './form-place.routes';
 import { placePipes } from './components/place-context.pipe';
-import { PlaceSearchService } from '../../shared/place/place-search.service';
+import providePlaceSearchService from '../../shared/place/search/provide-service';
 import { FormPlaceAddComponent } from './components/add/form-place-add.component';
 import { FormPlaceEditComponent } from './components/edit/form-place-edit.component';
 import { FormPlaceSearchComponent } from "./components/search/form-place-search.component";
@@ -31,7 +31,7 @@ import { SearchPlaceModule } from "../search-place/search-place.module";
     NativeScriptRouterModule.forRoot(routes),
   ],
   providers: [
-    PlaceSearchService,
+    providePlaceSearchService(),
   ],
   exports: [
     FormPlaceAddComponent,
