@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { LoadingIndicator } from "nativescript-loading-indicator";
 
-import { PlaceSearchService } from '../../../../shared/place/place-search.service';
+import { PlaceSearchService } from '../../../../shared/place/search/place-search.service';
 import providePlaceStorageService from '../../../../shared/place/storage/provide-service';
 import { PlaceStorageService } from '../../../../shared/place/storage/place-storage.service';
 import { CONTEXT_VALUES } from '../../../../shared/place/place';
@@ -26,6 +26,7 @@ export class FormPlaceValidationComponent implements OnInit{
   public contextsCtrl:AbstractControl;
 
   @Input() place:any;
+  @Output() submit = new EventEmitter();
   public constructor(private placeSearch:PlaceSearchService, private placeStorage:PlaceStorageService, private route:ActivatedRoute, private fb:FormBuilder) { }
 
 
@@ -51,17 +52,8 @@ export class FormPlaceValidationComponent implements OnInit{
 
   public onSubmit() {
     if (this.placeForm.valid) {
-      const loader = new LoadingIndicator();
-      loader.show({
-        message: 'process ...',
-        ios: {
-          color: '#FFFFFF',
-          backgroundColor: '#000000',
-        }
-      });
       this.place.comment = this.placeForm.controls['comment'].value;
-      if (!this.place.id) this.placeStorage.insert(this.place).subscribe((place => { this.place = place; loader.hide() }));
-      else this.placeStorage.update(this.place).subscribe(() => loader.hide());
+      this.submit.next('');
     }
   }
 
