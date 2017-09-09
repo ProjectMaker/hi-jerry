@@ -7,15 +7,14 @@ import { RouterExtensions } from 'nativescript-angular/router';
   templateUrl: 'action-bar.html',
 })
 export class ActionBarComponent {
-  @Input() activePage:string;
-
+  
   public constructor(private routerExtension:RouterExtensions) { }
 
   protected goToPlaces() {
-    if ( this.activePage !== 'list') this.routerExtension.navigate(['places'], { clearHistory: true });
+    this.routerExtension.navigate(['places'], { clearHistory: true });
   }
 
   protected goToAddPlaces() {
-    if ( this.activePage !== 'pin') this.routerExtension.navigate(['pin-places'], { clearHistory: true });
+    this.routerExtension.navigate(['pin-places'], { clearHistory: true });
   }
 }

@@ -1,18 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { RouterExtensions } from 'nativescript-angular/router';
-import providePlaceStorageService from '../../shared/place/storage/provide-service';
-import { PlaceStorageService } from '../../shared/place/storage/place-storage.service';
-import { PlaceMap, PlaceImgPlaceholder } from '../../shared/place/place';
+import providePlaceStorageService from '../../../shared/place/storage/provide-service';
+import { PlaceStorageService } from '../../../shared/place/storage/place-storage.service';
+import { PlaceMap, PlaceImgPlaceholder } from '../../../shared/place/place';
 
 const dialogs = require("ui/dialogs");
 
 @Component({
   moduleId: module.id,
-  selector: 'kl-places',
-  templateUrl: 'places.html',
+  selector: 'kl-place-list',
+  templateUrl: 'place-list.html',
   providers: [providePlaceStorageService()]
 })
-export class PlacesComponent implements OnInit {
+export class PlaceListComponent implements OnInit {
   public places:Array<any> = [];
   public isReady:boolean = true;
   public iconRemove:string = String.fromCharCode(0xf056);

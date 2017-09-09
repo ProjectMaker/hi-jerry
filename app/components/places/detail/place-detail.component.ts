@@ -6,7 +6,7 @@ import providePlaceStorageService from '../../../shared/place/storage/provide-se
 @Component({
   moduleId: module.id,
   selector: 'kl-place-detail',
-  templateUrl: 'places-detail.html',
+  templateUrl: 'place-detail.html',
   providers: [ providePlaceStorageService() ]
 })
 export class PlaceDetailComponent implements OnInit {
