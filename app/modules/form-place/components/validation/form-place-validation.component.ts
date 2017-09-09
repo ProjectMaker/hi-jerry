@@ -60,15 +60,8 @@ export class FormPlaceValidationComponent implements OnInit{
         }
       });
       this.place.comment = this.placeForm.controls['comment'].value;
-      this.placeStorage.insert(this.place)
-        .subscribe((place => console.log(JSON.stringify(place))));
-      loader.hide();
-      /*
-      if (!this.place.id) this.placeStorage.insert(this.place).subscribe(id => { this.place.id = id; loader.hide() });
-      else {
-        this.placeStorage.update(this.place).subscribe(() => loader.hide());
-      }
-      */
+      if (!this.place.id) this.placeStorage.insert(this.place).subscribe((place => { this.place = place; loader.hide() }));
+      else this.placeStorage.update(this.place).subscribe(() => loader.hide());
     }
   }
 

@@ -8,7 +8,7 @@
       <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
         <FlexboxLayout  backgroundColor="#f6f8fa">
           <Image src="res://{{item.type}}" stretch="none" horizontalAlignment="center"></Image>
-          <Label [text]="item.name" marginLeft="20px" flexGrow="1" [nsRouterLink]="['/place']" [queryParams]="{id: item.id}"></Label>
+          <Label [text]="item.name" marginLeft="20px" flexGrow="1" [nsRouterLink]="['/place-detail', item.id]"></Label>
           <Label text="{{ iconRemove }}" class="fa fa-2" color="#CB1D00" paddingLeft="10" paddingRight="10" (tap)="onRemove(item)"></Label>
         </FlexboxLayout>
       </ng-template>

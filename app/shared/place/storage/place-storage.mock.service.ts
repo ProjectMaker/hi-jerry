@@ -18,11 +18,17 @@ export class PlaceStorageMockService  implements IPlaceStorageService {
     const place = require('./place.mock.json');
     return Observable.of([place]).map(places => this.places = places);
   }
-  
-  public update(place:any) {
+
+  public loadById(id):Observable<any> {
+    const place = require('./place.mock.json');
+    return Observable.of(place);
+  }
+
+  public update(place:any):Observable<boolean> {
     const idx = this.places.findIndex(_place => _place.id === place.id);
     this.places[idx] = place;
     this.emitter.next([...this.places]);
+    return Observable.of(true);
   }
 
   public insert(place:any):Observable<any> {
@@ -32,10 +38,11 @@ export class PlaceStorageMockService  implements IPlaceStorageService {
     return Observable.of(place);
   }
 
-  public remove(id:string) {
+  public remove(id:string):Observable<boolean> {
     const idx = this.places.findIndex(_place => _place.id === id);
     this.places.splice(idx, 1);
     this.emitter.next([...this.places]);
+    return Observable.of(true);
   }
 
   

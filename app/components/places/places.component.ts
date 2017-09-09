@@ -32,7 +32,7 @@ export class PlacesComponent implements OnInit {
       (err) => console.log(err)
     );
     this.placeStorage.load()
-      .subscribe((places) => this.places = places);
+      .subscribe((places) => { this.places = places; });
   }
 
   public onRemove(place:PlaceMap) {
