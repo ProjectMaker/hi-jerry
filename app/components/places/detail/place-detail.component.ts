@@ -21,7 +21,8 @@ export class PlaceDetailComponent implements OnInit {
         (place) => {
           this.place = place;
           this.isReady = true;
-        }
+        },
+        (err) => console.log(err)
       )
     
   }

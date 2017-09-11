@@ -35,9 +35,9 @@ export class PlaceListComponent implements OnInit {
       .subscribe((places) => { this.places = places; });
   }
 
-  public onRemove(place:PlaceMap) {
+  public onRemove(place:any) {
     dialogs.confirm(`Remove ${place.name}`).then((result) => {
-      if (result === true) this.placeStorage.remove(place.id.toString());
+      if (result === true) this.placeStorage.remove(place._id).subscribe(result => console.log(result), err => console.log(err));
     });
   }
 }

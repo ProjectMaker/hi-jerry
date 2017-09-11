@@ -42,6 +42,13 @@ export class FormPlaceAddComponent implements OnInit{
       }
     });
 
-    this.placeStorage.insert(this.place).subscribe((place => { this.place = place; loader.hide() }));
+    this.placeStorage.insert(this.place).subscribe(
+      (place) => {
+          console.log(place);
+        this.place = place;
+        loader.hide()
+      },
+      (err) => console.log(err)
+    );
   }
 }

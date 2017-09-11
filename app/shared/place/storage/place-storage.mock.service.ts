@@ -11,7 +11,7 @@ export class PlaceStorageMockService  implements IPlaceStorageService {
   public emitter:EventEmitter<Array<any>> = new EventEmitter();
 
   public constructor() {
-    console.log('API CONSTRUCT');
+    console.log('API MOCK CONSTRUCT');
   }
   
   public load():Observable<Array<any>> {

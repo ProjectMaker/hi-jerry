@@ -5,5 +5,5 @@ import { PlaceSearchMockService } from './place-search.mock.service';
 import { Config } from '../../config';
 
 export default () => {
-  return { provide: PlaceSearchService, useFactory: (http:Http) => Config.mockSearch ? new PlaceSearchMockService(http) : new PlaceSearchService(http), deps: [] }
+  return { provide: PlaceSearchService, useFactory: (http:Http) => Config.mockSearch ? new PlaceSearchMockService(http) : new PlaceSearchService(http), deps: [Http] }
 }
