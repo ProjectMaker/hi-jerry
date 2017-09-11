@@ -25,6 +25,10 @@ export class FormPlaceEditComponent {
       }
     });
     
-    this.placeStorage.update(this.place).subscribe(() => loader.hide());
+    this.placeStorage.update(this.place).subscribe(
+      () => loader.hide(),
+      (err) => loader.hide(),
+      () => console.log('complete')
+    );
   }
 }
