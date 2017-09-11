@@ -38,8 +38,7 @@ export abstract class AbastractPlaceSearchService {
           address: doc.vicinity,
           type: this.rewriteType(doc.types),
           origin: 'google',
-          externalId: doc.id,
-          imageRefId: doc.photos ? doc.photos[0].photo_reference : '',
+          placeId: doc.place_id,
         };
         return place;
       });
@@ -66,6 +65,7 @@ export class PlaceSearchService extends AbastractPlaceSearchService implements  
   }
 
   public search(position:Position):Observable<Array<any>> {
+    console.log('PlaceSearcgService search');
     this.callGoogleApi(position);
     return Observable.create(observer => {
       this.placesRefreshEvent.subscribe(
@@ -106,7 +106,7 @@ export class PlaceSearchService extends AbastractPlaceSearchService implements  
   private callGoogleApi(position:Position, pageToken?:string) {
     let url:string;
     let nextPageToken:string;
-    if (!pageToken) url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${key}&location=${position.latitude},${position.longitude}&radius=500`;
+    if (!pageToken) url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${key}&location=${position.latitude},${position.longitude}&radius=25`;
     else url = url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${key}&pagetoken=${pageToken}`;
     this.http.get(url)
       .map(result => {

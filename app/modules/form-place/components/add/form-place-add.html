@@ -1,4 +1,8 @@
-<StackLayout orientation="vertical">
-  <kl-form-place-search (submit)="onFindPlace($event)" *ngIf="step === 'search'"></kl-form-place-search>
+<StackLayout orientation="vertical" height="100%">
+
+  <kl-form-place-map (submit)="onFindPlace($event)" *ngIf="step === 'search'"></kl-form-place-map>
+
+
+  <kl-form-place-search (submit)="onFindPlace($event)" *ngIf="step === 'searchs'"></kl-form-place-search>
   <kl-form-place-validation *ngIf="step === 'validation'" [place]="place" (submit)="onSubmit($event)"></kl-form-place-validation>
 </StackLayout>
