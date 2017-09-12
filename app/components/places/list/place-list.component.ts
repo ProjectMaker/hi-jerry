@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { RouterExtensions } from 'nativescript-angular/router';
 import providePlaceStorageService from '../../../shared/place/storage/provide-service';
 import { PlaceStorageService } from '../../../shared/place/storage/place-storage.service';

@@ -1,0 +1,13 @@
+<StackLayout orientation="vertical" class="place-list-card-container" [nsRouterLink]="['/place-detail', place._id]">
+  <Image src="data:image/png;base64,{{ imageSource }}"></Image>
+  <StackLayout orientation="vertical" class="content">
+    <Label [text]="place.name" row="1" class="font-weight-bold"></Label>
+    <Label [text]="place.formattedAddress"></Label>
+    <StackLayout orientation="horizontal" class="note-container">
+      <Label *ngFor="let star of [1,2,3,4,5]"
+             text="{{ iconStar }}"
+             class="fa fa-1 place-star"
+             [class.place-star-selected]="place.note >= star"></Label>
+    </StackLayout>
+  </StackLayout>
+</StackLayout>

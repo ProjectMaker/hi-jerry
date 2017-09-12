@@ -1,0 +1,20 @@
+.place-star-container {
+    margin-top: 20;
+}
+
+.place-list-card-container .place-star {
+    margin-right: 10;
+}
+
+.place-list-card-container .place-star-selected {
+    color: #b58900;
+}
+
+.place-list-card-container .content {
+    padding-left: 5;
+    padding-top: 5;
+}
+
+.place-list-card-container .address {
+    color: #f6f8fa;
+}
