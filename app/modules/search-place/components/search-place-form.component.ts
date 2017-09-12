@@ -3,6 +3,7 @@ import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/fo
 
 import { Position } from 'nativescript-google-maps-sdk';
 
+import { GeolocationService } from '../../../shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from '../../../shared/place/search/place-search.service';
 
 @Component({
@@ -16,22 +17,19 @@ export class SearchPlaceFormComponent implements OnInit{
   public isReady:boolean = false;
 
   @Output() found = new EventEmitter();
-  public constructor(private placeSearch:PlaceSearchService, private fb:FormBuilder) { }
+  public constructor(private geolocation:GeolocationService, private placeSearch:PlaceSearchService, private fb:FormBuilder) { }
 
 
   public ngOnInit() {
-    console.log('INIT TOO');
     this.searchForm = this.fb.group({
       placeName: this.fb.control('', [Validators.required, Validators.minLength(4)])
     });
 
-    this.isReady = true;
-
+    
   }
 
   protected onSearchSubmit() {
-    console.log(this.searchForm);
-    this.placeSearch.searchByPositionAndName(Position.positionFromLatLng(48.8511475,2.399606700000001), 'bouion')
+    this.placeSearch.searchByPositionAndName(this.geolocation.position, this.searchForm.controls['placeName'].value)
       .subscribe(
         (result) => this.found.next(result),
         (err) => console.log('err', err),

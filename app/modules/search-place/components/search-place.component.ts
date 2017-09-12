@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 
+import { GeolocationService } from '../../../shared/geolocation/geolocation.sercice';
+
 @Component({
   moduleId: module.id,
   selector: 'kl-search-place',
@@ -11,11 +13,18 @@ export class SearchPlaceComponent implements OnInit{
   public places:Array<any> = [];
 
   @Output() selected = new EventEmitter();
-  public constructor() { }
+  public constructor(private geolocation:GeolocationService) { }
 
 
   public ngOnInit() {
-
+    this.geolocation.start();
+    this.geolocation.isReady()
+      .subscribe(
+        (position:Position) => {
+          this.isReady = true;
+        },
+        (err) => console.log(err)
+      );
   }
 
   protected onSearchSubmit(places) {
@@ -23,7 +32,6 @@ export class SearchPlaceComponent implements OnInit{
   }
 
   protected onSelectedPlace(place) {
-    console.log('search-place.component, onSelectedPlace', place);
     this.selected.next(place);
   }
 }

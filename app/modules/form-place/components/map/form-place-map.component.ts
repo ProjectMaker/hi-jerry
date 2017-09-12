@@ -6,8 +6,6 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { registerElement } from 'nativescript-angular/element-registry';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 
-import {LoadingIndicator} from "nativescript-loading-indicator";
-
 import { GeolocationService } from '../../../../shared/geolocation/geolocation.sercice';
 import { PlaceSearchService } from '../../../../shared/place/search/place-search.service';
 import { getMarkerIcon } from '../../../../shared/place/place';

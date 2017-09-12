@@ -77,7 +77,7 @@ export class PlaceSearchService extends AbastractPlaceSearchService implements  
   }
 
   public searchByPositionAndName(position:Position, name:string):Observable<any> {
-    const url= `${URL_API_PLACE}/queryautocomplete/json?key=${key}&location=${position.latitude},${position.longitude}&radius=500&input=${name}`;
+    const url= `${URL_API_PLACE}/queryautocomplete/json?key=${key}&location=${position.latitude},${position.longitude}&radius=25&input=${name}`;
     return this.http.get(url)
       .map(result => result.json())
       .map(doc => doc.predictions

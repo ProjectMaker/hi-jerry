@@ -11,12 +11,12 @@ export class PinPlaceComponent implements OnInit{
   public step:string = 'search';
   public place:any = {};
   public iconSearch:string = String.fromCharCode(0xf002);
-  protected searchView:string = 'map';
+  protected searchView:string = 'name';
   public constructor() { }
 
 
   public ngOnInit() {
-    this.isReady = true;
+    
   }
 
   protected onPlaceSelected(place) {
