@@ -22,6 +22,7 @@ export class PlaceSearchMockService extends AbastractPlaceSearchService implemen
   }
 
   public search(position:Position):Observable<Array<any>> {
+    console.log('SEARCH MOCK');
     const places = require('./place-search.mock.json');
     return Observable.of(places)
       .map(result => this.parseGoogleDoc(result));

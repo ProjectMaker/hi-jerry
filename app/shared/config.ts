@@ -1,4 +1,4 @@
 export class Config {
-  static mockStorage:boolean = false;
-  static mockSearch:boolean = true;
+  static mockStorage:boolean = true;
+  static mockSearch:boolean = false;
 }

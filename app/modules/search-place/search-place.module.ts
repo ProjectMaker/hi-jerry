@@ -4,6 +4,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpModule } from "nativescript-angular";
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { GeolocationService } from '../../shared/geolocation/geolocation.sercice';
 import providePlaceSearchService from '../../shared/place/search/provide-service';
 
 import { SearchPlaceComponent } from "./components/search-place.component";
@@ -24,6 +25,7 @@ import { SearchPlaceListComponent } from "./components/search-place-list.compone
   ],
   providers: [
     providePlaceSearchService(),
+    GeolocationService
   ],
   exports: [
     SearchPlaceComponent,

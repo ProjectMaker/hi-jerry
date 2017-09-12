@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { LoadingIndicator } from "nativescript-loading-indicator";
@@ -17,6 +17,7 @@ export class FormPlaceAddComponent implements OnInit{
   protected step:string = 'search';
   protected place:any;
 
+  @Input() searchView:string;
   public constructor( private placeSearch: PlaceSearchService, private placeStorage: PlaceStorageService, private router:Router) { }
 
   public ngOnInit() { }
@@ -30,6 +31,10 @@ export class FormPlaceAddComponent implements OnInit{
           this.step = 'validation';
         }
       );
+  }
+
+  protected onToggleSearchView() {
+    this.searchView = this.searchView === 'map' ? 'name' : 'map';
   }
 
   public onSubmit() {

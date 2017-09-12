@@ -31,7 +31,7 @@ export class GeolocationService {
         const interval = setInterval(() => {
           if (this.position) {
             clearInterval(interval);
-            observer.next(true);
+            observer.next(this.position);
             observer.complete();
           }
         }, 2000);
