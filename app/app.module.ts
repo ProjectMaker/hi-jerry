@@ -12,7 +12,7 @@ import { GeolocationService } from './shared/geolocation/geolocation.sercice';
 import providePlaceSearchService from './shared/place/search/provide-service';
 import { AppComponent } from "./app.component";
 import { ActionBarComponent as ActionBarPlacesComponent } from './components/places/action-bar/action-bar.component';
-
+import { PlaceListCardComponent } from './components/places/list/place-list-card.component';
 import { FormPlaceModule } from './modules/form-place/form-place.module';
 import { DropDownModule } from "nativescript-drop-down/angular";
 
@@ -34,6 +34,7 @@ if (platform.isIOS) {
   declarations: [
     AppComponent,
     ActionBarPlacesComponent,
+    PlaceListCardComponent,
     ...navigatableComponents
   ],
   bootstrap: [AppComponent],
