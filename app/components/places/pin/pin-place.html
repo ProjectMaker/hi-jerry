@@ -1,9 +1,10 @@
 <ActionBar title="Pin places" class="action-bar">
+  <ActionItem [ios.systemIcon]="searchView === 'map' ? 12 : 11" ios.position="right" (tap)="onToggleSearchView()"></ActionItem>
 </ActionBar>
 <GridLayout rows="*,auto">
   <StackLayout row="0">
     <ScrollView orientation="vertical" visibility="{{ isReady ? 'visible' : 'collapse'}}">
-      <kl-form-place-add></kl-form-place-add>
+      <kl-form-place-add [searchView]="searchView"></kl-form-place-add>
     </ScrollView>
   </StackLayout>
   <kl-places-action-bar activePage="pin" row="1"></kl-places-action-bar>

@@ -19,7 +19,6 @@ export interface IPlaceSearchService {
 export class PlaceSearchMockService extends AbastractPlaceSearchService implements  IPlaceSearchService {
   public constructor(private http:Http) {
     super();
-    console.log('PlaceSearchMockService constructor');
   }
 
   public search(position:Position):Observable<Array<any>> {
