@@ -14,7 +14,9 @@ export interface IPlaceStorageService {
   loadById(id:string):Observable<any>
 }
 
-const URL_PLACE_API = 'http://localhost:3000/api/place';
+import { Config } from '../../config';
+const DOMAIN_API = Config.localApi ? 'localhost:3000' : Config.domainApi;
+const URL_PLACE_API = `http://${DOMAIN_API}/api/place`;
 
 @Injectable()
 export class PlaceStorageService implements IPlaceStorageService {

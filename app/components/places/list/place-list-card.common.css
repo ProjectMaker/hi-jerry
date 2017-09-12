@@ -18,3 +18,7 @@
 .place-list-card-container .address {
     color: #f6f8fa;
 }
+
+.place-list-card-container {
+    margin-bottom: 15;
+}
