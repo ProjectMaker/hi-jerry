@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, Input, EventEmitter } from "@angular/core";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import { Component, OnInit, OnDestroy, Output, Input, EventEmitter } from "@angular/core";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import {Image} from 'ui/image';
 
 const imageSource = require("image-source");
@@ -18,8 +18,9 @@ const style = require('./map-style.json');
   selector: 'kl-google-sdk-map',
   templateUrl: 'map.html',
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
   private _places = new BehaviorSubject([]);
+  private isAlive:boolean = true;
   markers:Array<Marker> = [];
   markerSelected:Marker;
   zoom = 16;
@@ -45,6 +46,10 @@ export class MapComponent implements OnInit {
 
   public ngOnInit() { }
 
+  public ngOnDestroy() {
+    this.isAlive = false;
+  }
+
   private switchMarker(marker:Marker) {
     let image;
     if (this.markerSelected) {
@@ -67,6 +72,7 @@ export class MapComponent implements OnInit {
     this.mapView.setStyle(style);
 
     this._places
+      .takeWhile(() => this.isAlive)
       .subscribe(() => {
         this.places.forEach(place => this.addMarker(place));
       });
