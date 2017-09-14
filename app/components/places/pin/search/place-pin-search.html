@@ -1,0 +1,14 @@
+<StackLayout height="50%">
+  <kl-google-sdk-map
+    *ngIf="searchView === 'map'"
+    (ready)="onMapLoaded()"
+    [places]="places" #map></kl-google-sdk-map>
+</StackLayout>
+<StackLayout height="50%">
+  <kl-google-sdk-list-view-search-place
+    *ngIf="searchView === 'map'"
+    [places]="places"
+    (info)="onInfoPlace($event)"
+    (select)="onSelectPlace($event)"></kl-google-sdk-list-view-search-place>
+</StackLayout>
+<kl-google-sdk-search-place (selected)="onPlaceSelected($event)"></kl-google-sdk-search-place>

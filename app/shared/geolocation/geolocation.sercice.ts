@@ -25,10 +25,12 @@ export class GeolocationService {
   }
 
   isReady() {
+    console.log('Geolocation.isReady');
     if (this.position) return Observable.of(this.position);
     else {
       return Observable.create(observer => {
         const interval = setInterval(() => {
+          console.log('interval', this.position)
           if (this.position) {
             clearInterval(interval);
             observer.next(this.position);

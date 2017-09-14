@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, Input, EventEmitter } from "@angular/core";
+import { Component, OnInit, OnDestroy, Output, Input, EventEmitter, NgZone } from "@angular/core";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import {Image} from 'ui/image';
 
@@ -31,8 +31,8 @@ export class MapComponent implements OnInit, OnDestroy {
   gpsMarker:Marker;
   lastCamera: String;
 
-  @Output() loaded = new EventEmitter();
-  constructor() {}
+  @Output() ready = new EventEmitter();
+  constructor(private zone:NgZone) {}
 
   @Input()
   set places(value) {
@@ -68,6 +68,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   //Map events
   onMapReady(event) {
+    console.log('map.component.onMapReady');
     this.mapView = event.object;
     this.mapView.setStyle(style);
 
@@ -77,8 +78,24 @@ export class MapComponent implements OnInit, OnDestroy {
         this.places.forEach(place => this.addMarker(place));
       });
 
-    this.loaded.next(true);
-    this.loaded.complete();
+    this.ready.next(true);
+    this.ready.complete();
+  }
+
+  public selectMarker(place:any) {
+    console.log('selectMarker', place.placeId);
+    const marker = this.markers.find((marker) => { return place.placeId === marker.userData.placeId});
+
+    this.zone.run(() => {
+      this.mapView.latitude = marker.position.latitude;
+      this.mapView.longitude = marker.position.longitude;
+
+      this.switchMarker(marker);
+
+      marker.showInfoWindow();
+    })
+
+    console.log('/selectMaker', marker.title);
   }
 
   public center(position:Position) {
@@ -118,6 +135,7 @@ export class MapComponent implements OnInit, OnDestroy {
     marker.icon = icon;
 
     this.mapView.addMarker(marker);
+    this.markers.push(marker);
 
     return marker;
   }

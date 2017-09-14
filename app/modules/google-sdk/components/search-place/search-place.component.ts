@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 
-import { GeolocationService } from '../../../shared/geolocation/geolocation.sercice';
+import { GeolocationService } from '../../../../shared/geolocation/geolocation.sercice';
 
 @Component({
   moduleId: module.id,
-  selector: 'kl-search-place',
+  selector: 'kl-google-sdk-search-place',
   templateUrl: 'search-place.html',
   styleUrls: ["./search-place.common.css", "./search-place.component.css"],
 })
@@ -17,7 +17,6 @@ export class SearchPlaceComponent implements OnInit{
 
 
   public ngOnInit() {
-    console.log('YOYOYOYO');
     this.geolocation.start();
     this.geolocation.isReady()
       .subscribe(

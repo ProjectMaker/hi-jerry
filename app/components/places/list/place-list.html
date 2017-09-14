@@ -1,21 +1,11 @@
 <ActionBar title="Mes places" class="action-bar">
 </ActionBar>
 <GridLayout rows="*,auto">
-  <!-- <Image src="data:image/png;base64,{{ imageSource1 }}" ></Image> -->
   <ActivityIndicator busy="true" visibility="{{ !isReady ? 'visible' : 'collapse'}}" row="0"></ActivityIndicator>
-  <StackLayout orientation="vertical" row="0" visibility="{{ isReady ? 'visible' : 'collapse'}}">
-    <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%">
-      <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
-        <kl-place-list-card [place]="item"></kl-place-list-card>
-        <!--
-        <FlexboxLayout  backgroundColor="#f6f8fa">
-          <Image src="res://{{item.type}}" stretch="none" horizontalAlignment="center"></Image>
-          <Label [text]="item.name" marginLeft="20px" flexGrow="1" [nsRouterLink]="['/place-detail', item._id]"></Label>
-          <Label text="{{ iconRemove }}" class="fa fa-2" color="#CB1D00" paddingLeft="10" paddingRight="10" (tap)="onRemove(item)"></Label>
-        </FlexboxLayout>
-        -->
-      </ng-template>
-    </ListView>
-  </StackLayout>
-  <kl-places-action-bar></kl-places-action-bar>
+  <ListView [items]="places" separatorColor="transparent" row="0" class="list-group" visibility="{{ isReady ? 'visible' : 'collapse'}}">
+    <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+      <kl-place-list-card [place]="item"></kl-place-list-card>
+    </ng-template>
+  </ListView>
+  <StackLayout row="1" kl-places-action-bar></StackLayout>
 </GridLayout>

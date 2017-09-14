@@ -1,4 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+
+
+import { MapComponent } from '../../../modules/google-sdk/components/map/map.component';
+import { PlaceSearchService } from '../../../shared/place/search/place-search.service';
+import { GeolocationService } from '../../../shared/geolocation/geolocation.sercice';
 
 @Component({
   moduleId: module.id,
@@ -6,27 +12,19 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: 'pin-place.html',
   styleUrls: ["./pin-place.common.css", "./pin-place.component.css"],
 })
+
 export class PinPlaceComponent implements OnInit{
-  public isReady:boolean = false;
-  public step:string = 'search';
+  public isReady:boolean = true;
+  public step:string = 'find';
   public place:any = {};
   public iconSearch:string = String.fromCharCode(0xf002);
-  protected searchView:string = 'name';
-  public constructor() { }
+  public places:Array<any> = [];
+
+  @ViewChild("map") mapElt: MapComponent;
+  public constructor(private geolocation:GeolocationService, private placeSearch:PlaceSearchService) { }
 
 
   public ngOnInit() {
-    
-  }
 
-  protected onPlaceSelected(place) {
-    this.step = 'validation';
-    
-    console.log('place', JSON.stringify(place));
-  }
-
-  protected onToggleSearchView() {
-    this.searchView = this.searchView === 'map' ? 'name' : 'map';
-    console.log('onToggleSearchView()', this.searchView);
   }
 }

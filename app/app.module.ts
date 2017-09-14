@@ -14,9 +14,10 @@ import { AppComponent } from "./app.component";
 import { ActionBarComponent as ActionBarPlacesComponent } from './components/places/action-bar/action-bar.component';
 import { PlaceListCardComponent } from './components/places/list/place-list-card.component';
 import { FormPlaceModule } from './modules/form-place/form-place.module';
+import { GoogleSdkModule } from './modules/google-sdk/google-sdk.module';
 import { DropDownModule } from "nativescript-drop-down/angular";
 
-
+import { PlacePinSearchComponent } from './components/places/pin/search/place-pin-search.component';
 
 declare var GMSServices: any;
 import * as platform from "platform";
@@ -35,6 +36,7 @@ if (platform.isIOS) {
     AppComponent,
     ActionBarPlacesComponent,
     PlaceListCardComponent,
+    PlacePinSearchComponent,
     ...navigatableComponents
   ],
   bootstrap: [AppComponent],
@@ -47,7 +49,8 @@ if (platform.isIOS) {
     TNSCheckBoxModule,
     ReactiveFormsModule,
     DropDownModule,
-    FormPlaceModule
+    FormPlaceModule,
+    GoogleSdkModule,
   ],
   providers: [
     UserService,

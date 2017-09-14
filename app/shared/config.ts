@@ -1,6 +1,6 @@
 export class Config {
-  static mockStorage:boolean = false;
-  static mockSearch:boolean = false;
+  static mockStorage:boolean = true;
+  static mockSearch:boolean = true;
   static localApi:boolean = false;
   static domainApi:string = 'hi-jerry.cleverapps.io';
 }

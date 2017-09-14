@@ -1,0 +1,22 @@
+.place-container {
+    padding: 10 10 0 10;
+}
+
+.place-submit-container {
+    margin-top: 20;
+    horizontal-align: center;
+    width: 100%;
+}
+
+.place-submit-container Button {
+    background-color: #CB1D00;
+    padding: 5;
+    color: white;
+}
+
+
+
+.search-list-item-container {
+    padding-top: 5;
+    padding-bottom: 5;
+}

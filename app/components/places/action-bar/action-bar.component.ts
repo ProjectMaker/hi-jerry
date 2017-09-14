@@ -3,7 +3,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 
 @Component({
   moduleId: module.id,
-  selector: 'kl-places-action-bar',
+  selector: 'kl-places-action-bar, [kl-places-action-bar]',
   templateUrl: 'action-bar.html',
 })
 export class ActionBarComponent {
