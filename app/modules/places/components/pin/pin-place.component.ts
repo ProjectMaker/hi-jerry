@@ -3,10 +3,10 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { LoadingIndicator } from "nativescript-loading-indicator";
 
 import { PlacePinSearchComponent } from './search/place-pin-search.component';
-import { PlaceSearchService } from '../../../modules/google-sdk/shared/place/search/place-search.service';
-import { GeolocationService } from '../../../shared/geolocation/geolocation.sercice';
-import providePlaceStorageService from '../../../shared/place/storage/provide-service';
-import { PlaceStorageService } from '../../../shared/place/storage/place-storage.service';
+import { PlaceSearchService } from '../../../google-sdk/shared/place/search/place-search.service';
+import { GeolocationService } from '../../../../shared/geolocation/geolocation.sercice';
+import providePlaceStorageService from '../../../../shared/place/storage/provide-service';
+import { PlaceStorageService } from '../../../../shared/place/storage/place-storage.service';
 
 @Component({
   moduleId: module.id,

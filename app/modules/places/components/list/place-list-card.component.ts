@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
-import providePlaceStorageService from '../../../shared/place/storage/provide-service';
-import { PlaceImgPlaceholder } from '../../../shared/place/place';
+import providePlaceStorageService from '../../../../shared/place/storage/provide-service';
+import { PlaceImgPlaceholder } from '../../../../shared/place/place';
 
 @Component({
   moduleId: module.id,

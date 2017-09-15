@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, Input, ViewChild, EventEmitter } from "@angular/core";
 
-import { MapComponent } from '../../../../modules/google-sdk/components/map/map.component';
-import { PlaceSearchService } from '../../../../modules/google-sdk/shared/place/search/place-search.service';
-import { GeolocationService } from '../../../../shared/geolocation/geolocation.sercice';
+import { MapComponent } from '../../../../google-sdk/components/map/map.component';
+import { PlaceSearchService } from '../../../../google-sdk/shared/place/search/place-search.service';
+import { GeolocationService } from '../../../../../shared/geolocation/geolocation.sercice';
 
 @Component({
   moduleId: module.id,

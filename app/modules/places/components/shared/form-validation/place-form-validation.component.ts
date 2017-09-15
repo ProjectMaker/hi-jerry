@@ -4,10 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 
 import { LoadingIndicator } from "nativescript-loading-indicator";
 
-import { PlaceSearchService } from '../../../../modules/google-sdk/shared/place/search/place-search.service';
-import providePlaceStorageService from '../../../../shared/place/storage/provide-service';
-import { PlaceStorageService } from '../../../../shared/place/storage/place-storage.service';
-import { CONTEXT_VALUES } from '../../../../shared/place/place';
+import { PlaceSearchService } from '../../../../google-sdk/shared/place/search/place-search.service';
+import providePlaceStorageService from '../../../../../shared/place/storage/provide-service';
+import { PlaceStorageService } from '../../../../../shared/place/storage/place-storage.service';
+import { CONTEXT_VALUES } from '../../../../../shared/place/place';
 
 @Component({
   moduleId: module.id,

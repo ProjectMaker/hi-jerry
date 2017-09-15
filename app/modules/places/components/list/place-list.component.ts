@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { RouterExtensions } from 'nativescript-angular/router';
-import providePlaceStorageService from '../../../shared/place/storage/provide-service';
-import { PlaceStorageService } from '../../../shared/place/storage/place-storage.service';
-import { PlaceMap, PlaceImgPlaceholder } from '../../../shared/place/place';
+import providePlaceStorageService from '../../../../shared/place/storage/provide-service';
+import { PlaceStorageService } from '../../../../shared/place/storage/place-storage.service';
+import { PlaceImgPlaceholder } from '../../../../shared/place/place';
 
 const dialogs = require("ui/dialogs");
 
