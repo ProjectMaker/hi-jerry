@@ -7,7 +7,7 @@ const imageSource = require("image-source");
 import { registerElement } from 'nativescript-angular/element-registry';
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 
-import { getMarkerIcon } from '../../shared/marker';
+import { getMarkerIcon } from '../../shared/place/marker';
 
 const style = require('./map-style.json');
 

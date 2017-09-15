@@ -1,16 +1,5 @@
 import { Component, OnInit, ViewChild, Output, Input, EventEmitter, NgZone, ElementRef } from "@angular/core";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { ListView } from 'ui/list-view';
-const imageSource = require("image-source");
-
-import { registerElement } from 'nativescript-angular/element-registry';
-import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
-
-import { getMarkerIcon } from '../../shared/marker';
-
-
-
-//registerElement('MapView', () => MapView);
 
 @Component({
   moduleId: module.id,
