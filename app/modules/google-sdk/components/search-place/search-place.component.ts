@@ -12,8 +12,8 @@ export class SearchPlaceComponent implements OnInit{
   public isReady:boolean = false;
   public places:Array<any> = [];
 
-  @Output() selected = new EventEmitter();
-  public constructor(private geolocation:GeolocationService) { }
+  @Output() select = new EventEmitter();
+  public constructor(private geolocation:GeolocationService) {}
 
 
   public ngOnInit() {
@@ -32,6 +32,6 @@ export class SearchPlaceComponent implements OnInit{
   }
 
   protected onSelectedPlace(place) {
-    this.selected.next(place);
+    this.select.next(place);
   }
 }
