@@ -48,43 +48,12 @@ export class MapComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     this.isAlive = false;
+    console.log('MAP COMPONENT ON DESTROY');
   }
 
-  private switchMarker(marker:Marker) {
-    let image;
-    if (this.markerSelected) {
-      image = new Image();
-      getMarkerIcon(this.markerSelected.userData.type)
-      image.imageSource = imageSource.fromResource(getMarkerIcon(this.markerSelected.userData.type));
-      this.markerSelected.icon = image;
-    }
-    this.markerSelected = marker;
-
-
-    image = new Image();
-    image.imageSource = imageSource.fromResource("monkey-export");
-    marker.icon = image;
-  }
-
-  //Map events
-  onMapReady(event) {
-    console.log('map.component.onMapReady');
-    this.mapView = event.object;
-    this.mapView.setStyle(style);
-
-    this._places
-      .takeWhile(() => this.isAlive)
-      .subscribe(() => {
-        this.places.forEach(place => this.addMarker(place));
-      });
-
-    this.ready.next(true);
-    this.ready.complete();
-  }
-
-  public selectMarker(place:any) {
-    console.log('selectMarker', place.placeId);
-    const marker = this.markers.find((marker) => { return place.placeId === marker.userData.placeId});
+  public selectMarker(placeId:string) {
+    console.log('selectMarker', placeId);
+    const marker = this.markers.find((marker) => { return placeId === marker.userData.placeId});
 
     this.zone.run(() => {
       this.mapView.latitude = marker.position.latitude;
@@ -115,6 +84,51 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
+  protected onMarkerEvent(args) {
+    //if (args.eventName === 'markerSelect')
+    console.log("Marker Event: '" + args.eventName
+      + "' triggered on: " + args.marker.title
+      + ", Lat: " + args.marker.position.latitude + ", Lon: " + args.marker.position.longitude, args);
+    this.switchMarker(args.marker);
+  }
+
+  protected onCameraChanged(args) {
+    console.log("Camera changed: " + JSON.stringify(args.camera), JSON.stringify(args.camera) === this.lastCamera);
+    this.lastCamera = JSON.stringify(args.camera);
+  }
+
+  //Map events
+  protected onMapReady(event) {
+    console.log('map.component.onMapReady');
+    this.mapView = event.object;
+    this.mapView.setStyle(style);
+
+    this._places
+      .takeWhile(() => this.isAlive)
+      .subscribe(() => {
+        this.places.forEach(place => this.addMarker(place));
+      });
+
+    this.ready.next(this);
+    this.ready.complete();
+  }
+  
+  private switchMarker(marker:Marker) {
+    let image;
+    if (this.markerSelected) {
+      image = new Image();
+      getMarkerIcon(this.markerSelected.userData.type)
+      image.imageSource = imageSource.fromResource(getMarkerIcon(this.markerSelected.userData.type));
+      this.markerSelected.icon = image;
+    }
+    this.markerSelected = marker;
+
+
+    image = new Image();
+    image.imageSource = imageSource.fromResource("monkey-export");
+    marker.icon = image;
+  }
+
   private getMarker(place:any) {
     return this.markers.find(marker => marker.userData.placeId === place.placeId);
   }
@@ -140,26 +154,9 @@ export class MapComponent implements OnInit, OnDestroy {
     return marker;
   }
 
-  removeMarker(marker:Marker) {
+  private removeMarker(marker:Marker) {
     if (this.mapView && marker) {
       this.mapView.removeMarker(marker);
     }
-  }
-
-  onCoordinateTapped(args) {
-    //console.log("Coordinate Tapped, Lat: " + args.position.latitude + ", Lon: " + args.position.longitude, args);
-  }
-
-  onMarkerEvent(args) {
-    //if (args.eventName === 'markerSelect')
-    console.log("Marker Event: '" + args.eventName
-      + "' triggered on: " + args.marker.title
-      + ", Lat: " + args.marker.position.latitude + ", Lon: " + args.marker.position.longitude, args);
-    this.switchMarker(args.marker);
-  }
-
-  onCameraChanged(args) {
-    console.log("Camera changed: " + JSON.stringify(args.camera), JSON.stringify(args.camera) === this.lastCamera);
-    this.lastCamera = JSON.stringify(args.camera);
   }
 }
