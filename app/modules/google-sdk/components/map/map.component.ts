@@ -11,7 +11,7 @@ import { getMarkerIcon } from '../../shared/marker';
 
 const style = require('./map-style.json');
 
-//registerElement('MapView', () => MapView);
+registerElement('MapView', () => MapView);
 
 @Component({
   moduleId: module.id,
@@ -44,7 +44,9 @@ export class MapComponent implements OnInit, OnDestroy {
   }
   
 
-  public ngOnInit() { }
+  public ngOnInit() {
+    console.log('map.component onInit()');
+  }
 
   public ngOnDestroy() {
     this.isAlive = false;
@@ -98,7 +100,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   //Map events
-  protected onMapReady(event) {
+  public onMapReady(event) {
     console.log('map.component.onMapReady');
     this.mapView = event.object;
     this.mapView.setStyle(style);
@@ -112,7 +114,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.ready.next(this);
     this.ready.complete();
   }
-  
+
   private switchMarker(marker:Marker) {
     let image;
     if (this.markerSelected) {

@@ -5,7 +5,7 @@ import { PlaceDetailComponent } from './components/places/detail/place-detail.co
 
 export const routes = [
   { path: 'pin-places', component: PinPlaceComponent },
-  { path: '', component: PlaceListComponent },
+  { path: '', component: PinPlaceComponent },
   { path: 'login', component: LoginComponent },
   { path: 'places', component: PlaceListComponent },
   { path: 'place-detail/:id', component: PlaceDetailComponent }

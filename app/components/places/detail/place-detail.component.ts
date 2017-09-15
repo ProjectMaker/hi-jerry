@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LoadingIndicator } from "nativescript-loading-indicator";
+
 import { PlaceStorageService} from '../../../shared/place/storage/place-storage.service';
 import providePlaceStorageService from '../../../shared/place/storage/provide-service';
 
@@ -25,5 +27,22 @@ export class PlaceDetailComponent implements OnInit {
         (err) => console.log(err)
       )
     
+  }
+
+  public onSubmit() {
+    const loader = new LoadingIndicator();
+    loader.show({
+      message: 'process ...',
+      ios: {
+        color: '#FFFFFF',
+        backgroundColor: '#000000',
+      }
+    });
+
+    this.placeStorage.update(this.place).subscribe(
+      () => loader.hide(),
+      (err) => loader.hide(),
+      () => console.log('complete')
+    );
   }
 }

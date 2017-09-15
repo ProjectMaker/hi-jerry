@@ -1,4 +1,4 @@
-<StackLayout height="50%" *ngIf="searchView === 'map'">
+<StackLayout height="50%" *ngIf="searchView === 'map'" backgroundColor="red">
   <kl-google-sdk-map
     (ready)="onMapLoaded($event)"
     [places]="places"></kl-google-sdk-map>

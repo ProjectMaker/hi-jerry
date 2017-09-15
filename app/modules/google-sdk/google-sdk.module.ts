@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { placePipes } from '../../shared/pipes/place.pipes';
 import { MapComponent } from "./components/map/map.component";
 import { ListViewSearchComponent } from "./components/list-view-search-place/list-view-search-place.component";
+import { SearchPlaceListComponent } from './components/search-place/search-place-list.component';
+import { SearchPlaceFormComponent } from './components/search-place/search-place-form.component';
 import { SearchPlaceComponent } from "./components/search-place/search-place.component";
 
 @NgModule({
@@ -14,7 +16,9 @@ import { SearchPlaceComponent } from "./components/search-place/search-place.com
     ...placePipes,
     MapComponent,
     ListViewSearchComponent,
-    SearchPlaceComponent
+    SearchPlaceComponent,
+    SearchPlaceFormComponent,
+    SearchPlaceListComponent
   ],
   imports: [
     NativeScriptModule,
