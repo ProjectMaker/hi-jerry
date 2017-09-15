@@ -1,9 +1,0 @@
-<GridLayout class="place-container" rows="auto,auto" [formGroup]="searchForm">
-  <StackLayout row="0">
-    <TextField hint="Enter the name" formControlName="placeName"></TextField>
-  </StackLayout>
-  <StackLayout row="1" class="place-submit-container">
-    <Button text="Search" [class]="searchForm.invalid ? 'disabled' : ''" (tap)="onSearchSubmit()"></Button>
-  </StackLayout>
-</GridLayout>
-

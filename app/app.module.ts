@@ -9,7 +9,7 @@ import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
 import { routes, navigatableComponents } from "./app.routing";
 import { UserService } from './shared/user/user.service';
 import { GeolocationService } from './shared/geolocation/geolocation.sercice';
-import providePlaceSearchService from './shared/place/search/provide-service';
+import providePlaceSearchService from './modules/google-sdk/shared/place/search/provide-service';
 import { AppComponent } from "./app.component";
 import { ActionBarComponent as ActionBarPlacesComponent } from './components/places/action-bar/action-bar.component';
 import { PlaceListCardComponent } from './components/places/list/place-list-card.component';

@@ -1,14 +1,16 @@
 import { Component, OnInit, EventEmitter, Output } from "@angular/core";
-import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { GeolocationService } from '../../../../shared/geolocation/geolocation.sercice';
-import { PlaceSearchService } from '../../../../shared/place/search/place-search.service';
+import providePlaceSearchService from '../../shared/place/search/provide-service';
+import { PlaceSearchService } from '../../shared/place/search/place-search.service';
 
 @Component({
   moduleId: module.id,
   selector: 'kl-google-sdk-search-place-form',
   templateUrl: 'search-place-form.html',
   styleUrls: ["./search-place.common.css", "./search-place.component.css"],
+  providers: [ providePlaceSearchService() ]
 })
 export class SearchPlaceFormComponent implements OnInit{
   public searchForm:FormGroup;

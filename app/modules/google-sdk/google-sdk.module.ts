@@ -4,6 +4,8 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpModule } from "nativescript-angular";
 import { ReactiveFormsModule } from '@angular/forms';
 
+import providePlaceSearchService from './shared/place/search/provide-service';
+
 import { placePipes } from '../../shared/pipes/place.pipes';
 import { MapComponent } from "./components/map/map.component";
 import { ListViewSearchComponent } from "./components/list-view-search-place/list-view-search-place.component";
@@ -27,7 +29,7 @@ import { SearchPlaceComponent } from "./components/search-place/search-place.com
     ReactiveFormsModule,
   ],
   providers: [
-
+    providePlaceSearchService()
   ],
   exports: [
     MapComponent,

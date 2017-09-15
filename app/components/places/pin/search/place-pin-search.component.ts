@@ -1,9 +1,7 @@
 import { Component, OnInit, Output, Input, ViewChild, EventEmitter } from "@angular/core";
-import { Observable } from "rxjs/Observable";
-
 
 import { MapComponent } from '../../../../modules/google-sdk/components/map/map.component';
-import { PlaceSearchService } from '../../../../shared/place/search/place-search.service';
+import { PlaceSearchService } from '../../../../modules/google-sdk/shared/place/search/place-search.service';
 import { GeolocationService } from '../../../../shared/geolocation/geolocation.sercice';
 
 @Component({
