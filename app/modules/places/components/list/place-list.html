@@ -1,0 +1,11 @@
+<ActionBar title="Mes places" class="action-bar">
+</ActionBar>
+<GridLayout rows="*,auto">
+  <ActivityIndicator busy="true" visibility="{{ !isReady ? 'visible' : 'collapse'}}" row="0"></ActivityIndicator>
+  <ListView [items]="places" separatorColor="transparent" row="0" class="list-group" visibility="{{ isReady ? 'visible' : 'collapse'}}">
+    <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+      <kl-place-list-card [place]="item"></kl-place-list-card>
+    </ng-template>
+  </ListView>
+  <StackLayout row="1" kl-places-action-bar></StackLayout>
+</GridLayout>

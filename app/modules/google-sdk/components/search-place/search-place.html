@@ -1,0 +1,5 @@
+<StackLayout orientation="vertical" [verticalAlignment]="isReady ? 'top' : 'center'" height="100%">
+  <ActivityIndicator busy="true" *ngIf="!isReady"></ActivityIndicator>
+  <kl-google-sdk-search-place-form (found)="onSearchSubmit($event)" *ngIf="isReady"></kl-google-sdk-search-place-form>
+  <kl-google-sdk-search-place-list [places]="places" (selected)="onSelectedPlace($event)" *ngIf="isReady"></kl-google-sdk-search-place-list>
+</StackLayout>

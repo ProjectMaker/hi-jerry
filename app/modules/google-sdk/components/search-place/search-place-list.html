@@ -1,0 +1,9 @@
+<StackLayout class="place-container">
+  <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%" (itemTap)="onItemTap($event)">
+    <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+      <StackLayout class="search-list-item-container" backgroundColor="#f6f8fa">
+        <Label [text]="item.name"></Label>
+      </StackLayout>
+    </ng-template>
+  </ListView>
+</StackLayout>

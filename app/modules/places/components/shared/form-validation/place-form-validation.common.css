@@ -1,0 +1,57 @@
+.place-container {
+    padding: 10 10 0 10;
+}
+
+.place-container .place-name {
+    font-weight: bold;
+}
+
+.place-star-container {
+    margin-top: 20;
+}
+
+.place-container .place-star {
+    margin-right: 10;
+}
+
+.place-container .place-star-selected {
+    color: #b58900;
+}
+
+.place-context-container {
+    margin-top: 10;
+}
+
+.place-context-container CheckBox {
+    margin-top: 10;
+}
+
+.place-comments-container {
+    margin-top: 20;
+}
+
+.place-comments-container TextView {
+    height: 150;
+}
+
+.place-submit-container {
+    margin-top: 20;
+    horizontal-align: center;
+    width: 100%;
+}
+
+.place-submit-container Button {
+    background-color: #CB1D00;
+    padding: 5;
+    color: white;
+}
+
+.visible {
+    animation-name: show;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+@keyframes show {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

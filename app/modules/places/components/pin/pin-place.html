@@ -1,0 +1,11 @@
+<ActionBar title="Pin places" class="action-bar">
+  <ActionItem [ios.systemIcon]="11" ios.position="right" (tap)="onToggleSearchView()"></ActionItem>
+</ActionBar>
+<GridLayout rows="*,auto" height="100%">
+  <StackLayout height="100%" orientation="vertical" row="0">
+    <kl-place-pin-search #search (findPlace)="onFindPlace($event)" *ngIf="step === 'find'"></kl-place-pin-search>
+    <kl-place-form-validation *ngIf="step === 'validation'" [place]="place" (submit)="onSubmit($event)"></kl-place-form-validation>
+  </StackLayout>
+  <StackLayout row="1" activePage="pin" kl-places-action-bar></StackLayout>
+</GridLayout>
+

@@ -5,23 +5,23 @@ import { NativeScriptHttpModule } from "nativescript-angular";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { ReactiveFormsModule } from '@angular/forms';
 import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
+import { DropDownModule } from "nativescript-drop-down/angular";
 
 import { routes, navigatableComponents } from "./app.routing";
+import { PipeModule } from './modules/pipes/pipe.module'
 import { UserService } from './shared/user/user.service';
 import { GeolocationService } from './shared/geolocation/geolocation.sercice';
-import providePlaceSearchService from './shared/place/search/provide-service';
+import providePlaceSearchService from './modules/google-sdk/shared/place/search/provide-service';
 import { AppComponent } from "./app.component";
-import { ActionBarComponent as ActionBarPlacesComponent } from './components/places/action-bar/action-bar.component';
-import { PlaceListCardComponent } from './components/places/list/place-list-card.component';
-import { FormPlaceModule } from './modules/form-place/form-place.module';
-import { DropDownModule } from "nativescript-drop-down/angular";
+
+import { GoogleSdkModule } from './modules/google-sdk/google-sdk.module';
+import { PlaceModule } from './modules/places/place.module';
 
 
 
 declare var GMSServices: any;
 import * as platform from "platform";
 if (platform.isIOS) {
-  GMSServices.provideAPIKey("AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4");
   const iqKeyboard: IQKeyboardManager = IQKeyboardManager.sharedManager();
   iqKeyboard.overrideKeyboardAppearance = true;
   iqKeyboard.keyboardAppearance = UIKeyboardAppearance.Dark;
@@ -33,8 +33,6 @@ if (platform.isIOS) {
 @NgModule({
   declarations: [
     AppComponent,
-    ActionBarPlacesComponent,
-    PlaceListCardComponent,
     ...navigatableComponents
   ],
   bootstrap: [AppComponent],
@@ -47,7 +45,8 @@ if (platform.isIOS) {
     TNSCheckBoxModule,
     ReactiveFormsModule,
     DropDownModule,
-    FormPlaceModule
+    GoogleSdkModule,
+    PlaceModule,
   ],
   providers: [
     UserService,
