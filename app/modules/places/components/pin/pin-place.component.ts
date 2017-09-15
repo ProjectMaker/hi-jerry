@@ -5,8 +5,8 @@ import { LoadingIndicator } from "nativescript-loading-indicator";
 import { PlacePinSearchComponent } from './search/place-pin-search.component';
 import { PlaceSearchService } from '../../../google-sdk/shared/place/search/place-search.service';
 import { GeolocationService } from '../../../../shared/geolocation/geolocation.sercice';
-import providePlaceStorageService from '../../../../shared/place/storage/provide-service';
-import { PlaceStorageService } from '../../../../shared/place/storage/place-storage.service';
+import providePlaceStorageService from '../../shared/storage/provide-service';
+import { PlaceStorageService } from '../../shared/storage/place-storage.service';
 
 @Component({
   moduleId: module.id,

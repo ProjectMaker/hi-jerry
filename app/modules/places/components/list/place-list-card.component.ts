@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from "@angular/core";
-import providePlaceStorageService from '../../../../shared/place/storage/provide-service';
 import { PlaceImgPlaceholder } from '../../../../shared/place/place';
 
 @Component({
@@ -7,7 +6,6 @@ import { PlaceImgPlaceholder } from '../../../../shared/place/place';
   selector: 'kl-place-list-card',
   templateUrl: 'place-list-card.html',
   styleUrls: ["./place-list-card.common.css"],
-  providers: [providePlaceStorageService()]
 })
 export class PlaceListCardComponent implements OnInit {
   protected imageSource:string = PlaceImgPlaceholder;

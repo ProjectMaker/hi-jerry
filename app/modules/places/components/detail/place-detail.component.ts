@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingIndicator } from "nativescript-loading-indicator";
 
-import { PlaceStorageService} from '../../../../shared/place/storage/place-storage.service';
-import providePlaceStorageService from '../../../../shared/place/storage/provide-service';
+import { PlaceStorageService} from '../../shared/storage/place-storage.service';
+import providePlaceStorageService from '../../shared/storage/provide-service';
 
 @Component({
   moduleId: module.id,

@@ -14,7 +14,7 @@ export interface IPlaceStorageService {
   loadById(id:string):Observable<any>
 }
 
-import { Config } from '../../config';
+import { Config } from '../../../../shared/config';
 const DOMAIN_API = Config.localApi ? 'localhost:3000' : Config.domainApi;
 const URL_PLACE_API = `http://${DOMAIN_API}/api/place`;
 
