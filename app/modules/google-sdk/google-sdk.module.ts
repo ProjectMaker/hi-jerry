@@ -13,6 +13,12 @@ import { SearchPlaceListComponent } from './components/search-place/search-place
 import { SearchPlaceFormComponent } from './components/search-place/search-place-form.component';
 import { SearchPlaceComponent } from "./components/search-place/search-place.component";
 
+declare var GMSServices: any;
+import * as platform from "platform";
+if (platform.isIOS) {
+  GMSServices.provideAPIKey("AIzaSyAC0SKQg4Ff1vtQC2cmGbD6MdPKr2LPdq4");
+}
+
 @NgModule({
   declarations: [
     MapComponent,
