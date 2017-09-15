@@ -20,7 +20,7 @@ import { getMarkerIcon } from '../../shared/marker';
 export class ListViewSearchComponent implements OnInit {
   public myName:string = 'tom';
   public iconAdd:string = String.fromCharCode(0xf055);
-  public placeSelected:any = { placeId: 'ChIJz9jZXHdy5kcR2kGiBGvf6VE'}
+  protected placeSelected:any
 
   @Input() places:Array<any>;
   @Output() select = new EventEmitter();
@@ -39,23 +39,15 @@ export class ListViewSearchComponent implements OnInit {
   }
 
   public onItemTap(args) {
-    const place = this.places.find(place => place.__list__selected);
-    if (place) delete place.__list__selected;
-    this.places[args.index].__list__selected = true;
+    this.placeSelected = this.places[args.index];
 
     const elt = <ListView>this.listElt.nativeElement;
     elt.refresh();
 
-    this.info.next(this.places[args.index]);
+    this.info.next(this.placeSelected.placeId);
   }
   
-  onCancelSelect(place) {
-    delete place.__list__selected;
-    const elt = <ListView>this.listElt.nativeElement;
-    elt.refresh();
-  }
-
-  onConfirmSelect(place) {
-    this.select.next(place);
+  onSelectPlace(place) {
+    this.select.next(place.placeId);
   }
 }

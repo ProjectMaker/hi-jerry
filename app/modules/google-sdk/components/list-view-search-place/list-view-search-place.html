@@ -1,17 +1,12 @@
 <ListView [items]="places" separatorColor="transparent" class="list-group" height="100%" (itemTap)="onItemTap($event)"
-          [itemTemplateSelector]="templateSelector" #list>
+           #list>
 
   <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even" nsTemplateKey="default">
     <FlexboxLayout backgroundColor="#f6f8fa">
       <Image src="{{item.type | placeIconImgSrc}}" stretch="none" horizontalAlignment="center"></Image>
       <Label [text]="item.name" marginLeft="10px" flexGrow="1"></Label>
-    </FlexboxLayout>
-  </ng-template>
-  <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even" nsTemplateKey="selected">
-    <FlexboxLayout backgroundColor="#f6f8fa">
-      <Image src="{{item.type | placeIconImgSrc}}" stretch="none" horizontalAlignment="center"></Image>
-      <Button text="Add" flexGrow="1" (tap)="onConfirmSelect(item)"></Button>
-      <Button text="Cancel" flexGrow="1" (tap)="onCancelSelect(item)"></Button>
+      <Label text="{{ iconAdd }}" *ngIf="placeSelected === item" (tap)="onSelectPlace(item)"
+             class="fa fa-2" color="#1b926c" paddingLeft="10" paddingRight="10"></Label>
     </FlexboxLayout>
   </ng-template>
 </ListView>
