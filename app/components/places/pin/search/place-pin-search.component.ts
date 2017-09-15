@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, Output, Input, ViewChild, EventEmitter } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 
 
@@ -19,8 +19,9 @@ export class PlacePinSearchComponent implements OnInit{
   public iconSearch:string = String.fromCharCode(0xf002);
   public places:Array<any> = [];
   protected searchView:string = 'map';
+  protected map:MapComponent;
 
-  @ViewChild("map") mapElt: MapComponent;
+  @Output() findPlace = new EventEmitter();
   public constructor(private geolocation:GeolocationService, private placeSearch:PlaceSearchService) { }
 
 
@@ -28,11 +29,12 @@ export class PlacePinSearchComponent implements OnInit{
     this.geolocation.start();
   }
 
-  public onMapLoaded() {
+  public onMapLoaded(map) {
     console.log('onMapLoaded **********');
+    this.map = map;
     this.geolocation.isReady()
       .concatMap(() => {
-        this.mapElt.center(this.geolocation.position);
+        this.map.center(this.geolocation.position);
         return this.placeSearch.search(this.geolocation.position)
       })
       .subscribe(
@@ -43,21 +45,21 @@ export class PlacePinSearchComponent implements OnInit{
       );
   }
 
-  protected onPlaceSelected(place) {
-    console.log('place', JSON.stringify(place));
+  public onInfoPlace(placeId) {
+    this.map.selectMarker(placeId);
   }
 
-  protected onToggleSearchView() {
+  public onSelectPlace(placeId:string) {
+    this.placeSearch.searchById(placeId)
+      .subscribe(
+        (place) => {
+          place.contexts = [];
+          this.findPlace.next(place);
+        }
+      );
+  }
+
+  public onToggleSearchView() {
     this.searchView = this.searchView === 'map' ? 'name' : 'map';
-    console.log('onToggleSearchView()', this.searchView);
-  }
-
-  public onInfoPlace(place) {
-    this.mapElt.selectMarker(place);
-    console.log(JSON.stringify(place));
-  }
-
-  public onSelectPlace(place) {
-
   }
 }
