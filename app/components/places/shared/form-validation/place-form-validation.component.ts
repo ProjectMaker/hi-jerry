@@ -11,12 +11,12 @@ import { CONTEXT_VALUES } from '../../../../shared/place/place';
 
 @Component({
   moduleId: module.id,
-  selector: 'kl-form-place-validation',
-  templateUrl: 'form-place-validation.html',
-  styleUrls: ["./form-place-validation.common.css", "./form-place-validation.component.css"],
+  selector: 'kl-place-form-validation',
+  templateUrl: 'place-form-validation.html',
+  styleUrls: ["./place-form-validation.common.css", "./place-form-validation.component.css"],
   providers: [ providePlaceStorageService() ]
 })
-export class FormPlaceValidationComponent implements OnInit{
+export class PlaceFormValidationComponent implements OnInit{
   public isReady:boolean = false;
   public iconStar:string = String.fromCharCode(0xf005);
   public step:string = 'search';

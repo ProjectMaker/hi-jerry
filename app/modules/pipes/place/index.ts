@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
-import { getMarkerIcon } from '../place/place';
+import { getMarkerIcon } from '../../../shared/place/place';
 
 @Pipe({
   name: 'placeContextChecked'
@@ -20,7 +20,7 @@ class PlaceIconImgSrcPipe implements PipeTransform {
   }
 }
 
-export const placePipes = [
+export const pipes = [
   PlaceContextCheckedPipe,
   PlaceIconImgSrcPipe
 ];

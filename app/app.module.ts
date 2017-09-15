@@ -7,13 +7,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TNSCheckBoxModule } from 'nativescript-checkbox/angular';
 
 import { routes, navigatableComponents } from "./app.routing";
+import { PipeModule } from './modules/pipes/pipe.module'
 import { UserService } from './shared/user/user.service';
 import { GeolocationService } from './shared/geolocation/geolocation.sercice';
 import providePlaceSearchService from './modules/google-sdk/shared/place/search/provide-service';
 import { AppComponent } from "./app.component";
-import { ActionBarComponent as ActionBarPlacesComponent } from './components/places/action-bar/action-bar.component';
+import { ActionBarComponent as ActionBarPlacesComponent } from './components/places/shared/action-bar/action-bar.component';
 import { PlaceListCardComponent } from './components/places/list/place-list-card.component';
-import { FormPlaceModule } from './modules/form-place/form-place.module';
+import { PlaceFormValidationComponent } from './components/places/shared/form-validation/place-form-validation.component';
+
 import { GoogleSdkModule } from './modules/google-sdk/google-sdk.module';
 import { DropDownModule } from "nativescript-drop-down/angular";
 
@@ -37,6 +39,7 @@ if (platform.isIOS) {
     ActionBarPlacesComponent,
     PlaceListCardComponent,
     PlacePinSearchComponent,
+    PlaceFormValidationComponent,
     ...navigatableComponents
   ],
   bootstrap: [AppComponent],
@@ -49,8 +52,8 @@ if (platform.isIOS) {
     TNSCheckBoxModule,
     ReactiveFormsModule,
     DropDownModule,
-    FormPlaceModule,
     GoogleSdkModule,
+    PipeModule,
   ],
   providers: [
     UserService,
